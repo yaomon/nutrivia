@@ -1,5 +1,6 @@
 let domain1_answers = [
     {
+        "number": "1",
         "question": "When you check overrun, you are checking:",
         "answers": [
             {
@@ -22,6 +23,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "2",
         "question": "What is the process by which the water content of a vegetable is replaced by a concentrated salt solution?",
         "answers": [
             {
@@ -44,6 +46,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "3",
         "question": "Which recipe ingredient should be adjusted if a cake has a crunchy crust and compact moist texture?",
         "answers": [
             {
@@ -66,6 +69,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "4",
         "question": "Why do egg whites beat more easily at room temperature?",
         "answers": [
             {
@@ -88,6 +92,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "5",
         "question": "Which pigment does not change color in an acid or an alkaline solution?",
         "answers": [
             {
@@ -110,6 +115,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "6",
         "question": "The end products of cellular oxidation are:",
         "answers": [
             {
@@ -132,6 +138,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "7",
         "question": "Carbohydrates listed in order of decreasing sweetness are:",
         "answers": [
             {
@@ -154,6 +161,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "8",
         "question": "The flakiness of pie crust depends on:",
         "answers": [
             {
@@ -176,6 +184,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "9",
         "question": "If the sole source of protein is gelatin, growth is inhibited because:",
         "answers": [
             {
@@ -198,6 +207,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "10",
         "question": "A #10 can holds how many cups of product?",
         "answers": [
             {
@@ -209,7 +219,7 @@ let domain1_answers = [
                 "text": "13"
             },
             {
-                "option": "C",
+                "option": "c",
                 "text": "12"
             },
             {
@@ -220,6 +230,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "11",
         "question": "If you replace half and half with whipping cream in ice cream, the effects on the ice crystals will be:",
         "answers": [
             {
@@ -242,6 +253,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "12",
         "question": "Fat produces more calories than carbohydrate because:",
         "answers": [
             {
@@ -264,6 +276,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "13",
         "question": "Research has shown that neural tube defects can be reduced with proper supplementation of:",
         "answers": [
             {
@@ -286,6 +299,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "14",
         "question": "The best laboratory value to use in assessing iron status is:",
         "answers": [
             {
@@ -308,6 +322,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "15",
         "question": "Which is the best flour to use when making cakes?",
         "answers": [
             {
@@ -330,6 +345,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "16",
         "question": "Where is lactose absorbed?",
         "answers": [
             {
@@ -352,6 +368,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "17",
         "question": "Considering the following smoke points of various fats, which would be the best to use for frying?",
         "answers": [
             {
@@ -374,6 +391,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "18",
         "question": "Which minerals are involved in carbohydrate metabolism?",
         "answers": [
             {
@@ -396,6 +414,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "19",
         "question": "Acidic chyme becomes neutralized in the duodenum by:",
         "answers": [
             {
@@ -418,6 +437,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "20",
         "question": "The colon functions in the absorption of:",
         "answers": [
             {
@@ -440,6 +460,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "21",
         "question": "To prevent frozen gravy from separating when thawed:",
         "answers": [
             {
@@ -462,6 +483,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "22",
         "question": "How much fluid is lost through insensible losses?",
         "answers": [
             {
@@ -484,6 +506,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "23",
         "question": "An amino acid that cannot be produced by the body is:",
         "answers": [
             {
@@ -506,6 +529,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "24",
         "question": "The following is an irreversible reaction:",
         "answers": [
             {
@@ -528,6 +552,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "25",
         "question": "Riboflavin, thiamin and niacin are all involved in the:",
         "answers": [
             {
@@ -550,6 +575,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "26",
         "question": "An increased plasma pyruvate level is an indication of:",
         "answers": [
             {
@@ -572,6 +598,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "27",
         "question": "Which of the following stabilizes an egg white foam?",
         "answers": [
             {
@@ -594,6 +621,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "28",
         "question": "Winterized oil is:",
         "answers": [
             {
@@ -616,6 +644,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "29",
         "question": "What may cause EKG abnormalities?",
         "answers": [
             {
@@ -638,6 +667,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "30",
         "question": "In the fed state, the brain uses which nutrient as a source of energy?",
         "answers": [
             {
@@ -660,6 +690,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "31",
         "question": "In starvation, the brain uses which nutrient as an energy source?",
         "answers": [
             {
@@ -682,6 +713,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "32",
         "question": "Gluconeogenesis is the:",
         "answers": [
             {
@@ -704,6 +736,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "33",
         "question": "Glycolysis is the:",
         "answers": [
             {
@@ -726,6 +759,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "34",
         "question": "Glycogenolysis is the:",
         "answers": [
             {
@@ -748,6 +782,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "35",
         "question": "The end product of aerobic glycolysis is:",
         "answers": [
             {
@@ -770,6 +805,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "36",
         "question": "Protein-bound iodine (PBI) measures:",
         "answers": [
             {
@@ -792,6 +828,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "37",
         "question": "The hormone epinephrine:",
         "answers": [
             {
@@ -814,6 +851,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "38",
         "question": "A provitamin is:",
         "answers": [
             {
@@ -836,6 +874,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "39",
         "question": "The formula for producing the active form of vitamin D is:",
         "answers": [
             {
@@ -858,6 +897,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "40",
         "question": "In the human, vitamin K is affected by:",
         "answers": [
             {
@@ -880,6 +920,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "41",
         "question": "Which hormone regulates calcium levels?",
         "answers": [
             {
@@ -902,6 +943,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "42",
         "question": "Pyridoxine acts as a coenzyme in:",
         "answers": [
             {
@@ -924,6 +966,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "43",
         "question": "Which of the following are synthesized by intestinal bacteria?",
         "answers": [
             {
@@ -946,6 +989,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "44",
         "question": "Ascorbic acid aids in healing. Which of the following applies?",
         "answers": [
             {
@@ -968,6 +1012,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "45",
         "question": "Biotin is considered a coenzyme in the synthesis of:",
         "answers": [
             {
@@ -990,7 +1035,8 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
-        "question": "Food iron is in the form.:",
+        "number": "46",
+        "question": "Food iron is in the form.",
         "answers": [
             {
                 "option": "a",
@@ -1012,6 +1058,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "47",
         "question": "Food iron is reduced in the stomach to the more absorbable form of:",
         "answers": [
             {
@@ -1034,6 +1081,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "48",
         "question": "Which would aid the absorption of an iron supplement?",
         "answers": [
             {
@@ -1056,7 +1104,8 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
-        "question": "Bile is produced in the and stored in the .:",
+        "number": "49",
+        "question": "Bile is produced in the and stored in the .",
         "answers": [
             {
                 "option": "a",
@@ -1078,6 +1127,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "50",
         "question": "Cholecystokinin causes:",
         "answers": [
             {
@@ -1100,6 +1150,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "51",
         "question": "Which enzymes are involved in protein digestion?",
         "answers": [
             {
@@ -1122,6 +1173,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "52",
         "question": "Protein digestion begins in the:",
         "answers": [
             {
@@ -1144,6 +1196,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "53",
         "question": "Lactase is produced in the:",
         "answers": [
             {
@@ -1166,6 +1219,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "54",
         "question": "Which enzymes are secreted by the pancreas?",
         "answers": [
             {
@@ -1188,6 +1242,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "55",
         "question": "Which conversion requires glucose - 6 - phosphatase?",
         "answers": [
             {
@@ -1210,6 +1265,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "56",
         "question": "NADPH is:",
         "answers": [
             {
@@ -1232,6 +1288,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "57",
         "question": "The following are required for the conversion of pyruvic acid into active acetate?",
         "answers": [
             {
@@ -1254,6 +1311,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "58",
         "question": "46 grams of protein is the RDA for females beginning at what age?",
         "answers": [
             {
@@ -1265,7 +1323,7 @@ let domain1_answers = [
                 "text": "16"
             },
             {
-                "option": "C",
+                "option": "c",
                 "text": "18"
             },
             {
@@ -1276,6 +1334,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "59",
         "question": "Glucocorticoids are:",
         "answers": [
             {
@@ -1298,6 +1357,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "60",
         "question": "Glucocorticoids:",
         "answers": [
             {
@@ -1320,7 +1380,8 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
-        "question": "Dietary fat enters the blood as and leaves the liver as _:",
+        "number": "61",
+        "question": "Dietary fat enters the blood as and leaves the liver as _",
         "answers": [
             {
                 "option": "a",
@@ -1342,6 +1403,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "62",
         "question": "The oxidation of fatty acids forms:",
         "answers": [
             {
@@ -1364,6 +1426,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "63",
         "question": "Which statement is not true?",
         "answers": [
             {
@@ -1386,6 +1449,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "64",
         "question": "Which of the following can be reversed with vitamin A?",
         "answers": [
             {
@@ -1408,6 +1472,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "65",
         "question": "On a package label, the claim \"evidence suggests but does not prove that...\"is a:",
         "answers": [
             {
@@ -1430,6 +1495,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "66",
         "question": "Which amino acids must be present in a parenteral solution?",
         "answers": [
             {
@@ -1452,6 +1518,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "67",
         "question": "Iron absorption is enhanced by:",
         "answers": [
             {
@@ -1474,6 +1541,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "68",
         "question": "Which of the following inhibits gluconeogenesis?",
         "answers": [
             {
@@ -1496,6 +1564,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "69",
         "question": "Which has the lowest cholesterol content?",
         "answers": [
             {
@@ -1518,6 +1587,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "70",
         "question": "What is the difference between cake flour and bread flour?",
         "answers": [
             {
@@ -1540,6 +1610,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "71",
         "question": "Vitamin A is involved in:",
         "answers": [
             {
@@ -1562,6 +1633,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "72",
         "question": "A patient with metabolic alkalosis would have:",
         "answers": [
             {
@@ -1584,6 +1656,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "73",
         "question": "Which foods should be washed just before serving?",
         "answers": [
             {
@@ -1606,6 +1679,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "74",
         "question": "Which government agency inspects and grades meat?",
         "answers": [
             {
@@ -1628,6 +1702,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "75",
         "question": "Iflinoleic acid replaces carbohydrates in the diet:",
         "answers": [
             {
@@ -1650,6 +1725,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "76",
         "question": "Which is not absorbed directly into the portal blood?",
         "answers": [
             {
@@ -1672,6 +1748,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "77",
         "question": "When substituting buttermilk for whole milk in pastry:",
         "answers": [
             {
@@ -1694,6 +1771,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "78",
         "question": "Ground meat will spoil faster than sliced meat because:",
         "answers": [
             {
@@ -1716,6 +1794,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "79",
         "question": "Evaporated milk has:",
         "answers": [
             {
@@ -1738,6 +1817,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "80",
         "question": "Ketones are most associated with:",
         "answers": [
             {
@@ -1749,7 +1829,7 @@ let domain1_answers = [
                 "text": "simple sugars"
             },
             {
-                "option": "C",
+                "option": "c",
                 "text": "fats"
             },
             {
@@ -1760,6 +1840,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "81",
         "question": "Which best describes sorbitol and glucose?",
         "answers": [
             {
@@ -1782,6 +1863,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "82",
         "question": "What causes egg yolk color to change?",
         "answers": [
             {
@@ -1804,6 +1886,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "83",
         "question": "Which data is needed to convert weight into volume?",
         "answers": [
             {
@@ -1826,6 +1909,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "84",
         "question": "The tartness in fruits and vegetables is due to:",
         "answers": [
             {
@@ -1848,6 +1932,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "85",
         "question": "When a white sauce tastes starchy and grainy, the likely cause is:",
         "answers": [
             {
@@ -1870,6 +1955,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "86",
         "question": "The scientific process by which water makes lettuce crisp is:",
         "answers": [
             {
@@ -1892,6 +1978,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "87",
         "question": "When analyzing correlations, when r = 1:",
         "answers": [
             {
@@ -1914,6 +2001,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "88",
         "question": "Which hormone greatly influences the BMR?",
         "answers": [
             {
@@ -1936,6 +2024,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "89",
         "question": "If linoleic acid replaces saturated fat in the diet:",
         "answers": [
             {
@@ -1958,6 +2047,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "90",
         "question": "Which oil is highest in monounsaturated fatty acids?",
         "answers": [
             {
@@ -1980,6 +2070,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "91",
         "question": "Which oil is highest in saturated fat?",
         "answers": [
             {
@@ -2002,6 +2093,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "92",
         "question": "Which of the following may result in metabolic acidosis?",
         "answers": [
             {
@@ -2024,6 +2116,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "93",
         "question": "Examples of moist heat cooking include:",
         "answers": [
             {
@@ -2046,6 +2139,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "94",
         "question": "Dry heat cookery should be used for which cut of meat?",
         "answers": [
             {
@@ -2068,6 +2162,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "95",
         "question": "What color do onions turn when cooked in an aluminum pan?",
         "answers": [
             {
@@ -2090,6 +2185,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "96",
         "question": "Which cooking method would best convert collagen to gelatin in a bottom round roast?",
         "answers": [
             {
@@ -2112,6 +2208,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "97",
         "question": "Which method of bread-making is not as dependent on the length of time the dough sits to rise?",
         "answers": [
             {
@@ -2134,6 +2231,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "98",
         "question": "Which of the following has the least monounsaturated fats?",
         "answers": [
             {
@@ -2156,6 +2254,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "99",
         "question": "What does the term \"USDA graded\" on meat tell the consumer?",
         "answers": [
             {
@@ -2178,6 +2277,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "100",
         "question": "A cake with a fallen center may be the result of:",
         "answers": [
             {
@@ -2200,6 +2300,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "101",
         "question": "Which of the following has the least amount of saturated fat?",
         "answers": [
             {
@@ -2222,6 +2323,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "102",
         "question": "Coarse texture in a cake is due to:",
         "answers": [
             {
@@ -2244,6 +2346,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "103",
         "question": "Nitrogen equilibrium is associated with:",
         "answers": [
             {
@@ -2266,6 +2369,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "104",
         "question": "Children's diets are found to be low in iron due to emphasis on:",
         "answers": [
             {
@@ -2277,7 +2381,7 @@ let domain1_answers = [
                 "text": "milk"
             },
             {
-                "option": "C",
+                "option": "c",
                 "text": "fruits"
             },
             {
@@ -2288,6 +2392,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "105",
         "question": "Which mineral is involved in blood clotting?",
         "answers": [
             {
@@ -2310,6 +2415,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "106",
         "question": "Which of the following is true regarding flour?",
         "answers": [
             {
@@ -2332,6 +2438,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "107",
         "question": "The main function of glycolysis is to provide:",
         "answers": [
             {
@@ -2354,6 +2461,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "108",
         "question": "Foodservice employees should wash their hands for at least:",
         "answers": [
             {
@@ -2376,6 +2484,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "109",
         "question": "Metabolites of the Kreb's cycle are:",
         "answers": [
             {
@@ -2398,6 +2507,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "110",
         "question": "Meat graded \"US Standard\" is the grade given at the:",
         "answers": [
             {
@@ -2420,7 +2530,8 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
-        "question": "Which of the following substitutions will most decrease the sodium content of a biscuit? I. low sodium milk for whole milk II. egg substitute for egg III. low sodium baking powder for baking powder:",
+        "number": "111",
+        "question": "Which of the following substitutions will most decrease the sodium content of a biscuit? I. low sodium milk for whole milk II. egg substitute for egg III. low sodium baking powder for baking powder",
         "answers": [
             {
                 "option": "a",
@@ -2442,6 +2553,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "112",
         "question": "Which pasta contains egg?",
         "answers": [
             {
@@ -2464,7 +2576,8 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
-        "question": "A patient who is iron-deficient should consume with a good iron source.:",
+        "number": "113",
+        "question": "A patient who is iron-deficient should consume with a good iron source.",
         "answers": [
             {
                 "option": "a",
@@ -2486,6 +2599,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "114",
         "question": "A serum sodium level of 150 mEq/L indicates:",
         "answers": [
             {
@@ -2508,6 +2622,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "115",
         "question": "To minimize strong flavor development, cabbage should be cooked:",
         "answers": [
             {
@@ -2530,6 +2645,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "116",
         "question": "To decrease sodium intake, substitute:",
         "answers": [
             {
@@ -2552,6 +2668,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "117",
         "question": "Apples stored in a controlled environment would:",
         "answers": [
             {
@@ -2574,6 +2691,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "118",
         "question": "The following oils can be winterized:",
         "answers": [
             {
@@ -2596,6 +2714,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "119",
         "question": "Which would you give to a person who is mildly hypokalemic?",
         "answers": [
             {
@@ -2618,6 +2737,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "120",
         "question": "A serum sodium level of 150 mEq/L is a sign of:",
         "answers": [
             {
@@ -2640,6 +2760,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "121",
         "question": "To increase potassium intake, consume a snack of:",
         "answers": [
             {
@@ -2662,6 +2783,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "122",
         "question": "If protein intake is doubled, which nutrient needs to be increased?",
         "answers": [
             {
@@ -2684,6 +2806,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "123",
         "question": "The level of significance of test results is measured using the p value. Which of the following represents the most significant factor?",
         "answers": [
             {
@@ -2706,6 +2829,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "124",
         "question": "The Cori Cycle converts:",
         "answers": [
             {
@@ -2728,6 +2852,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "125",
         "question": "Fats high in monounsaturatedfatty acids include:",
         "answers": [
             {
@@ -2750,6 +2875,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "126",
         "question": "Fats high in polyunsaturatedfatty acids include:",
         "answers": [
             {
@@ -2772,7 +2898,8 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
-        "question": "Green beans cooked in tomato sauce turn due to .:",
+        "number": "127",
+        "question": "Green beans cooked in tomato sauce turn due to .",
         "answers": [
             {
                 "option": "a",
@@ -2794,6 +2921,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "128",
         "question": "Which fat would be more susceptible to oxidative rancidity?",
         "answers": [
             {
@@ -2816,6 +2944,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "129",
         "question": "A 5-month-old is diagnosed with salmonella. What is likely the cause?",
         "answers": [
             {
@@ -2838,7 +2967,8 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
-        "question": "New food labels must state DVs for:",
+        "number": "130",
+        "question": "New food labels must state DVs for",
         "answers": [
             {
                 "option": "a",
@@ -2860,6 +2990,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "131",
         "question": "Which is the best source of emulsification?",
         "answers": [
             {
@@ -2882,6 +3013,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "132",
         "question": "The kidneys respond to respiratory acidosis by:",
         "answers": [
             {
@@ -2904,6 +3036,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "133",
         "question": "A serum sodium level of 150 mEq/L may be due to:",
         "answers": [
             {
@@ -2926,6 +3059,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "134",
         "question": "Older adults are more vulnerable to toxicity of vitamin:",
         "answers": [
             {
@@ -2948,6 +3082,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "135",
         "question": "Which of the following is the least polyunsaturated fat?",
         "answers": [
             {
@@ -2970,6 +3105,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "136",
         "question": "Cured meat is pink due to:",
         "answers": [
             {
@@ -2992,6 +3128,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "137",
         "question": "A serum sodium level of 115 mEq/L may be due to:",
         "answers": [
             {
@@ -3014,6 +3151,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "138",
         "question": "Butter has fatty acids in this order of predominance:",
         "answers": [
             {
@@ -3036,6 +3174,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "139",
         "question": "Margarine has fatty acids in this order of predominance:",
         "answers": [
             {
@@ -3058,6 +3197,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "140",
         "question": "Lactic acid is produced through:",
         "answers": [
             {
@@ -3080,6 +3220,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "141",
         "question": "Which of the following amino acids is a precursor for serotonin?",
         "answers": [
             {
@@ -3102,6 +3243,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "142",
         "question": "When on Coumadin, avoid increasing your intake of:",
         "answers": [
             {
@@ -3124,6 +3266,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "143",
         "question": "If there is not enough oxaloacetic acid available to the TCA cycle:",
         "answers": [
             {
@@ -3146,6 +3289,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "144",
         "question": "Energy expenditure of humans can be measured by:",
         "answers": [
             {
@@ -3168,6 +3312,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "145",
         "question": "Gastric proteolysis requires:",
         "answers": [
             {
@@ -3190,6 +3335,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "146",
         "question": "Patients with early signs of xerophthalmia should consume:",
         "answers": [
             {
@@ -3212,6 +3358,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "147",
         "question": "Sorbitol is:",
         "answers": [
             {
@@ -3234,6 +3381,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "148",
         "question": "Which mineral is absorbed through the intestine and transported with ceruloplasmin in the blood?",
         "answers": [
             {
@@ -3256,6 +3404,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "149",
         "question": "The Schilling test detects defects in the absorption of:",
         "answers": [
             {
@@ -3278,6 +3427,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "150",
         "question": "Which of the following should be avoided on a low sodium diet?",
         "answers": [
             {
@@ -3300,6 +3450,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "151",
         "question": "What is the effect of excess caffeine intake?",
         "answers": [
             {
@@ -3322,6 +3473,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "152",
         "question": "The toxic level of vitamin A has been identified as:",
         "answers": [
             {
@@ -3344,6 +3496,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "153",
         "question": "How many oranges are needed to produce one quart of juice?",
         "answers": [
             {
@@ -3355,7 +3508,7 @@ let domain1_answers = [
                 "text": "15"
             },
             {
-                "option": "C",
+                "option": "c",
                 "text": "18"
             },
             {
@@ -3366,6 +3519,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "154",
         "question": "High doses of vitamin E may antagonize:",
         "answers": [
             {
@@ -3388,6 +3542,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "155",
         "question": "A muffin has long tunnels from top to bottom. Next time you make this recipe you should:",
         "answers": [
             {
@@ -3410,6 +3565,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "156",
         "question": "56 grams of protein is the RDA for males beginning at what age?",
         "answers": [
             {
@@ -3421,7 +3577,7 @@ let domain1_answers = [
                 "text": "16"
             },
             {
-                "option": "C",
+                "option": "c",
                 "text": "19"
             },
             {
@@ -3432,6 +3588,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "157",
         "question": "Phenylalanine is a precursor for:",
         "answers": [
             {
@@ -3454,6 +3611,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "158",
         "question": "Which cheese has the highest moisture content?",
         "answers": [
             {
@@ -3476,6 +3634,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "159",
         "question": "Decreased levels of serotonin are associated with:",
         "answers": [
             {
@@ -3498,6 +3657,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "160",
         "question": "Carbohydrate, fat and protein are all converted into:",
         "answers": [
             {
@@ -3520,6 +3680,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "161",
         "question": "If energy needs increase, which vitamins are needed in higher amounts?",
         "answers": [
             {
@@ -3542,6 +3703,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "162",
         "question": "How many mEq of sodium are in 1 gram of sodium?",
         "answers": [
             {
@@ -3564,6 +3726,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "163",
         "question": "How can you preserve thiamin when cooking pork?",
         "answers": [
             {
@@ -3586,6 +3749,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "164",
         "question": "A good source of vitamin A for pre-school children would be:",
         "answers": [
             {
@@ -3608,6 +3772,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "165",
         "question": "Which amino acid is especially glucogenic?",
         "answers": [
             {
@@ -3630,6 +3795,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "166",
         "question": "If carbohydrate intake is increased, which vitamin needs to be increased?",
         "answers": [
             {
@@ -3652,6 +3818,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "167",
         "question": "The rate of oxidation of which branched-chain amino acid increases significantly during moderate exercise?",
         "answers": [
             {
@@ -3674,6 +3841,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "168",
         "question": "What should you do with leftover sliced beef from lunch?",
         "answers": [
             {
@@ -3696,6 +3864,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "169",
         "question": "A food is bacteria-safe if it is:",
         "answers": [
             {
@@ -3718,7 +3887,8 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
-        "question": "French fries made from-stored potatoes would have changes in: I. taste II. appearance III. texture:",
+        "number": "170",
+        "question": "French fries made from-stored potatoes would have changes in: I. taste II. appearance III. texture",
         "answers": [
             {
                 "option": "a",
@@ -3740,6 +3910,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "171",
         "question": "What percent of protein and fat converts to glucose?",
         "answers": [
             {
@@ -3762,6 +3933,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "172",
         "question": "Excess amounts of zinc may lead to a deficiency of:",
         "answers": [
             {
@@ -3784,6 +3956,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "173",
         "question": "When adding bran to a flour mixture, what should be changed?",
         "answers": [
             {
@@ -3806,6 +3979,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "174",
         "question": "A food item provides 45 grams of carbohydrate, 10 grams of protein and 10 grams of fat. What percent of total calories comes from fat?",
         "answers": [
             {
@@ -3828,6 +4002,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "175",
         "question": "Which of the following is a digestive enzyme secreted by the pancreas?",
         "answers": [
             {
@@ -3850,6 +4025,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "176",
         "question": "Sugar tenderizes a baked good by:",
         "answers": [
             {
@@ -3872,6 +4048,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "177",
         "question": "Dermatitis, diarrhea, dementia, pellagra are signs of a:",
         "answers": [
             {
@@ -3894,6 +4071,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "178",
         "question": "What must be fortified with folic acid?",
         "answers": [
             {
@@ -3916,6 +4094,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "179",
         "question": "To determine whether classes on lowering sodium intake have been effective, conduct:",
         "answers": [
             {
@@ -3938,6 +4117,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "180",
         "question": "What is the main purpose of water in the body?",
         "answers": [
             {
@@ -3960,6 +4140,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "181",
         "question": "What is fluid seeping from a congealed product called?",
         "answers": [
             {
@@ -3982,6 +4163,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "182",
         "question": "Strict vegans may need supplements of:",
         "answers": [
             {
@@ -4004,6 +4186,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "183",
         "question": "The citric acid cycle occurs:",
         "answers": [
             {
@@ -4026,6 +4209,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "184",
         "question": "Frozen chicken has been thawed in warm water. You should:",
         "answers": [
             {
@@ -4048,7 +4232,8 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
-        "question": "When substituting butter for lard in pastry,:",
+        "number": "185",
+        "question": "When substituting butter for lard in pastry,",
         "answers": [
             {
                 "option": "a",
@@ -4070,6 +4255,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "186",
         "question": "The purpose of an emulsifier in margarine is to:",
         "answers": [
             {
@@ -4092,6 +4278,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "187",
         "question": "Which of the following must be reduced before it can be further transported for absorption?",
         "answers": [
             {
@@ -4114,6 +4301,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "188",
         "question": "Adding bran to a bread recipe will:",
         "answers": [
             {
@@ -4136,6 +4324,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "189",
         "question": "An angel food cake is made without cream of tartar. What is the result?",
         "answers": [
             {
@@ -4158,6 +4347,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "190",
         "question": "All baking powders contain:",
         "answers": [
             {
@@ -4180,6 +4370,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "191",
         "question": "Beef bottom round should be cooked:",
         "answers": [
             {
@@ -4202,6 +4393,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "192",
         "question": "Which of the following combines with CoA in two carbon fragments to make acetyl CoA to then enter the Kreb's cycle to make energy?",
         "answers": [
             {
@@ -4224,6 +4416,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "193",
         "question": "What is the best way to cook a roast?",
         "answers": [
             {
@@ -4246,6 +4439,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "194",
         "question": "If you are comparing the prevalence of heart disease in two states, the study design is:",
         "answers": [
             {
@@ -4268,6 +4462,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "195",
         "question": "Which of the following has the most bacteria?",
         "answers": [
             {
@@ -4290,6 +4485,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "196",
         "question": "What is the product of pyruvate breakdown?",
         "answers": [
             {
@@ -4312,6 +4508,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "197",
         "question": "Which of the following is true?",
         "answers": [
             {
@@ -4334,6 +4531,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "198",
         "question": "Infants should be given solid foods at:",
         "answers": [
             {
@@ -4356,6 +4554,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "199",
         "question": "Which of the following is a grade for fresh produce?",
         "answers": [
             {
@@ -4378,6 +4577,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "200",
         "question": "What is the recommended weight gain during pregnancy for a woman with a BMI of 28?",
         "answers": [
             {
@@ -4400,6 +4600,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "201",
         "question": "What gives the structure to quick breads?",
         "answers": [
             {
@@ -4422,6 +4623,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "202",
         "question": "When taking an anticoagulant, avoid the following:",
         "answers": [
             {
@@ -4444,6 +4646,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "203",
         "question": "What is a function of cream of tartar in a recipe?",
         "answers": [
             {
@@ -4466,6 +4669,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "204",
         "question": "The flour with the most starch is:",
         "answers": [
             {
@@ -4488,6 +4692,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "205",
         "question": "In interpreting correlation data, if the r value is greater than 1:",
         "answers": [
             {
@@ -4510,6 +4715,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "206",
         "question": "Homemade rolls are crumbly and fall apart easily. The most likely cause of the poor texture in the yeast bread is:",
         "answers": [
             {
@@ -4532,6 +4738,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "207",
         "question": "Replacing carbohydrate with fat in the diet will:",
         "answers": [
             {
@@ -4554,6 +4761,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "208",
         "question": "A commercial muffin mix is described as a \"rich formula\", which means it contains:",
         "answers": [
             {
@@ -4576,6 +4784,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "209",
         "question": "The greatest effect on the yield of meat cooked to a uniform internal temperature is produced by the:",
         "answers": [
             {
@@ -4598,6 +4807,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "210",
         "question": "In the quasi-experimental design \"time series\", there is:",
         "answers": [
             {
@@ -4620,6 +4830,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "211",
         "question": "Which ofthe following will stabilize the egg in a recipe?",
         "answers": [
             {
@@ -4642,6 +4853,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "212",
         "question": "A natural plant hormone that is used to ripen fruits is:",
         "answers": [
             {
@@ -4664,6 +4876,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "213",
         "question": "Aseptically packaged milk should be stored:",
         "answers": [
             {
@@ -4686,6 +4899,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "214",
         "question": "The sensitivity of a screening tool evaluates:",
         "answers": [
             {
@@ -4708,6 +4922,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "215",
         "question": "A processed food entree includes TVP which is used to:",
         "answers": [
             {
@@ -4730,6 +4945,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "216",
         "question": "If broccoli in a vegetable mixture turns olive green during holding, it may be due to:",
         "answers": [
             {
@@ -4752,6 +4968,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "217",
         "question": "In the alanine cycle, alanine is released from muscle, taken up by the liver, and:",
         "answers": [
             {
@@ -4774,6 +4991,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "218",
         "question": "In the Cori cycle, lactate is converted into:",
         "answers": [
             {
@@ -4796,7 +5014,8 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
-        "question": "Normal saline has mEq sodium/L.:",
+        "number": "219",
+        "question": "Normal saline has mEq sodium/L.",
         "answers": [
             {
                 "option": "a",
@@ -4807,7 +5026,7 @@ let domain1_answers = [
                 "text": "100"
             },
             {
-                "option": "C",
+                "option": "c",
                 "text": "50"
             },
             {
@@ -4818,6 +5037,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "220",
         "question": "An amylase deficiency would result in:",
         "answers": [
             {
@@ -4840,6 +5060,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "221",
         "question": "Fresh eggs in the shell can be stored in a refrigerator at 40 degrees for:",
         "answers": [
             {
@@ -4862,6 +5083,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "222",
         "question": "Trypsin and chymotrypsin are:",
         "answers": [
             {
@@ -4884,6 +5106,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "223",
         "question": "Acid-base abnormalities in an uncontrolled diabetic are likely due to:",
         "answers": [
             {
@@ -4906,6 +5129,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "224",
         "question": "A patient consumed 12 grams of protein and released 8 grams of nitrogen in the urine. This is:",
         "answers": [
             {
@@ -4928,6 +5152,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "225",
         "question": "Kidneys help control pH by:",
         "answers": [
             {
@@ -4950,6 +5175,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "226",
         "question": "Pernicious anemia is likely to occur following a:",
         "answers": [
             {
@@ -4972,7 +5198,8 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
-        "question": "A patient's 1/0 form indicates the following data. What is his total insensible fluid loss? When substituted for saturated fats in the diet, which of the following oils will likely lower total cholesterol but also lower HDL cholesterol?",
+        "number": "227",
+        "question": "A patient's 1/0 form indicates the following data. What is his total insensible fluid loss? Input: Oral fluids 1800 | Output: urine 1900, Input: Solid foods Boo | Output: intestinal 250, Input: Metabolic water | Output: 250 lungs and skin 700, Input: Total 2850 | Output Total 2850 When substituted for saturated fats in the diet, which of the following oils will likely lower total cholesterol but also lower HDL cholesterol?",
         "answers": [
             {
                 "option": "a",
@@ -4994,6 +5221,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "233",
         "question": "What is the best way to reduce the fat content of a brownie recipe?",
         "answers": [
             {
@@ -5016,7 +5244,31 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
-        "question": "What are the caloric needs of a 4-month-old infant weighing 14 lbs.? Input (ml) Output (ml) a.510 Oral fluids 1800 urine 1900 b.582 Solid foods Boo intestinal 250 C. 602 Metabolic water 250 lungs and skin 700 d.687 Total 2850 Total 2850 235. A child is lethargic and irritable with constipation. The cause may be:",
+        "number": "234",
+        "question": "What are the caloric needs of a 4-month-old infant weighing 14 lbs.?",
+        "answers": [
+            {
+                "option": "a",
+                "text": "510"
+            },
+            {
+                "option": "b",
+                "text": "582"
+            },
+            {
+                "option": "c",
+                "text": "602"
+            },
+            {
+                "option": "d",
+                "text": "687"
+            }
+        ],
+        "correct_answer": "d"
+    },
+    {
+        "number": "235",
+        "question": "A child is lethargic and irritable with constipation. The cause may be:",
         "answers": [
             {
                 "option": "a",
@@ -5035,9 +5287,10 @@ let domain1_answers = [
                 "text": "2850 ml d. vitamin A toxicity"
             }
         ],
-        "correct_answer": "d"
+        "correct_answer": "b"
     },
     {
+        "number": "228",
         "question": "Which pigment can be converted into a vitamin?",
         "answers": [
             {
@@ -5060,6 +5313,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "229",
         "question": "The amount of ceruloplasmin is affected by what disease?",
         "answers": [
             {
@@ -5082,6 +5336,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "230",
         "question": "An edematous person may actually be dehydrated because:",
         "answers": [
             {
@@ -5104,6 +5359,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "231",
         "question": "When a-linolenic acid is substituted for saturated fatty acids in the diet, the results will be:",
         "answers": [
             {
@@ -5126,6 +5382,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "236",
         "question": "A child is at the 95th percentile BMI for age. He is:",
         "answers": [
             {
@@ -5148,6 +5405,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "237",
         "question": "A child is at the 85th percentile for BMI. He is:",
         "answers": [
             {
@@ -5170,6 +5428,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "238",
         "question": "Cross-sectional studies:",
         "answers": [
             {
@@ -5192,6 +5451,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "239",
         "question": "To determine whether promotional efforts have increased sales in a business, use:",
         "answers": [
             {
@@ -5214,6 +5474,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "240",
         "question": "What should you do with a new client who sits scowling at you during the session?",
         "answers": [
             {
@@ -5236,6 +5497,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "241",
         "question": "The absence of reinforcement following an undesirable behavior is:",
         "answers": [
             {
@@ -5258,6 +5520,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "242",
         "question": "A study design that tracks the occurrence of infections in patients who are at nutritional risk and in the hospital for longer than seven days is:",
         "answers": [
             {
@@ -5280,6 +5543,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "243",
         "question": "Which of the following foods is the best source of omega-3 fatty acids?",
         "answers": [
             {
@@ -5302,6 +5566,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "244",
         "question": "Before you teach a class on nutrition, you should:",
         "answers": [
             {
@@ -5324,6 +5589,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "245",
         "question": "You are explaining to a new client how making a few changes in his food choices will benefit his overall health. The learning domain is:",
         "answers": [
             {
@@ -5346,6 +5612,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "246",
         "question": "Active listening in counseling sessions involves:",
         "answers": [
             {
@@ -5368,6 +5635,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "247",
         "question": "A study reported a 10% morbidity rate in infants in the country and a 12% morbidity rate for infants in the city. This means that:",
         "answers": [
             {
@@ -5390,6 +5658,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "248",
         "question": "The first step in planning a continuing education program is to:",
         "answers": [
             {
@@ -5412,6 +5681,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "249",
         "question": "When planning a program for rural elderly, which is the most important?",
         "answers": [
             {
@@ -5434,6 +5704,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "250",
         "question": "Which exhibits a definite positive correlation?",
         "answers": [
             {
@@ -5445,7 +5716,7 @@ let domain1_answers = [
                 "text": "1.2- 1.3"
             },
             {
-                "option": "C",
+                "option": "c",
                 "text": "0.8-1.0"
             },
             {
@@ -5456,6 +5727,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "251",
         "question": "Where would this be placed in a research article: \"Most of the changes seen were probably due to \"?",
         "answers": [
             {
@@ -5478,6 +5750,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "252",
         "question": "You are asked to give an in-service to the staff. What should you do first?",
         "answers": [
             {
@@ -5500,6 +5773,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "253",
         "question": "When should an explanation of how a worker will be evaluated be given to them?",
         "answers": [
             {
@@ -5522,6 +5796,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "254",
         "question": "When developing educational plans, when do you plan the evaluation criteria?",
         "answers": [
             {
@@ -5544,6 +5819,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "255",
         "question": "The first step in developing a training program is to:",
         "answers": [
             {
@@ -5566,6 +5842,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "256",
         "question": "Which of the following is the most useful for evaluating long term nutrition in children?",
         "answers": [
             {
@@ -5588,6 +5865,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "257",
         "question": "Which denotes a high correlation?",
         "answers": [
             {
@@ -5610,6 +5888,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "258",
         "question": "The mean is a measure of:",
         "answers": [
             {
@@ -5632,6 +5911,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "259",
         "question": "In interpreting statistical data, if half the observations are above the number 8, and half are below the number 8, the number 8 is the:",
         "answers": [
             {
@@ -5654,6 +5934,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "260",
         "question": "In a study of the effects of following a low-fat diet on the incidence of breast cancer, women were randomized to follow either their usual dietary pattern, or a low-fat diet. The study design is:",
         "answers": [
             {
@@ -5676,6 +5957,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "261",
         "question": "A study showed the morbidity of children with anemia to be 5:1000. This means:",
         "answers": [
             {
@@ -5698,6 +5980,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "262",
         "question": "A 5-month-old infant has changed from the 65th to the 95th percentile weight for height. The Dietitian should first:",
         "answers": [
             {
@@ -5720,6 +6003,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "263",
         "question": "You are analyzing a client's physical ability to prepare meals. The learning domain is:",
         "answers": [
             {
@@ -5742,6 +6026,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "264",
         "question": "At your first counseling session with a new patient you should:",
         "answers": [
             {
@@ -5764,7 +6049,8 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
-        "question": "An appropriate purpose of analytical research is to _:",
+        "number": "265",
+        "question": "An appropriate purpose of analytical research is to _",
         "answers": [
             {
                 "option": "a",
@@ -5786,6 +6072,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "266",
         "question": "Which defines the statistical term \"mean\"?",
         "answers": [
             {
@@ -5802,13 +6089,14 @@ let domain1_answers = [
             },
             {
                 "option": "d",
-                "text": "a value in an ordered set of numbers below and above"
+                "text": "a value in an ordered set of numbers below and above which fall in an equal set of numbers"
             }
         ],
         "correct_answer": "b"
     },
     {
-        "question": "If patients in a counseling session become restless,:",
+        "number": "267",
+        "question": "If patients in a counseling session become restless,",
         "answers": [
             {
                 "option": "a",
@@ -5830,6 +6118,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "268",
         "question": "You will be introducing new methods of production to your staff. The most effective method would be to:",
         "answers": [
             {
@@ -5852,6 +6141,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "269",
         "question": "The best indicator that children applied knowledge from a nutrition education program about vitamin D is:",
         "answers": [
             {
@@ -5874,6 +6164,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "270",
         "question": "In a study on custards which would be the dependent variable?",
         "answers": [
             {
@@ -5896,7 +6187,8 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
-        "question": "What is the mean of the following set of numbers? 3, 2, 2:",
+        "number": "271",
+        "question": "What is the mean of the following set of numbers? 3, 2, 2",
         "answers": [
             {
                 "option": "a",
@@ -5907,7 +6199,7 @@ let domain1_answers = [
                 "text": "2.3"
             },
             {
-                "option": "C",
+                "option": "c",
                 "text": "3.2"
             },
             {
@@ -5918,6 +6210,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "272",
         "question": "Statistics that let you draw probable conclusions beyond your immediate universe of data, are called:",
         "answers": [
             {
@@ -5940,6 +6233,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "273",
         "question": "A performance objective should be based on:",
         "answers": [
             {
@@ -5962,6 +6256,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "274",
         "question": "Which would provide the best source of omega-3 fatty acids?",
         "answers": [
             {
@@ -5984,6 +6279,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "275",
         "question": "Synergistics is:",
         "answers": [
             {
@@ -6006,6 +6302,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "276",
         "question": "When counseling an anorexic, the best advice is to:",
         "answers": [
             {
@@ -6028,6 +6325,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "277",
         "question": "After you review the patient's medical record, the first step in counseling is to:",
         "answers": [
             {
@@ -6050,6 +6348,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "278",
         "question": "ANOVA is used when:",
         "answers": [
             {
@@ -6072,6 +6371,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "279",
         "question": "If you measure a group before and after a treatment to see whether or not there has been a significant change, the study design is:",
         "answers": [
             {
@@ -6094,6 +6394,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "280",
         "question": "The number of individuals in a population diagnosed with a specific condition during a specified time is the:",
         "answers": [
             {
@@ -6116,6 +6417,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "281",
         "question": "Results of a three-day food record were obtained in June and again, three months later. What is this called?",
         "answers": [
             {
@@ -6138,6 +6440,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "282",
         "question": "Which of the following responses by a counselor indicates \"reflection\"?",
         "answers": [
             {
@@ -6160,6 +6463,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "283",
         "question": "How do you begin an interview with a patient?",
         "answers": [
             {
@@ -6182,6 +6486,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "284",
         "question": "Inferential statistics are associated with:",
         "answers": [
             {
@@ -6204,6 +6509,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "285",
         "question": "In behavior modification, the absence of reinforcement following an undesired behavior is referred to as:",
         "answers": [
             {
@@ -6226,6 +6532,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "286",
         "question": "What is your first concern when deciding how to teach?",
         "answers": [
             {
@@ -6248,7 +6555,8 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
-        "question": "The statement \"After class, the patient will be able to write a day's menu following the guidelines\" is...:",
+        "number": "287",
+        "question": "The statement \"After class, the patient will be able to write a day's menu following the guidelines\" is...",
         "answers": [
             {
                 "option": "a",
@@ -6270,6 +6578,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "288",
         "question": "To determine the reading level of a text:",
         "answers": [
             {
@@ -6292,6 +6601,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "289",
         "question": "In a normal curve, what% of data falls between +1 and -1 standard deviation?",
         "answers": [
             {
@@ -6314,6 +6624,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "290",
         "question": "The statement \"This further shows daily weighing is an effective weight loss tool\" should be placed in which section of the research report?",
         "answers": [
             {
@@ -6336,6 +6647,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "291",
         "question": "The statement \"The county's infant mortality rate is 12.8, and the state's infant mortality rate is 10.5\" means that:",
         "answers": [
             {
@@ -6358,6 +6670,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "292",
         "question": "What reading level is appropriate for educational material for the general population?",
         "answers": [
             {
@@ -6380,6 +6693,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "293",
         "question": "What reading level is appropriate for written materials for a population with low literacy skills?",
         "answers": [
             {
@@ -6402,6 +6716,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "294",
         "question": "The formula that counts the number of polysyllabic words in text to calculate the reading level is the:",
         "answers": [
             {
@@ -6424,6 +6739,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "295",
         "question": "Which is the dependent variable?",
         "answers": [
             {
@@ -6446,6 +6762,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "296",
         "question": "The incidence of xeropthalmia in children between the ages of 1-5 is 5:1000. This means:",
         "answers": [
             {
@@ -6468,6 +6785,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "297",
         "question": "If there is no statistical difference between study groups, the hypothesis is:",
         "answers": [
             {
@@ -6490,6 +6808,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "298",
         "question": "A focus group contributes what data?",
         "answers": [
             {
@@ -6512,6 +6831,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "299",
         "question": "An example of nominal (frequency) data is:",
         "answers": [
             {
@@ -6534,6 +6854,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "300",
         "question": "Compared to whole milk, breast milk is:",
         "answers": [
             {
@@ -6556,7 +6877,8 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
-        "question": "Which result is desirable? Before After Experimental group A B Control group C D:",
+        "number": "301",
+        "question": "Which result is desirable? Before After Experimental group A B Control group C D",
         "answers": [
             {
                 "option": "a",
@@ -6578,6 +6900,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "302",
         "question": "A patient relates a story to the RD. The RD says: \"This happened to me, too.\" This is:",
         "answers": [
             {
@@ -6600,6 +6923,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "303",
         "question": "An example of formative evaluation is:",
         "answers": [
             {
@@ -6622,6 +6946,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "304",
         "question": "The lecture:",
         "answers": [
             {
@@ -6644,6 +6969,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "305",
         "question": "How can you encourage preschool children to eat more fruits and vegetables?",
         "answers": [
             {
@@ -6666,6 +6992,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "306",
         "question": "Which is the best way to teach food service workers to prepare a new menu item?",
         "answers": [
             {
@@ -6688,6 +7015,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "307",
         "question": "Following counseling, a client is able to plan a low sodium diet. The learning domain is:",
         "answers": [
             {
@@ -6710,6 +7038,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "308",
         "question": "A client says: \"I want to change my eating habits.\" You ask why. The learning domain is:",
         "answers": [
             {
@@ -6732,6 +7061,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "309",
         "question": "What is the best way to assess what a group of students has learned after diet instruction?",
         "answers": [
             {
@@ -6754,6 +7084,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "310",
         "question": "At which step in the educational process do you begin evaluation?",
         "answers": [
             {
@@ -6776,6 +7107,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "311",
         "question": "The Dietitian says to the client: \"I hear you say that on some days you just cannot stay with the plan. Is that right?\" This is:",
         "answers": [
             {
@@ -6798,6 +7130,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "312",
         "question": "An advantage of using focus groups to collect data is that they:",
         "answers": [
             {
@@ -6820,6 +7153,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "313",
         "question": "An example of a survey with a negative correlation is:",
         "answers": [
             {
@@ -6836,12 +7170,13 @@ let domain1_answers = [
             },
             {
                 "option": "d",
-                "text": "as the intake of peanut butter and potato chips increases, dental"
+                "text": "as the intake of peanut butter and potato chips increases, dental caries increase"
             }
         ],
         "correct_answer": "a"
     },
     {
+        "number": "314",
         "question": "When providing nutrition education to a pregnant teenager, which characteristic of adolescents should be kept in mind?",
         "answers": [
             {
@@ -6864,6 +7199,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "315",
         "question": "A new mother may hesitate to become involved with a breast-feeding informational program due to:",
         "answers": [
             {
@@ -6886,6 +7222,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "316",
         "question": "During motivational interviewing, the question \"Do you think you can try this?\" is:",
         "answers": [
             {
@@ -6908,6 +7245,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "317",
         "question": "A statement of affirmation in motivational interviewing would be:",
         "answers": [
             {
@@ -6930,6 +7268,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "318",
         "question": "To estimate REE in normal weight and obese individuals, use:",
         "answers": [
             {
@@ -6952,6 +7291,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "319",
         "question": "To estimate energy needs in the critically ill, use:",
         "answers": [
             {
@@ -6974,6 +7314,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "320",
         "question": "Of the following oils, which is highest in vitamin E?",
         "answers": [
             {
@@ -6996,6 +7337,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "321",
         "question": "Water soluble nutrients are absorbed through:",
         "answers": [
             {
@@ -7018,6 +7360,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "322",
         "question": "To determine the effectiveness of a nutrition program to be offered at fitness facilities throughout the city:",
         "answers": [
             {
@@ -7040,6 +7383,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "323",
         "question": "The two most abundant minerals in the body are:",
         "answers": [
             {
@@ -7062,6 +7406,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "324",
         "question": "Increased plasma pyruvate is an indication of a:",
         "answers": [
             {
@@ -7084,6 +7429,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "325",
         "question": "A serum calcium level of 11.5mg/dl will bring on a release of:",
         "answers": [
             {
@@ -7106,6 +7452,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "326",
         "question": "A neonate at birth was at the 75th percentile for weight for age. At 6 months he appears healthy and was at the 60th percentile weight for age. This indicates that:",
         "answers": [
             {
@@ -7128,6 +7475,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "327",
         "question": "To determine whether your client has applied your suggestions on decreasing his fat intake, ask him to:",
         "answers": [
             {
@@ -7150,6 +7498,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "328",
         "question": "When is breast-feeding contraindicated?",
         "answers": [
             {
@@ -7172,6 +7521,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "329",
         "question": "Prior to conducting a healthy eating class to local residents, assess their:",
         "answers": [
             {
@@ -7194,6 +7544,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "330",
         "question": "BMI for age percentiles start at age:",
         "answers": [
             {
@@ -7216,6 +7567,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "331",
         "question": "Pale conjunctivae is associated with a deficiency of:",
         "answers": [
             {
@@ -7238,6 +7590,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "332",
         "question": "A typical meal of a pregnant teenager consists of a hamburger, French fries and diet soda. Which of the following changes would be most beneficial?",
         "answers": [
             {
@@ -7260,6 +7613,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "333",
         "question": "Which of the following nonessential amino acids may be considered conditionally essential in catabolic stress such as heart failure?",
         "answers": [
             {
@@ -7282,6 +7636,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "334",
         "question": "Which of the following would be most productive when conducting a workshop for teenage mothers about proper portion sizes for feeding toddlers?",
         "answers": [
             {
@@ -7304,6 +7659,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "335",
         "question": "Implementing the Baby-Friendly Hospital Initiative begins with:",
         "answers": [
             {
@@ -7326,6 +7682,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "336",
         "question": "Cheilosis, stomatitis and a magenta tongue are signs of a:",
         "answers": [
             {
@@ -7348,6 +7705,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "337",
         "question": "When green vegetables begin to lose their color during serving, consider:",
         "answers": [
             {
@@ -7370,6 +7728,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "338",
         "question": "In metabolic acidosis, which of the following is involved?",
         "answers": [
             {
@@ -7392,6 +7751,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "339",
         "question": "Fats used in frying can become rancid due to the:",
         "answers": [
             {
@@ -7414,6 +7774,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "340",
         "question": "At what age should children be measured standing up?",
         "answers": [
             {
@@ -7436,6 +7797,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "341",
         "question": "What is normal weight gain during the first trimester?",
         "answers": [
             {
@@ -7458,6 +7820,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "342",
         "question": "The breast-fed infant is drinking primarily colostrum for:",
         "answers": [
             {
@@ -7480,6 +7843,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "343",
         "question": "A normal pregnancy requires supplementation of:",
         "answers": [
             {
@@ -7502,6 +7866,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "344",
         "question": "Which hormone is involved in developing the placenta?",
         "answers": [
             {
@@ -7524,6 +7889,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "345",
         "question": "Which supplements should you give to a breast-fed baby?",
         "answers": [
             {
@@ -7546,6 +7912,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "346",
         "question": "Which of the following represents cow's milk?",
         "answers": [
             {
@@ -7568,6 +7935,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "347",
         "question": "A child who is below the 5th percentile weight for height:",
         "answers": [
             {
@@ -7590,6 +7958,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "348",
         "question": "Which hormone regulates breast milk production?",
         "answers": [
             {
@@ -7612,6 +7981,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "349",
         "question": "A low birth weight infant weighs:",
         "answers": [
             {
@@ -7634,6 +8004,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "350",
         "question": "An 18-month-old child should receive:",
         "answers": [
             {
@@ -7656,6 +8027,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "351",
         "question": "Which of the following indicates stunted growth?",
         "answers": [
             {
@@ -7678,6 +8050,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "352",
         "question": "The treatment for hyperbilirubinemia is:",
         "answers": [
             {
@@ -7700,6 +8073,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "353",
         "question": "Creatine supplements may be beneficial for the:",
         "answers": [
             {
@@ -7722,6 +8096,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "354",
         "question": "Which of the following weight gains puts pregnant women at risk?",
         "answers": [
             {
@@ -7744,6 +8119,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "355",
         "question": "Which is the primary fuel used by resting muscle and at low intensity exercise?",
         "answers": [
             {
@@ -7766,6 +8142,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "356",
         "question": "Increasing the amount of sugar in a recipe will have what effect on gluten development?",
         "answers": [
             {
@@ -7788,6 +8165,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "357",
         "question": "The advantages of a crossover design (RCT) include:",
         "answers": [
             {
@@ -7810,6 +8188,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "358",
         "question": "Metabolic acidosis is characterized by what physiological changes?",
         "answers": [
             {
@@ -7832,6 +8211,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "359",
         "question": "Infants and adolescents have a higher prevalence of:",
         "answers": [
             {
@@ -7854,6 +8234,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "360",
         "question": "A sign of growth retardation and sexual immaturity in adolescents is a:",
         "answers": [
             {
@@ -7876,6 +8257,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "361",
         "question": "Compared to human milk, commercially prepared infant formula is:",
         "answers": [
             {
@@ -7898,6 +8280,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "362",
         "question": "At what age should a standing height first be measured?",
         "answers": [
             {
@@ -7920,6 +8303,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "363",
         "question": "Within 2 - 3 hours of continuous exercise at 60-80% of maximum:",
         "answers": [
             {
@@ -7942,6 +8326,7 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
+        "number": "364",
         "question": "Which supplement should be avoided prior to surgery?",
         "answers": [
             {
@@ -7964,6 +8349,7 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
+        "number": "365",
         "question": "Which of the following are non-nutritive sweeteners?",
         "answers": [
             {
@@ -7986,6 +8372,7 @@ let domain1_answers = [
         "correct_answer": "d"
     },
     {
+        "number": "366",
         "question": "What type of metal pan is best when heating vegetables with anthocyanins?",
         "answers": [
             {
@@ -8008,6 +8395,7 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
+        "number": "367",
         "question": "The best measure to assess weight in children is:",
         "answers": [
             {

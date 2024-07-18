@@ -14,6 +14,7 @@ html, body {
 }
 
 .container {
+    position: relative;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -32,6 +33,15 @@ html, body {
     color: rgba(0, 0, 0, 0.8);
     align-items: center;
     justify-content: flex-start;
+}
+
+.question-num {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    text-align: right;
+    font-size: 0.9em;
+    opacity: 0.8;
 }
 
 .question {
@@ -58,16 +68,46 @@ html, body {
     margin-top: 20px;
     padding: 10px 20px;
     width: 80%;
-    height: 46px;
+    height: 80px;
     border-radius: 22px;
-    -webkit-border-radius: 22px;
+    -webkit-border-radius: 12px;
     -moz-border-radius: 22px;
     -ms-border-radius: 22px;
     -o-border-radius: 22px;
     background: #e0e0e0;
     box-shadow:  11px 11px 25px #d5d5d5,                -11px -11px 25px #ebebeb;
     color: rgba(0, 0, 0, 0.8);
-    font-size: 1.0em;
+    font-size: 0.9em;
+}
+
+#choice-1.correct,
+#choice-2.correct,
+#choice-3.correct,
+#choice-4.correct {
+    width: 90%;
+    background-image: linear-gradient(120deg, rgb(0, 190, 70) 0%, rgba(0, 189, 132, 0.5) 100%);
+    box-shadow:  0px 0px 25px rgb(71, 255, 215);
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+}
+
+#choice-1.incorrect,
+#choice-2.incorrect,
+#choice-3.incorrect,
+#choice-4.incorrect {
+    background-image: linear-gradient(120deg, rgb(190, 0, 32) 0%, rgba(189, 22, 0, 0.5) 100%);
+    box-shadow:  0px 0px 25px rgb(255, 30, 30);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+.correct .inset-text {
+    -webkit-text-fill-color: white;
+}
+
+.incorrect .inset-text {
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.8);
 }
 
 .choice-let {
@@ -90,7 +130,6 @@ html, body {
     background: #e0e0e0;
     box-shadow: inset 11px 11px 25px #d5d5d5,
                 inset -11px -11px 25px #ebebeb;
-
 }
 
 .inset-text {
