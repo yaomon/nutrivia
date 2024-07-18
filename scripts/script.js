@@ -31,6 +31,10 @@
         if (guess !== curr_ques.correct_answer) {
             // Incorrect
             $(this).addClass("incorrect");
+            $(".incorrect-num").text(parseInt($(".incorrect-num").text()) + 1);
+        } else {
+            // Correct
+            $(".correct-num").text(parseInt($(".correct-num").text()) + 1);
         }
         // Add correct answer
         switch (curr_ques.correct_answer) {
