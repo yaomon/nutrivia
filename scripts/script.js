@@ -67,8 +67,29 @@
             num_corr++;
             $(".correct-num").text(num_corr);
         }
+        // Set correct percent and color
         let perc = num_corr / (num_corr + num_incorr);
         $(".stat-perc").text(Math.round(perc * 100) + "%");
+
+        let r = Math.round(200 * (1 - perc) + 0 * perc);
+        let g = Math.round(0 * (1 - perc) + 200 * perc);
+        let b = Math.round(42 * (1 - perc) + 52 * perc);
+        $(".stat-perc").css(
+            "background-image",
+            "-webkit-linear-gradient(45deg, rgba(" +
+                (r - 10) +
+                ", " +
+                (g - 10) +
+                ", " +
+                b +
+                ", 0.9), rgba(" +
+                (r + 10) +
+                ", " +
+                (g + 10) +
+                ", " +
+                b +
+                ", 0.9))"
+        );
         // Add correct answer
         switch (curr_ques.correct_answer) {
             case "a":
