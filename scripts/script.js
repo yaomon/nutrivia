@@ -22,9 +22,11 @@
         $("#choice-3 .choice-val").text(randomQuestion.answers[2].text);
         $("#choice-4 .choice-val").text(randomQuestion.answers[3].text);
         $(".question-num").text(randomQuestion.number);
+        $(".choice").removeClass("disabled");
     }
 
     function guessAnswer() {
+        $(".choice").addClass("disabled");
         let guess = $(this).find(".choice-let").text();
         if (guess !== curr_ques.correct_answer) {
             // Incorrect

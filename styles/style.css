@@ -78,6 +78,22 @@ html, body {
     box-shadow:  11px 11px 25px #d5d5d5,                -11px -11px 25px #ebebeb;
     color: rgba(0, 0, 0, 0.8);
     font-size: 0.9em;
+    cursor:pointer;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+}
+
+.choice:active {
+    background: #e0e0e0;
+    box-shadow: inset 11px 11px 25px #d5d5d5,
+                inset -11px -11px 25px #ebebeb;
+}
+
+.choice.disabled {
+    pointer-events: none;
 }
 
 #choice-1.correct,
@@ -89,6 +105,11 @@ html, body {
     box-shadow:  0px 0px 25px rgb(71, 255, 215);
     color: rgb(255, 255, 255);
     font-weight: bold;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
 }
 
 #choice-1.incorrect,
@@ -100,6 +121,11 @@ html, body {
     color: rgba(255, 255, 255, 0.8);
     font-weight: bold;
     opacity: 0.8;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
 }
 
 .correct .inset-text {
@@ -126,12 +152,6 @@ html, body {
     justify-content: center;
 }
 
-.choice:active {
-    background: #e0e0e0;
-    box-shadow: inset 11px 11px 25px #d5d5d5,
-                inset -11px -11px 25px #ebebeb;
-}
-
 .inset-text {
     background-image: -webkit-linear-gradient(45deg, rgba(38, 44, 43, 0.9), rgba(38, 44, 43, 0.9));
     background-clip: text;
@@ -142,7 +162,7 @@ html, body {
 
 .skip {
     margin-top: 20px;
-    padding: 10px;
+    padding: 10px 20px;
     border-radius: 12px;
     -webkit-border-radius: 12px;
     -moz-border-radius: 12px;
@@ -152,6 +172,7 @@ html, body {
                 -5px -5px 11px #ebebeb;
     font-weight: bold;
     font-size: 1.1em;
+    cursor: pointer;
 }
 
 .skip:active {
