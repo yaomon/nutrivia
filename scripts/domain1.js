@@ -1122,8 +1122,12 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
-        "question": "Protein digestion begins in the: a.mouth:",
+        "question": "Protein digestion begins in the:",
         "answers": [
+            {
+                "option": "a",
+                "text": "mouth"
+            },
             {
                 "option": "b",
                 "text": "stomach"
@@ -1135,6 +1139,28 @@ let domain1_answers = [
             {
                 "option": "d",
                 "text": "ileum"
+            }
+        ],
+        "correct_answer": "b"
+    },
+    {
+        "question": "Lactase is produced in the:",
+        "answers": [
+            {
+                "option": "a",
+                "text": "stomach"
+            },
+            {
+                "option": "b",
+                "text": "small intestine"
+            },
+            {
+                "option": "c",
+                "text": "gallbladder"
+            },
+            {
+                "option": "d",
+                "text": "pancreas"
             }
         ],
         "correct_answer": "b"
@@ -1250,15 +1276,23 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
-        "question": "Glucocorticoid s are:",
+        "question": "Glucocorticoids are:",
         "answers": [
             {
                 "option": "a",
-                "text": "thyroid"
+                "text": "thyroid hormones"
             },
             {
                 "option": "b",
-                "text": "pituit"
+                "text": "pituitary hormones"
+            },
+            {
+                "option": "c",
+                "text": "adrenal hormones"
+            },
+            {
+                "option": "d",
+                "text": "parathyroid hormones"
             }
         ],
         "correct_answer": "c"
@@ -1770,22 +1804,48 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
-        "question": "Which data is needed to convert weight into volume? a.mass:",
+        "question": "Which data is needed to convert weight into volume?",
         "answers": [
+            {
+                "option": "a",
+                "text": "mass"
+            },
             {
                 "option": "b",
                 "text": "temperature"
             },
             {
                 "option": "c",
-                "text": "specific gravity d.pH"
+                "text": "specific gravity"
             },
             {
-                "option": "a",
-                "text": "flavones"
+                "option": "d",
+                "text": "pH"
             }
         ],
         "correct_answer": "c"
+    },
+    {
+        "question": "The tartness in fruits and vegetables is due to:",
+        "answers": [
+            {
+                "option": "a",
+                "text": "flavones"
+            },
+            {
+                "option": "b",
+                "text": "chlorophyll"
+            },
+            {
+                "option": "c",
+                "text": "anthoxanthins"
+            },
+            {
+                "option": "d",
+                "text": "tannins"
+            }
+        ],
+        "correct_answer": "d"
     },
     {
         "question": "When a white sauce tastes starchy and grainy, the likely cause is:",
@@ -2526,10 +2586,36 @@ let domain1_answers = [
             },
             {
                 "option": "c",
-                "text": "cottonseed, olive d.olive,com"
+                "text": "cottonseed, olive"
+            },
+            {
+                "option": "d",
+                "text": "olive,com"
             }
         ],
         "correct_answer": "a"
+    },
+    {
+        "question": "Which would you give to a person who is mildly hypokalemic?",
+        "answers": [
+            {
+                "option": "a",
+                "text": "1 cup blueberries"
+            },
+            {
+                "option": "b",
+                "text": "1 cup cranberries"
+            },
+            {
+                "option": "c",
+                "text": "1/2 cup applesauce"
+            },
+            {
+                "option": "d",
+                "text": "1 piece cantaloupe"
+            }
+        ],
+        "correct_answer": "d"
     },
     {
         "question": "A serum sodium level of 150 mEq/L is a sign of:",
@@ -2786,10 +2872,36 @@ let domain1_answers = [
             },
             {
                 "option": "c",
-                "text": "salt d.flour"
+                "text": "salt"
+            },
+            {
+                "option": "d",
+                "text": "flour"
             }
         ],
         "correct_answer": "a"
+    },
+    {
+        "question": "The kidneys respond to respiratory acidosis by:",
+        "answers": [
+            {
+                "option": "a",
+                "text": "increasing the secretion of magnesium"
+            },
+            {
+                "option": "b",
+                "text": "exchanging sodium for calcium"
+            },
+            {
+                "option": "c",
+                "text": "increasing the retention of bicarbonate"
+            },
+            {
+                "option": "d",
+                "text": "exchanging potassium for hydrogen"
+            }
+        ],
+        "correct_answer": "c"
     },
     {
         "question": "A serum sodium level of 150 mEq/L may be due to:",
@@ -2998,11 +3110,15 @@ let domain1_answers = [
             },
             {
                 "option": "b",
-                "text": "b"
+                "text": "beets"
             },
             {
                 "option": "c",
                 "text": "corn"
+            },
+            {
+                "option": "d",
+                "text": "beef"
             }
         ],
         "correct_answer": "a"
@@ -3218,10 +3334,36 @@ let domain1_answers = [
             },
             {
                 "option": "c",
-                "text": "15000 IU d.20000IU"
+                "text": "15000 IU"
+            },
+            {
+                "option": "d",
+                "text": "20000IU"
             }
         ],
         "correct_answer": "b"
+    },
+    {
+        "question": "How many oranges are needed to produce one quart of juice?",
+        "answers": [
+            {
+                "option": "a",
+                "text": "12"
+            },
+            {
+                "option": "b",
+                "text": "15"
+            },
+            {
+                "option": "C",
+                "text": "18"
+            },
+            {
+                "option": "d",
+                "text": "20"
+            }
+        ],
+        "correct_answer": "a"
     },
     {
         "question": "High doses of vitamin E may antagonize:",
@@ -3400,8 +3542,12 @@ let domain1_answers = [
         "correct_answer": "c"
     },
     {
-        "question": "How many mEq of sodium are in 1 gram of sodium? a.25:",
+        "question": "How many mEq of sodium are in 1 gram of sodium?",
         "answers": [
+            {
+                "option": "a",
+                "text": "25"
+            },
             {
                 "option": "b",
                 "text": "43"
@@ -3413,6 +3559,28 @@ let domain1_answers = [
             {
                 "option": "d",
                 "text": "110"
+            }
+        ],
+        "correct_answer": "b"
+    },
+    {
+        "question": "How can you preserve thiamin when cooking pork?",
+        "answers": [
+            {
+                "option": "a",
+                "text": "Use the drippings after the fat has been removed."
+            },
+            {
+                "option": "b",
+                "text": "Insert a meat thermometer and cook it to 145'F in an oven at 325'."
+            },
+            {
+                "option": "c",
+                "text": "Increase the cooking temperature to lessen cooking time."
+            },
+            {
+                "option": "d",
+                "text": "Add a small quantity of water during cooking."
             }
         ],
         "correct_answer": "b"
@@ -3430,7 +3598,11 @@ let domain1_answers = [
             },
             {
                 "option": "c",
-                "text": "cantaloupe"
+                "text": "cantaloupe pieces"
+            },
+            {
+                "option": "d",
+                "text": "banana"
             }
         ],
         "correct_answer": "c"
@@ -4294,8 +4466,12 @@ let domain1_answers = [
         "correct_answer": "a"
     },
     {
-        "question": "The flour with the most starch is: a.cake:",
+        "question": "The flour with the most starch is:",
         "answers": [
+            {
+                "option": "a",
+                "text": "cake"
+            },
             {
                 "option": "b",
                 "text": "whole wheat"
@@ -4310,6 +4486,28 @@ let domain1_answers = [
             }
         ],
         "correct_answer": "a"
+    },
+    {
+        "question": "In interpreting correlation data, if the r value is greater than 1:",
+        "answers": [
+            {
+                "option": "a",
+                "text": "the relationship is strong"
+            },
+            {
+                "option": "b",
+                "text": "the result is not valid"
+            },
+            {
+                "option": "c",
+                "text": "the relationship is weak"
+            },
+            {
+                "option": "d",
+                "text": "it is within 1 standard deviation"
+            }
+        ],
+        "correct_answer": "b"
     },
     {
         "question": "Homemade rolls are crumbly and fall apart easily. The most likely cause of the poor texture in the yeast bread is:",
@@ -5401,8 +5599,12 @@ let domain1_answers = [
                 "text": "-4"
             },
             {
+                "option": "c",
+                "text": "6"
+            },
+            {
                 "option": "d",
-                "text": ". 8"
+                "text": "8"
             }
         ],
         "correct_answer": "d"
@@ -5438,7 +5640,11 @@ let domain1_answers = [
             },
             {
                 "option": "b",
-                "text": "me"
+                "text": "median"
+            },
+            {
+                "option": "c",
+                "text": "mean"
             },
             {
                 "option": "d",
@@ -5522,11 +5728,15 @@ let domain1_answers = [
             },
             {
                 "option": "b",
-                "text": "a"
+                "text": "affective"
             },
             {
                 "option": "c",
                 "text": "human"
+            },
+            {
+                "option": "d",
+                "text": "psychomotor"
             }
         ],
         "correct_answer": "d"
@@ -5686,8 +5896,12 @@ let domain1_answers = [
         "correct_answer": "b"
     },
     {
-        "question": "What is the mean of the following set of numbers? 3, 2, 2 a.3:",
+        "question": "What is the mean of the following set of numbers? 3, 2, 2:",
         "answers": [
+            {
+                "option": "a",
+                "text": "3"
+            },
             {
                 "option": "b",
                 "text": "2.3"
@@ -5699,6 +5913,28 @@ let domain1_answers = [
             {
                 "option": "d",
                 "text": "2.5"
+            }
+        ],
+        "correct_answer": "b"
+    },
+    {
+        "question": "Statistics that let you draw probable conclusions beyond your immediate universe of data, are called:",
+        "answers": [
+            {
+                "option": "a",
+                "text": "descriptive statistics"
+            },
+            {
+                "option": "b",
+                "text": "inferential statistics"
+            },
+            {
+                "option": "c",
+                "text": "variable interest statistics"
+            },
+            {
+                "option": "d",
+                "text": "continuous statistics"
             }
         ],
         "correct_answer": "b"
@@ -5980,7 +6216,11 @@ let domain1_answers = [
             },
             {
                 "option": "c",
-                "text": "negative"
+                "text": "negative reinforcement"
+            },
+            {
+                "option": "d",
+                "text": "negative consequence"
             }
         ],
         "correct_answer": "b"
@@ -6236,7 +6476,11 @@ let domain1_answers = [
             },
             {
                 "option": "b",
-                "text": "null c.even"
+                "text": "null"
+            },
+            {
+                "option": "c",
+                "text": "even"
             },
             {
                 "option": "d",
@@ -6244,6 +6488,28 @@ let domain1_answers = [
             }
         ],
         "correct_answer": "b"
+    },
+    {
+        "question": "A focus group contributes what data?",
+        "answers": [
+            {
+                "option": "a",
+                "text": "analytical"
+            },
+            {
+                "option": "b",
+                "text": "experimental"
+            },
+            {
+                "option": "c",
+                "text": "attitudinal"
+            },
+            {
+                "option": "d",
+                "text": "objective"
+            }
+        ],
+        "correct_answer": "c"
     },
     {
         "question": "An example of nominal (frequency) data is:",
@@ -6294,7 +6560,7 @@ let domain1_answers = [
         "answers": [
             {
                 "option": "a",
-                "text": "the difference between A and B is more significant than the"
+                "text": "the difference between A and B is more significant than the difference between C and D"
             },
             {
                 "option": "b",
@@ -6302,7 +6568,11 @@ let domain1_answers = [
             },
             {
                 "option": "c",
-                "text": "the difference between A and C is more significant than the"
+                "text": "the difference between A and C is more significant than the difference between B and D"
+            },
+            {
+                "option": "d",
+                "text": "the difference between A and D is more significant than the difference between C and B"
             }
         ],
         "correct_answer": "a"
@@ -6554,7 +6824,7 @@ let domain1_answers = [
         "answers": [
             {
                 "option": "a",
-                "text": "when folic acid intake increases prior to pregnancy, the incidence of neural"
+                "text": "when folic acid intake increases prior to pregnancy, the incidence of neural tube defects declines"
             },
             {
                 "option": "b",
@@ -6563,6 +6833,10 @@ let domain1_answers = [
             {
                 "option": "c",
                 "text": "when a person becomes more obese, their LDL levels likely rise"
+            },
+            {
+                "option": "d",
+                "text": "as the intake of peanut butter and potato chips increases, dental"
             }
         ],
         "correct_answer": "a"
@@ -6704,7 +6978,7 @@ let domain1_answers = [
         "answers": [
             {
                 "option": "a",
-                "text": "s"
+                "text": "safflower"
             },
             {
                 "option": "b",
@@ -6713,6 +6987,10 @@ let domain1_answers = [
             {
                 "option": "c",
                 "text": "cottonseed"
+            },
+            {
+                "option": "d",
+                "text": "olive"
             }
         ],
         "correct_answer": "c"
@@ -7514,7 +7792,7 @@ let domain1_answers = [
         "answers": [
             {
                 "option": "a",
-                "text": "each participant is randomly assigned to a treatment group"
+                "text": "each participant is randomly assigned to a treatment group and remains in that group"
             },
             {
                 "option": "b",
@@ -7523,6 +7801,10 @@ let domain1_answers = [
             {
                 "option": "c",
                 "text": "increased sample size"
+            },
+            {
+                "option": "d",
+                "text": "variability is reduced"
             }
         ],
         "correct_answer": "d"
