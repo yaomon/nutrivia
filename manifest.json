@@ -1,6 +1,6 @@
 {
-    "name": "Nutrivia", // installation name
-    "short_name": "Nutrivia", // app title name
+    "name": "Nutrivia",
+    "short_name": "Nutrivia",
     "start_url": ".",
     "theme_color": "#4287f5",
     "background_color": "#ffffff",
