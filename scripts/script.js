@@ -8,6 +8,7 @@
     let total_ques = domain1_questions.length;
     let num_corr = 0;
     let num_incorr = 0;
+    let streak = 0;
     // Function to get a random integer within a range
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -62,6 +63,7 @@
         if (guess !== curr_ques.correct_answer) {
             // Incorrect
             $(this).addClass("incorrect");
+            streak = 0;
             num_incorr++;
             $(".incorrect-num").text(num_incorr);
             // Add the missed question to the missed questions
@@ -70,6 +72,7 @@
             missed_ques.push(ques_number - 1);
         } else {
             // Correct
+            streak++;
             num_corr++;
             $(".correct-num").text(num_corr);
         }
@@ -96,6 +99,9 @@
                 b +
                 ", 0.9))"
         );
+        // Set streak test and color
+        $(".streak").text("🔥 " + streak);
+
         // Add correct answer
         switch (curr_ques.correct_answer) {
             case "a":
@@ -119,6 +125,69 @@
         }
     }
 
+    function setupFireworkOnClick() {
+        $(".choice").click(function (e) {
+            let $choice = $(this);
+            $choice.css({
+                transform: "scale(0.95)",
+                transition: "transform 0.01s",
+            });
+            // Revert the scaling effect after a short delay
+            setTimeout(function () {
+                $choice.removeAttr("style");
+            }, 50);
+            // Create and append the firework div
+            var $div = $("<div class='firework'></div>")
+                .css({
+                    left: e.pageX + "px",
+                    top: e.pageY + "px",
+                    position: "absolute",
+                })
+                .appendTo("body");
+
+            var maxElems = 16;
+            for (let i = 0; i < maxElems; i++) {
+                // Create and append span elements
+                var deg = i * (360 / maxElems) + Math.floor(Math.random() * 15);
+                var height = 20 + Math.floor(Math.random() * 40);
+                var width = 4 + Math.floor(Math.random() * 20);
+
+                $("<span class='fire-span'></span>")
+                    .css({
+                        height: height + "px",
+                        width: width + "px",
+                        transform: "rotate(" + deg + "deg)",
+                        position: "absolute",
+                    })
+                    .appendTo($div);
+            }
+
+            // Use requestAnimationFrame to ensure the initial styles are applied
+            window.requestAnimationFrame(function () {
+                window.requestAnimationFrame(function () {
+                    // Apply transformation and opacity changes
+                    $div.find("span").each(function () {
+                        var trasY = -50 - Math.floor(Math.random() * 100);
+                        $(this).css({
+                            transform:
+                                $(this).css("transform") +
+                                " scaleY(0.5) translateY(" +
+                                trasY +
+                                "px)",
+                            opacity: "0",
+                            transition: "transform 0.4s, opacity 0.4s",
+                        });
+                    });
+
+                    // Remove the firework div after the animation
+                    setTimeout(function () {
+                        $div.remove();
+                    }, 400);
+                });
+            });
+        });
+    }
+
     $(document).ready(function () {
         // Code to run when the document is ready
         loadUnasweredQuesetions();
@@ -126,5 +195,7 @@
         updateQuestion();
         $(".skip").click(updateQuestion);
         $(".choice").click(guessAnswer);
+
+        setupFireworkOnClick();
     });
 })(jQuery);

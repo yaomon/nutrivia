@@ -1,0 +1,42 @@
+.stats {
+    display: flex;
+    box-sizing: border-box;
+    max-width: 600px;
+    width: 80%;
+    height: 10vh;
+    font-weight: bold;
+    font-size: 1.8em;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.stat-perc {
+    text-align: right;
+}
+
+.stat-cont {
+    display: flex;
+    box-sizing: border-box;
+    width: 40%;
+}
+
+.correct-num, .incorrect-num {
+    padding: 0px 20px;
+    text-align: right;
+}
+
+#correct-cont {
+    background-image: linear-gradient(120deg, #1d6c0f 0%, #144e44 100%);
+}
+
+#incorrect-cont {
+    background-image: linear-gradient(120deg, #780f0f 0%, #3d0022 100%);
+}
+
+.question-num {
+    left: 18px;
+}
+
+.question-frac {
+    right: 18px;
+}

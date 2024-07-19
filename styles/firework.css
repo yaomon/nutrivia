@@ -1,0 +1,22 @@
+.firework {
+    position:absolute;
+    z-index: 10;
+    width:50px;
+    height:50px;
+    transform:translate(-50%, -50%);
+}
+.fire-span {
+    position:absolute;
+    bottom:50%;
+    left:50%;
+    z-index: 10;
+    display:block;
+    width:4px;
+    height:50px;
+    border-radius:4px;
+    background:#ffffff;
+    box-shadow:0 0 4px rgba(255,255,255,0.5);
+    transition:transform 0.2s, opacity 0.45s;
+    transition-timing-function:ease-out;
+    transform-origin: center bottom;
+}

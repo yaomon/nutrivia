@@ -2,7 +2,7 @@
     "name": "Nutrivia",
     "short_name": "Nutrivia",
     "start_url": ".",
-    "theme_color": "#4287f5",
+    "theme_color": "#cccccc",
     "background_color": "#ffffff",
     "display": "standalone",
     "icons":[

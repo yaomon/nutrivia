@@ -1,0 +1,36 @@
+.bottom-container {
+    display: flex;
+    margin-top: 20px;
+    width: 80%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.skip {
+    padding: 10px 20px;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+    box-shadow:  5px 5px 11px #d5d5d5,
+                -5px -5px 11px #ebebeb;
+    font-weight: bold;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.skip:active {
+    background-image: none;
+    background-clip: border-box;
+    -webkit-background-clip: border-box;
+    box-shadow: inset 5px 5px 11px #d5d5d5,
+                inset -5px -5px 11px #ebebeb;
+    text-shadow: none;
+    -webkit-text-fill-color: rgba(0, 0, 0, 0.8);
+}
+
+.streak {
+    font-weight: bold;
+    font-size: 1.3em;
+}
