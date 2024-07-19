@@ -3,8 +3,9 @@
     let curr_ques;
     let missed_ques = [];
     let missed_ques_counter = 0;
+    let not_answered_ques = [];
     let answered_ques = new Set([]);
-    let total_ques = domain1_answers.length;
+    let total_ques = domain1_questions.length;
     let num_corr = 0;
     let num_incorr = 0;
     // Function to get a random integer within a range
@@ -16,7 +17,10 @@
         missed_ques_counter++;
         // Every 5 questions, try to re-ask a missed question
         // Get a random index within the array length
-        let randomIndex = getRandomInt(0, domain1_answers.length - 1);
+        if (not_answered_ques.length <= 0) {
+            loadUnasweredQuesetions();
+        }
+        let randomIndex = getRandomInt(0, not_answered_ques.length);
         if (missed_ques_counter > 4) {
             missed_ques_counter = 0;
             if (missed_ques.length > 0) {
@@ -32,7 +36,9 @@
         }
 
         // Retrieve the random object
-        const randomQuestion = domain1_answers[randomIndex];
+        const randomQuestion = not_answered_ques[randomIndex];
+        // Remove answered questions
+        not_answered_ques.splice(randomIndex, 1);
         curr_ques = randomQuestion;
         // Clear correct/incorrect
         $(".choice").removeClass("correct");
@@ -107,8 +113,15 @@
         }
     }
 
+    function loadUnasweredQuesetions() {
+        for (let i = 0; i < domain1_questions.length; i++) {
+            not_answered_ques[i] = domain1_questions[i];
+        }
+    }
+
     $(document).ready(function () {
         // Code to run when the document is ready
+        loadUnasweredQuesetions();
         $(".question-frac").text(answered_ques.size + "/" + total_ques);
         updateQuestion();
         $(".skip").click(updateQuestion);
