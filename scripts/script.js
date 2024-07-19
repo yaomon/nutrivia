@@ -64,6 +64,9 @@
             // Incorrect
             $(this).addClass("incorrect");
             streak = 0;
+            $(".pulse").css({
+                animationDuration: "0s",
+            });
             num_incorr++;
             $(".incorrect-num").text(num_incorr);
             // Add the missed question to the missed questions
@@ -75,6 +78,80 @@
             streak++;
             num_corr++;
             $(".correct-num").text(num_corr);
+
+            // Set streak test and color
+            let perc = Math.min(streak / 10, 1.0);
+            let r = Math.round(0 * (1 - perc) + 255 * perc);
+            let g = Math.round(40 * (1 - perc) + 50 * perc);
+            let b = Math.round(42 * (1 - perc) + 52 * perc);
+            $(".pulse").text("🔥 " + streak);
+            $(".streak").css(
+                "background-image",
+                "-webkit-linear-gradient(45deg, rgba(" +
+                    (r - 10) +
+                    ", " +
+                    (g - 10) +
+                    ", " +
+                    b +
+                    ", 0.9), rgba(" +
+                    (r + 10) +
+                    ", " +
+                    (g + 10) +
+                    ", " +
+                    b +
+                    ", 0.9))"
+            );
+
+            // Set pulse anim based on streak
+            let minDuration = 0.1; // Minimum duration in seconds
+            let maxDuration = 1.0; // Maximum duration in seconds
+            let animationDuration =
+                minDuration + (maxDuration - minDuration) * (1.1 - perc);
+            $(".pulse").css({
+                animationDuration: animationDuration + "s",
+            });
+
+            let scale = 1 + 0.05 + streak * 0.05;
+            let $streak = $(".streak");
+            $streak.css({
+                transform: "scale(" + scale + ")",
+                transition: "transform 0.01s",
+                "background-image":
+                    "-webkit-linear-gradient(45deg, rgba(" +
+                    (r - 10) +
+                    ", " +
+                    (g - 10) +
+                    ", " +
+                    b +
+                    ", 0.9), rgba(" +
+                    (r + 10) +
+                    ", " +
+                    (g + 10) +
+                    ", " +
+                    b +
+                    ", 0.9))",
+            });
+            // Revert the scaling effect after a short delay
+            setTimeout(function () {
+                $streak.css({
+                    transform: "scale(1)",
+                    transition: "transform 0.1s",
+                    "background-image":
+                        "-webkit-linear-gradient(45deg, rgba(" +
+                        (r - 10) +
+                        ", " +
+                        (g - 10) +
+                        ", " +
+                        b +
+                        ", 0.9), rgba(" +
+                        (r + 10) +
+                        ", " +
+                        (g + 10) +
+                        ", " +
+                        b +
+                        ", 0.9))",
+                });
+            }, 50);
         }
         // Set correct percent and color
         let perc = num_corr / (num_corr + num_incorr);
@@ -99,8 +176,6 @@
                 b +
                 ", 0.9))"
         );
-        // Set streak test and color
-        $(".streak").text("🔥 " + streak);
 
         // Add correct answer
         switch (curr_ques.correct_answer) {
