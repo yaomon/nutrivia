@@ -24,7 +24,14 @@
     justify-content: space-between;
 }
 
-.skip {
+.bottom-left, .bottom-right {
+    display: flex;
+    width: 50%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.button {
     padding: 10px 20px;
     border-radius: 12px;
     -webkit-border-radius: 12px;
@@ -38,7 +45,7 @@
     cursor: pointer;
 }
 
-.skip:active {
+.button:active {
     background-image: none;
     background-clip: border-box;
     -webkit-background-clip: border-box;
@@ -49,6 +56,9 @@
 }
 
 .streak {
+    overflow: hidden;
+    width: 40%;
+    text-align: right;
     font-weight: bold;
     font-size: 1.3em;
 }

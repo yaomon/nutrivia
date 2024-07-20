@@ -1,14 +1,29 @@
 .stats {
     display: flex;
     box-sizing: border-box;
-    max-width: 600px;
-    width: 80%;
-    height: 10vh;
+    width: 50%;
     font-weight: bold;
     font-size: 1.8em;
     align-items: center;
+    justify-content: space-between;
+}
+
+.stats-positioner {
+    display: flex;
+    width: 70%;
     justify-content: space-evenly;
 }
+
+.top-container {
+    display: flex;
+    box-sizing: border-box;
+    max-width: 600px;
+    width: 80%;
+    height: 10vh;
+    align-items: center;
+    justify-content: space-between;
+}
+
 
 .stat-perc {
     text-align: right;
@@ -17,11 +32,12 @@
 .stat-cont {
     display: flex;
     box-sizing: border-box;
-    width: 40%;
+    width: 60px;
+    align-items: center;
 }
 
 .correct-num, .incorrect-num {
-    padding: 0px 20px;
+    padding-right: 10px;
     text-align: right;
 }
 

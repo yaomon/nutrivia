@@ -28,16 +28,21 @@
     </head>
 
     <body>
-        <div class="stats">
-            <div class="stat-cont inset-text" id="correct-cont">
-                <div class="correct-num">0</div>
-                ✔
+        <div class="top-container">
+            <div class="button inset-text" id="reset">Reset 🗘</div>
+            <div class="stats">
+                <div class="stats-positioner">
+                    <div class="stat-cont inset-text" id="correct-cont">
+                        <div class="correct-num">0</div>
+                        ✔
+                    </div>
+                    <div class="stat-cont inset-text" id="incorrect-cont">
+                        <div class="incorrect-num">0</div>
+                        ✖
+                    </div>
+                </div>
+                <div class="stat-perc inset-text">-- %</div>
             </div>
-            <div class="stat-cont inset-text" id="incorrect-cont">
-                <div class="incorrect-num">0</div>
-                ✖
-            </div>
-            <div class="stat-perc inset-text">-- %</div>
         </div>
         <div class="container">
             <div class="question-num inset-text">00</div>
@@ -62,10 +67,15 @@
                 </div>
             </div>
             <div class="bottom-container">
-                <div class="streak inset-text">
-                    <div class="pulse">🔥 0</div>
+                <div class="bottom-left">
+                    <div class="button inset-text" id="food">🍗</div>
                 </div>
-                <div class="skip inset-text">Next ▶</div>
+                <div class="bottom-right">
+                    <div class="streak inset-text">
+                        <div class="pulse">🔥 0</div>
+                    </div>
+                    <div class="button inset-text" id="skip">Next ▶</div>
+                </div>
             </div>
         </div>
     </body>
