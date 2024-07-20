@@ -26,9 +26,16 @@
 
 .bottom-left, .bottom-right {
     display: flex;
-    width: 50%;
     align-items: center;
     justify-content: space-between;
+}
+
+.bottom-left {
+    width: 30%;
+}
+
+.bottom-right {
+    width: 70%;
 }
 
 .button {
