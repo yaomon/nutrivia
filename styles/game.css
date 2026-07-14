@@ -275,6 +275,7 @@
 .choice.correct {
     background-color: var(--sage);
     --side: var(--sage-side);
+    --side-soft: var(--sage-side-soft);
     color: #fff8ef;
     text-shadow: 0 1px 2px rgba(93, 68, 51, 0.3);
 }
@@ -285,6 +286,7 @@
 .choice.incorrect {
     background-color: var(--red);
     --side: var(--red-side);
+    --side-soft: var(--red-side-soft);
     color: #fff8ef;
     text-shadow: 0 1px 2px rgba(93, 68, 51, 0.3);
 }
@@ -364,6 +366,7 @@
 .item-btn.armed {
     background-color: var(--mustard);
     --side: var(--mustard-side);
+    --side-soft: var(--mustard-side-soft);
     animation: wobble 1.1s ease-in-out infinite;
 }
 
@@ -394,6 +397,7 @@
 .set-card.selected {
     background-color: var(--sage);
     --side: var(--sage-side);
+    --side-soft: var(--sage-side-soft);
     color: #fff8ef;
     text-shadow: 0 1px 2px rgba(93, 68, 51, 0.3);
 }

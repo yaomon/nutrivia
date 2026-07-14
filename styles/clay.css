@@ -27,13 +27,21 @@
     --blue: #6f8fba;
     --purple: #a37bb8;
 
-    /* the visible underside of raised pressable pieces */
+    /* the visible underside of raised pressable pieces, plus a soft
+       translucent version of each so the side can melt into the slab
+       instead of ending at a hard silhouette */
     --clay-side: #c6ae8d;
+    --clay-side-soft: rgba(198, 174, 141, 0.55);
     --red-side: #a8402f;
+    --red-side-soft: rgba(168, 64, 47, 0.55);
     --mustard-side: #bb8124;
+    --mustard-side-soft: rgba(187, 129, 36, 0.55);
     --sage-side: #69854f;
+    --sage-side-soft: rgba(105, 133, 79, 0.55);
     --blue-side: #54709b;
+    --blue-side-soft: rgba(84, 112, 155, 0.55);
     --purple-side: #855e9c;
+    --purple-side-soft: rgba(133, 94, 156, 0.55);
 
     /* light & shade of the material — kept faint so nothing looks
        machine-perfect */
@@ -116,12 +124,18 @@ body::after {
 }
 
 /* ---------- pressable clay ---------- */
-/* Buttons have real thickness: a solid clay underside (the 0 5px 0
-   shadow) that you can see beneath the bottom edge, like a slab of
-   clay sitting proud of the surface. Pressing squashes it down onto
-   the slab and the side all but vanishes. */
+/* Buttons have real thickness: a solid clay underside plus a soft
+   translucent skirt beneath it, so the side reads as the material
+   curving down into the slab rather than a stacked hard edge.
+
+   All three states (rest, hover, pressed) declare the SAME number of
+   shadow layers in the same inset order — box-shadow only animates
+   smoothly between matching lists, and this is what makes the press
+   morph instead of snap. Layers 5-6 are the recess walls: transparent
+   at rest, solid + feathered when pressed. */
 .clay-btn {
     --side: var(--clay-side);
+    --side-soft: var(--clay-side-soft);
     appearance: none;
     border: none;
     font-family: inherit;
@@ -130,18 +144,18 @@ body::after {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-    transition: transform 0.09s ease, box-shadow 0.09s ease,
-        border-radius 0.2s ease, opacity 0.2s ease;
+    transition: transform 0.1s ease, box-shadow 0.1s ease,
+        background-color 0.1s ease, border-radius 0.2s ease,
+        opacity 0.2s ease;
     box-shadow:
-        /* the visible underside */ 0 5px 0 var(--side),
-        /* light spilling onto the slab, top-left */ -5px -4px 10px
-            var(--hi-soft),
-        /* shade cast onto the slab, past the underside */ 6px 12px 14px
-            var(--lo-soft),
-        /* contact shadow at the base */ 2px 7px 4px rgba(93, 68, 51, 0.08),
-        /* rounded edge catching light on top */ inset 1px 2px 2px
-            var(--hi-soft),
-        /* rounded edge rolling into shade below */ inset -2px -3px 5px
+        /* 1 solid underside core */ 0 3px 0 var(--side),
+        /* 2 skirt melting into the slab */ 0 5px 4px var(--side-soft),
+        /* 3 light spilling onto the slab */ -5px -4px 10px var(--hi-soft),
+        /* 4 shade cast past the underside */ 6px 12px 14px var(--lo-soft),
+        /* 5 recess top wall (pressed only) */ inset 0 0 0 transparent,
+        /* 6 wall feather (pressed only) */ inset 0 0 0 transparent,
+        /* 7 rounded edge catching light */ inset 1px 2px 2px var(--hi-soft),
+        /* 8 rounded edge rolling into shade */ inset -2px -3px 5px
             rgba(93, 68, 51, 0.1);
 }
 
@@ -150,27 +164,35 @@ body::after {
     .clay-btn:hover:not(:disabled):not(.pressed) {
         transform: translateY(-2px) rotate(-0.4deg);
         border-radius: 27px 23px 28px 24px / 23px 28px 24px 27px;
-        box-shadow: 0 7px 0 var(--side), -5px -5px 11px var(--hi-soft),
-            7px 15px 16px var(--lo-soft), 2px 9px 5px rgba(93, 68, 51, 0.08),
+        box-shadow: 0 5px 0 var(--side), 0 8px 5px var(--side-soft),
+            -5px -5px 11px var(--hi-soft), 7px 15px 16px var(--lo-soft),
+            inset 0 0 0 transparent, inset 0 0 0 transparent,
             inset 1px 2px 2px var(--hi-soft),
             inset -2px -3px 5px rgba(93, 68, 51, 0.1);
     }
 }
 
-/* pressed = squashed down flush with the slab; the underside compresses
-   (plain color while pressed — blended textures can flicker when the
-   browser re-rasterizes a transforming layer) */
+/* pressed = squashed down flush with the slab. The underside compresses
+   to a sliver, and the dent shows its near wall: a solid line of side
+   color under the top edge, feathering down to the recess floor.
+   (plain background while pressed — blended textures can flicker when
+   the browser re-rasterizes a transforming layer) */
 .clay-btn:active:not(:disabled),
 .clay-btn.pressed {
     transform: translateY(4px) scale(0.98, 0.965);
     background-color: var(--clay-deep);
     background-image: none;
     box-shadow:
-        /* a sliver of underside remains */ 0 1px 0 var(--side),
-        /* recess walls */ inset 4px 6px 10px rgba(93, 68, 51, 0.26),
-        inset -2px -4px 8px var(--hi-soft),
-        /* faint rim light around the dent */ -2px -2px 4px var(--hi-soft),
-        2px 3px 5px rgba(93, 68, 51, 0.08);
+        /* 1 a sliver of underside remains */ 0 1px 0 var(--side),
+        /* 2 its skirt hugs the slab */ 0 2px 2px var(--side-soft),
+        /* 3 rim light around the dent */ -2px -2px 5px var(--hi-soft),
+        /* 4 faint remaining cast shade */ 2px 4px 6px rgba(93, 68, 51, 0.08),
+        /* 5 visible top wall of the recess */ inset 0 3px 0 var(--side),
+        /* 6 wall melting down to the floor */ inset 0 6px 5px
+            var(--side-soft),
+        /* 7 light catching the far rim */ inset 0 -2px 2px var(--hi-soft),
+        /* 8 general recess shading */ inset 2px 4px 8px
+            rgba(93, 68, 51, 0.18);
 }
 
 .clay-btn:disabled {
@@ -178,14 +200,18 @@ body::after {
     opacity: 0.55;
 }
 
-/* ---------- recessed clay (tracks, wells, stat slots) ---------- */
+/* ---------- recessed clay (tracks, wells, stat slots) ----------
+   Same language as a pressed button: a visible near wall under the
+   top edge that feathers down to the floor of the recess. */
 .clay-inset {
     background-color: var(--clay-deep);
     background-image: var(--blotch);
     background-blend-mode: soft-light;
     border-radius: 18px 20px 17px 21px / 20px 17px 21px 18px;
-    box-shadow: inset 3px 4px 8px rgba(93, 68, 51, 0.24),
-        inset -2px -3px 7px var(--hi-soft), 1px 2px 2px var(--hi-soft);
+    box-shadow: inset 0 2px 0 var(--clay-side),
+        inset 0 5px 4px var(--clay-side-soft),
+        inset 2px 3px 7px rgba(93, 68, 51, 0.16),
+        inset 0 -2px 2px var(--hi-soft), 1px 2px 2px var(--hi-soft);
 }
 
 /* ---------- colored clays ---------- */
@@ -200,22 +226,27 @@ body::after {
 .clay.red {
     background-color: var(--red);
     --side: var(--red-side);
+    --side-soft: var(--red-side-soft);
 }
 .clay.mustard {
     background-color: var(--mustard);
     --side: var(--mustard-side);
+    --side-soft: var(--mustard-side-soft);
 }
 .clay.sage {
     background-color: var(--sage);
     --side: var(--sage-side);
+    --side-soft: var(--sage-side-soft);
 }
 .clay.blue {
     background-color: var(--blue);
     --side: var(--blue-side);
+    --side-soft: var(--blue-side-soft);
 }
 .clay.purple {
     background-color: var(--purple);
     --side: var(--purple-side);
+    --side-soft: var(--purple-side-soft);
 }
 
 .clay.red.clay-btn:active,
