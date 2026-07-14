@@ -5,6 +5,7 @@
 //   eligible(game)              -> bool, can this event trigger right now
 //   pickQuestion(game)          -> question object, overrides normal selection
 //   modifyChoices(game, q, cs)  -> choices array, reshape the displayed answers
+//   modifyRewards(game, r)      -> {xp, gold}, reshape correct-answer rewards
 const EVENTS = {
     redemption: {
         icon: "🔥",
@@ -32,5 +33,19 @@ const EVENTS = {
             )[0];
             return choices.filter((c) => c === correct || c === wrong);
         },
+    },
+    gold_rush: {
+        icon: "🤑",
+        name: "Gold Rush",
+        desc: "gold rewards are doubled",
+        eligible: () => true,
+        modifyRewards: (game, r) => ({ xp: r.xp, gold: r.gold * 2 }),
+    },
+    brain_wave: {
+        icon: "🧠",
+        name: "Brain Wave",
+        desc: "XP rewards are doubled",
+        eligible: () => true,
+        modifyRewards: (game, r) => ({ xp: r.xp * 2, gold: r.gold }),
     },
 };

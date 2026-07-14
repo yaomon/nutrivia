@@ -1,4 +1,4 @@
-const CACHE = "nutrivia-rogue-v1";
+const CACHE = "nutrivia-rogue-v2";
 
 self.addEventListener("install", (e) => {
     self.skipWaiting();
@@ -22,11 +22,12 @@ self.addEventListener("activate", (e) => {
     );
 });
 
-// Network first, cache fallback — always fresh while online, still works offline
+// Network first, cache fallback — always fresh while online, still works offline.
+// cache: "no-cache" forces revalidation so the HTTP cache can't serve stale files.
 self.addEventListener("fetch", (e) => {
     if (e.request.method !== "GET") return;
     e.respondWith(
-        fetch(e.request)
+        fetch(e.request, { cache: "no-cache" })
             .then((response) => {
                 const copy = response.clone();
                 caches.open(CACHE).then((cache) => cache.put(e.request, copy));

@@ -28,6 +28,7 @@
         <script src="scripts/index.js"></script>
         <script src="scripts/config.js"></script>
         <script src="scripts/domain1.js"></script>
+        <script src="scripts/sets.js"></script>
         <script src="scripts/foods.js"></script>
         <script src="scripts/items.js"></script>
         <script src="scripts/events.js"></script>
@@ -69,6 +70,20 @@
                     reset progress
                 </button>
             </div>
+        </section>
+
+        <!-- ============ PICK YOUR MENU ============ -->
+        <section id="screen-sets" class="screen hidden">
+            <h1 class="game-title small">Pick Your Menu</h1>
+            <div class="tagline">choose which questions go in the pot</div>
+            <div id="set-list" class="set-list"></div>
+            <div id="set-total" class="set-total"></div>
+            <button id="btn-run-go" class="clay clay-btn btn-hero red">
+                Cook!
+            </button>
+            <button id="btn-sets-back" class="clay clay-btn btn-quiet">
+                back
+            </button>
         </section>
 
         <!-- ============ RUN ============ -->
@@ -171,6 +186,10 @@
                     <span class="summary-label">missed</span>
                 </div>
                 <div class="summary-stat clay-inset">
+                    <span class="summary-num" id="sum-streak">0</span>
+                    <span class="summary-label">best streak</span>
+                </div>
+                <div class="summary-stat clay-inset">
                     <span class="summary-num" id="sum-gold">0</span>
                     <span class="summary-label">gold banked</span>
                 </div>
@@ -201,7 +220,7 @@
                         <span class="howto-emoji">🧠</span>
                         <span
                             >Answer right to earn 💙 XP and 💰 gold. Streaks 🔥
-                            make every answer worth more.</span
+                            and fast answers ⚡ earn bonus XP.</span
                         >
                     </div>
                     <div class="howto-line">

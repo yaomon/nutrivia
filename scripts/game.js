@@ -10,16 +10,23 @@ const Game = (() => {
 
     /* ---------------- state ---------------- */
 
+    function freshMeta() {
+        return {
+            gold: 0,
+            foods: [], // collected food image names
+            seen: [], // question numbers ever answered
+            missed: [], // question numbers currently owed a redemption
+            runs: 0,
+            best: { level: 0, correct: 0 },
+            hintsSeen: {}, // one-time coach hints already shown
+            sr: {}, // spaced repetition: number -> {itv, due}
+            totalAnswered: 0, // global clock the sr intervals count against
+            selectedSets: QUESTION_SETS.map((s) => s.id), // pool choices
+        };
+    }
+
     // meta persists across runs (the "lite" in roguelite)
-    let meta = {
-        gold: 0,
-        foods: [], // collected food image names
-        seen: [], // question numbers ever answered
-        missed: [], // question numbers currently owed a redemption
-        runs: 0,
-        best: { level: 0, correct: 0 },
-        hintsSeen: {}, // one-time coach hints already shown
-    };
+    let meta = freshMeta();
 
     // show a coach hint exactly once, ever
     function hint(id, text) {
@@ -48,8 +55,11 @@ const Game = (() => {
             event: null,
             sinceEvent: 0,
             q: null, // current question snapshot
+            qStart: 0, // when the current question was served (speed bonus)
             answeredCurrent: false,
             lowHpWarned: false,
+            bestStreak: 0,
+            setIds: [], // question sets locked in for this run
         };
     }
 
@@ -62,7 +72,7 @@ const Game = (() => {
         if (!raw) return;
         try {
             const data = JSON.parse(raw);
-            if (data.meta) meta = Object.assign(meta, data.meta);
+            if (data.meta) meta = Object.assign(freshMeta(), data.meta);
             run = data.run || null;
         } catch (e) {
             console.warn("Bad save, starting fresh", e);
@@ -91,32 +101,104 @@ const Game = (() => {
 
     /* ---------------- question pools ---------------- */
 
+    // the bank restricted to the sets picked for this run
+    let activePool = domain1_questions;
+
+    function rebuildActivePool() {
+        const ids = run && run.setIds && run.setIds.length ? run.setIds : null;
+        if (!ids) {
+            activePool = domain1_questions;
+            return;
+        }
+        const sel = QUESTION_SETS.filter((s) => ids.includes(s.id));
+        activePool = sel.length
+            ? domain1_questions.filter((q) =>
+                  sel.some((s) => s.match(+q.number))
+              )
+            : domain1_questions;
+    }
+
     function notCurrent(q) {
         return !run.q || q.number !== run.q.number;
     }
 
     function missedPool() {
-        return meta.missed.map((n) => qByNumber[n]).filter(Boolean).filter(notCurrent);
+        const active = new Set(activePool.map((q) => q.number));
+        return meta.missed
+            .map((n) => qByNumber[n])
+            .filter(Boolean)
+            .filter((q) => active.has(q.number))
+            .filter(notCurrent);
     }
 
     function seenPool() {
-        return meta.seen.map((n) => qByNumber[n]).filter(Boolean).filter(notCurrent);
+        const active = new Set(activePool.map((q) => q.number));
+        return meta.seen
+            .map((n) => qByNumber[n])
+            .filter(Boolean)
+            .filter((q) => active.has(q.number))
+            .filter(notCurrent);
     }
 
-    function defaultPool() {
-        const seen = new Set(meta.seen);
+    /* ---------------- spaced repetition ----------------
+       Every question carries {itv, due} counted in total questions
+       answered (the global clock). Correct answers push it further
+       out each time (itv * ease); a miss pulls it back close. The
+       picker serves due reviews sometimes, fresh questions otherwise,
+       so mastered material fades and shaky material keeps returning. */
+
+    function updateSR(number, correct) {
+        meta.totalAnswered++;
+        const e = meta.sr[number] || { itv: 0, due: 0 };
+        e.itv = correct
+            ? e.itv
+                ? Math.round(e.itv * CONFIG.srEase)
+                : CONFIG.srFirstInterval
+            : CONFIG.srWrongInterval;
+        e.due = meta.totalAnswered + e.itv;
+        meta.sr[number] = e;
+    }
+
+    function duePool() {
+        // reviews may repeat within a run — that's the point — but not
+        // so soon that the answer is still in short-term memory
+        const recent = new Set(run.asked.slice(-8));
+        return activePool
+            .filter((q) => {
+                const e = meta.sr[q.number];
+                return (
+                    e && e.due <= meta.totalAnswered && !recent.has(q.number)
+                );
+            })
+            .sort((a, b) => meta.sr[a.number].due - meta.sr[b.number].due);
+    }
+
+    function pickNextQuestion() {
         const asked = new Set(run.asked);
-        let pool = domain1_questions.filter(
+        const seen = new Set(meta.seen);
+        const due = duePool();
+        const fresh = activePool.filter(
             (q) => !seen.has(q.number) && !asked.has(q.number)
         );
-        if (!pool.length) {
-            pool = domain1_questions.filter((q) => !asked.has(q.number));
+
+        // serve a due review sometimes — always if nothing fresh is left
+        if (due.length && (!fresh.length || Math.random() < CONFIG.reviewChance)) {
+            return due[randInt(0, Math.min(due.length, 5) - 1)]; // most overdue few
         }
-        if (!pool.length) {
-            run.asked = []; // full sweep — start over
-            pool = domain1_questions.slice();
+        if (fresh.length) return pickFrom(fresh);
+
+        // everything seen, nothing due: whatever comes due soonest
+        const rest = activePool.filter((q) => !asked.has(q.number));
+        if (rest.length) {
+            return rest.sort(
+                (a, b) =>
+                    (meta.sr[a.number] ? meta.sr[a.number].due : 0) -
+                    (meta.sr[b.number] ? meta.sr[b.number].due : 0)
+            )[0];
         }
-        return pool;
+
+        run.asked = []; // full sweep of the pool — start over
+        return pickFrom(activePool);
     }
 
     /* ---------------- events ---------------- */
@@ -157,7 +239,7 @@ const Game = (() => {
         const ev = run.event ? EVENTS[run.event.id] : null;
         let source = null;
         if (ev && ev.pickQuestion) source = ev.pickQuestion(gameApi);
-        if (!source) source = pickFrom(defaultPool());
+        if (!source) source = pickNextQuestion();
 
         let choices = source.answers.map((a) => ({
             option: a.option,
@@ -175,8 +257,9 @@ const Game = (() => {
             eliminated: [],
         };
         run.answeredCurrent = false;
+        run.qStart = Date.now();
         disarmItem();
-        if (!run.asked.includes(source.number)) run.asked.push(source.number);
+        run.asked.push(source.number); // chronological — tail = most recent
         if (run.event) run.event.remaining--;
 
         save();
@@ -218,13 +301,36 @@ const Game = (() => {
 
     function onCorrect(clickEvent) {
         run.streak++;
-        const xpGain =
+        run.bestStreak = Math.max(run.bestStreak || 0, run.streak);
+        let xpGain =
             CONFIG.xpBase + Math.min(run.streak - 1, CONFIG.xpStreakBonusCap);
-        const goldGain =
+        let goldGain =
             CONFIG.goldBase + Math.min(run.streak - 1, CONFIG.goldStreakBonusCap);
+
+        // answered fast? bonus XP
+        const seconds = (Date.now() - run.qStart) / 1000;
+        const speed = CONFIG.speedBonus(seconds);
+        if (speed) xpGain += speed.xp;
+
+        // Star Bite: next correct answer is worth double XP
+        const doubled = !!run.buffs.double_xp;
+        if (doubled) {
+            delete run.buffs.double_xp;
+            xpGain *= 2;
+        }
+
+        // event reward hook (Gold Rush, Brain Wave, ...)
+        const ev = run.event ? EVENTS[run.event.id] : null;
+        if (ev && ev.modifyRewards) {
+            const r = ev.modifyRewards(gameApi, { xp: xpGain, gold: goldGain });
+            xpGain = r.xp;
+            goldGain = r.gold;
+        }
+
         run.xp += xpGain;
         run.gold += goldGain;
         run.correct++;
+        updateSR(run.q.number, true);
         finishQuestion(run.q.correct);
 
         // a correct answer clears the redemption debt
@@ -237,6 +343,29 @@ const Game = (() => {
         ]);
         UI.floatDelta(UI.$("#xp-fill").parentElement, "+" + xpGain + " XP", "#6f8fba");
         UI.floatDelta(UI.$("#hud-gold"), "+" + goldGain, "#a87e2f");
+        if (speed) {
+            setTimeout(
+                () =>
+                    UI.floatDelta(
+                        UI.$("#question-card"),
+                        speed.label + " +" + speed.xp + " XP",
+                        "#a37bb8"
+                    ),
+                180
+            );
+        }
+        if (doubled) {
+            setTimeout(
+                () =>
+                    UI.floatDelta(
+                        UI.$("#xp-fill").parentElement,
+                        "⭐ DOUBLE XP!",
+                        "#e5a83e"
+                    ),
+                360
+            );
+        }
+        UI.renderBuffs(run);
         UI.popChip("#hud-streak");
         UI.popChip("#hud-gold");
         UI.reactFace(run.streak >= 5 ? "🤩" : "😋");
@@ -275,6 +404,7 @@ const Game = (() => {
 
         finishQuestion(pickedOption);
         run.missed++;
+        updateSR(run.q.number, false);
         if (!meta.missed.includes(run.q.number)) meta.missed.push(run.q.number);
 
         if (run.buffs.streak_protector) {
@@ -469,8 +599,29 @@ const Game = (() => {
 
     /* ---------------- run lifecycle ---------------- */
 
-    function startRun() {
+    function showSetsScreen() {
+        if (!meta.selectedSets) meta.selectedSets = QUESTION_SETS.map((s) => s.id);
+        UI.renderSets(meta.selectedSets, toggleSet);
+        UI.showScreen("screen-sets");
+    }
+
+    function toggleSet(id) {
+        const i = meta.selectedSets.indexOf(id);
+        if (i >= 0) meta.selectedSets.splice(i, 1);
+        else meta.selectedSets.push(id);
+        save();
+        UI.renderSets(meta.selectedSets, toggleSet);
+    }
+
+    function beginRun() {
+        if (!meta.selectedSets || !meta.selectedSets.length) {
+            UI.replayAnim(UI.$("#btn-run-go"), "shake");
+            UI.toast("🍲 The pot is empty — pick at least one set first!");
+            return;
+        }
         run = newRun();
+        run.setIds = meta.selectedSets.slice();
+        rebuildActivePool();
         UI.showScreen("screen-run");
         refreshHUD();
         nextQuestion();
@@ -509,14 +660,7 @@ const Game = (() => {
         )
             return;
         localStorage.removeItem(STORAGE_KEY);
-        meta = {
-            gold: 0,
-            foods: [],
-            seen: [],
-            missed: [],
-            runs: 0,
-            best: { level: 0, correct: 0 },
-        };
+        meta = freshMeta();
         run = null;
         goHome();
     }
@@ -535,6 +679,15 @@ const Game = (() => {
         seenPool,
         visibleWrongOptions,
         eliminateOptions,
+        heal(n) {
+            run.hp = Math.min(CONFIG.maxHp, run.hp + n);
+            UI.floatDelta(
+                UI.$("#hp-fill").parentElement,
+                "+" + n + " HP",
+                "#7a9660"
+            );
+            refreshHUD();
+        },
     };
 
     /* ---------------- boot ---------------- */
@@ -555,8 +708,10 @@ const Game = (() => {
             UI.closeModal(howto)
         );
 
-        UI.$("#btn-start").addEventListener("click", startRun);
-        UI.$("#btn-again").addEventListener("click", startRun);
+        UI.$("#btn-start").addEventListener("click", showSetsScreen);
+        UI.$("#btn-run-go").addEventListener("click", beginRun);
+        UI.$("#btn-sets-back").addEventListener("click", goHome);
+        UI.$("#btn-again").addEventListener("click", beginRun);
         UI.$("#btn-home").addEventListener("click", goHome);
         UI.$("#btn-reset").addEventListener("click", resetProgress);
         UI.$("#btn-next").addEventListener("click", nextQuestion);
@@ -572,6 +727,7 @@ const Game = (() => {
 
         if (run && run.active && run.q) {
             // resume mid-run after a refresh
+            rebuildActivePool();
             UI.showScreen("screen-run");
             refreshHUD();
             UI.renderQuestion(run);

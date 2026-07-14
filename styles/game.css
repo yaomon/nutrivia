@@ -274,6 +274,7 @@
 
 .choice.correct {
     background-color: var(--sage);
+    --side: var(--sage-side);
     color: #fff8ef;
     text-shadow: 0 1px 2px rgba(93, 68, 51, 0.3);
 }
@@ -283,6 +284,7 @@
 
 .choice.incorrect {
     background-color: var(--red);
+    --side: var(--red-side);
     color: #fff8ef;
     text-shadow: 0 1px 2px rgba(93, 68, 51, 0.3);
 }
@@ -361,7 +363,89 @@
 /* the item awaiting its confirming second tap */
 .item-btn.armed {
     background-color: var(--mustard);
+    --side: var(--mustard-side);
     animation: wobble 1.1s ease-in-out infinite;
+}
+
+/* ---------------- PICK YOUR MENU (question sets) ---------------- */
+#screen-sets {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 22px;
+}
+
+.set-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: min(440px, 100%);
+}
+
+.set-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    text-align: left;
+}
+
+/* in the pot: raised sage clay */
+.set-card.selected {
+    background-color: var(--sage);
+    --side: var(--sage-side);
+    color: #fff8ef;
+    text-shadow: 0 1px 2px rgba(93, 68, 51, 0.3);
+}
+.set-card.selected .set-desc {
+    color: rgba(255, 248, 239, 0.85);
+}
+
+/* left out: smooshed flat into the slab */
+.set-card.unselected {
+    background-color: var(--clay-deep);
+    background-image: var(--blotch);
+    background-blend-mode: soft-light;
+    color: var(--ink-soft);
+    transform: scale(0.97);
+    box-shadow: inset 3px 4px 8px rgba(93, 68, 51, 0.22),
+        inset -2px -3px 7px var(--hi-soft);
+}
+
+.set-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.set-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.set-name {
+    font-weight: 900;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.set-desc {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+}
+
+.set-check {
+    font-size: 1.3rem;
+    font-weight: 900;
+    flex-shrink: 0;
+    width: 28px;
+    text-align: center;
+}
+
+.set-total {
+    font-family: "Caveat", cursive;
+    font-size: 1.35rem;
+    color: var(--ink-soft);
 }
 
 .item-btn {
@@ -449,10 +533,16 @@
 
 /* ---------------- SUMMARY ---------------- */
 .summary-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(130px, 180px));
+    display: flex;
+    flex-wrap: wrap;
     gap: 16px;
     justify-content: center;
+    max-width: 420px;
+}
+
+.summary-stat {
+    flex: 1 1 120px;
+    max-width: 180px;
 }
 
 .summary-stat {

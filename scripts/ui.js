@@ -34,6 +34,8 @@ const UI = (() => {
         "Items help when you're stuck — tap one before answering.",
         "Your 💰 gold is safe forever, even when a run ends.",
         "Wrong answers cost 5 ❤️ — the run ends when HP hits zero.",
+        "Answer within a few seconds for bonus ⚡ XP!",
+        "Questions you've mastered come back less often — new ones mix in.",
     ];
 
     /* ---------- helpers ---------- */
@@ -466,7 +468,44 @@ const UI = (() => {
         $("#sum-level").textContent = run.level;
         $("#sum-correct").textContent = run.correct;
         $("#sum-missed").textContent = run.missed;
+        $("#sum-streak").textContent = "🔥 " + (run.bestStreak || 0);
         $("#sum-gold").textContent = run.gold;
+    }
+
+    /* ---------- pick-your-menu (question sets) ---------- */
+
+    function renderSets(selectedIds, onToggle) {
+        const list = $("#set-list");
+        list.innerHTML = "";
+        let total = 0;
+        QUESTION_SETS.forEach((set) => {
+            const selected = selectedIds.includes(set.id);
+            const count = setQuestionCount(set);
+            if (selected) total += count;
+            const btn = document.createElement("button");
+            btn.className =
+                "set-card clay clay-btn " +
+                (selected ? "selected" : "unselected");
+            btn.innerHTML =
+                '<span class="set-icon">' +
+                set.icon +
+                '</span><div class="set-info"><div class="set-name">' +
+                set.name +
+                '</div><div class="set-desc">' +
+                set.desc +
+                " · " +
+                count +
+                ' questions</div></div><span class="set-check">' +
+                (selected ? "✔" : "") +
+                "</span>";
+            btn.addEventListener("click", () => onToggle(set.id));
+            list.appendChild(btn);
+            knead(btn);
+        });
+        $("#set-total").textContent =
+            total > 0
+                ? total + " questions in the pot"
+                : "the pot is empty — pick at least one!";
     }
 
     return {
@@ -498,5 +537,6 @@ const UI = (() => {
         showLevelUp,
         showFood,
         renderSummary,
+        renderSets,
     };
 })();

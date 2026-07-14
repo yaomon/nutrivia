@@ -50,4 +50,21 @@ const ITEMS = {
         buff: "second_chance",
         canUse: (game) => !game.run.buffs.second_chance,
     },
+    warm_broth: {
+        icon: "🍵",
+        name: "Warm Broth",
+        desc: "Sip it to smooth 5 HP back on.",
+        kind: "instant",
+        canUse: (game) => game.run.hp < CONFIG.maxHp,
+        use: (game) => game.heal(5),
+    },
+    star_bite: {
+        icon: "⭐",
+        name: "Star Bite",
+        desc: "Your next correct answer earns double XP.",
+        activeText: "⭐ Star Bite eaten — your next correct answer is worth double XP!",
+        kind: "buff",
+        buff: "double_xp",
+        canUse: (game) => !game.run.buffs.double_xp,
+    },
 };
