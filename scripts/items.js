@@ -20,7 +20,7 @@ const ITEMS = {
         },
     },
     single_elim: {
-        icon: "🫳",
+        icon: "🤏",
         name: "Pinch Off",
         desc: "Flick one wrong answer off the board.",
         kind: "instant",

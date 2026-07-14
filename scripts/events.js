@@ -21,7 +21,7 @@ const EVENTS = {
         pickQuestion: (game) => game.pickFrom(game.seenPool()),
     },
     coin_flip: {
-        icon: "🪙",
+        icon: "💰",
         name: "Coin Flip",
         desc: "every question has only two choices",
         eligible: () => true,

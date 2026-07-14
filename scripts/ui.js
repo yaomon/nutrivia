@@ -27,7 +27,124 @@ const UI = (() => {
         "Wonderful!",
     ];
 
+    const HOME_TIPS = [
+        "The 🔥 streak makes every right answer worth more — protect it!",
+        "Missed a question? It comes back later. Beat it to clear it.",
+        "Level up during a run to win items, gold, and new foods.",
+        "Items help when you're stuck — tap one before answering.",
+        "Your 💰 gold is safe forever, even when a run ends.",
+        "Wrong answers cost 5 ❤️ — the run ends when HP hits zero.",
+    ];
+
     /* ---------- helpers ---------- */
+
+    // Hand-form a clay piece: every element gets its own slightly
+    // uneven corners and a tiny off-true tilt, like it was pinched
+    // into shape rather than machined.
+    function knead(el) {
+        if (
+            el.classList.contains("chip") ||
+            el.classList.contains("buff-chip") ||
+            el.classList.contains("bar")
+        )
+            return; // pills stay pills
+
+        const isBlob =
+            el.classList.contains("avatar") ||
+            el.classList.contains("choice-let") ||
+            el.classList.contains("level-badge") ||
+            el.classList.contains("food-pedestal");
+
+        if (isBlob) {
+            const r = () => 42 + Math.random() * 16;
+            const a = r(),
+                b = r(),
+                c = r(),
+                d = r();
+            el.style.borderRadius =
+                a + "% " + (100 - a) + "% " + b + "% " + (100 - b) + "% / " +
+                c + "% " + d + "% " + (100 - d) + "% " + (100 - c) + "%";
+        } else {
+            const r = () => (20 + Math.random() * 12).toFixed(1) + "px";
+            el.style.borderRadius =
+                r() + " " + r() + " " + r() + " " + r() + " / " +
+                r() + " " + r() + " " + r() + " " + r();
+        }
+        el.style.rotate = ((Math.random() * 2 - 1) * 0.5).toFixed(2) + "deg";
+    }
+
+    function kneadAll(root) {
+        (root || document)
+            .querySelectorAll(".clay, .clay-inset")
+            .forEach(knead);
+    }
+
+    // split a heading into letters, each placed a little crooked
+    function splitTitle(el) {
+        const text = el.textContent;
+        el.textContent = "";
+        for (const ch of text) {
+            if (ch === " ") {
+                el.append(" ");
+                continue;
+            }
+            const span = document.createElement("span");
+            span.className = "tilt";
+            span.textContent = ch;
+            span.style.setProperty(
+                "--tilt",
+                ((Math.random() * 2 - 1) * 2.5).toFixed(1) + "deg"
+            );
+            span.style.setProperty(
+                "--tilt-y",
+                ((Math.random() * 2 - 1) * 2).toFixed(1) + "px"
+            );
+            el.appendChild(span);
+        }
+    }
+
+    /* ---------- coach toast (one hint at a time, tap to dismiss) ---------- */
+
+    let coachEl = null;
+
+    function toast(text) {
+        if (coachEl) coachEl.remove();
+        const el = document.createElement("div");
+        el.className = "coach clay squish-in";
+        el.textContent = text;
+        document.body.appendChild(el);
+        knead(el);
+        coachEl = el;
+        const dismiss = () => {
+            if (el !== coachEl) return;
+            coachEl = null;
+            el.classList.remove("squish-in");
+            el.classList.add("squish-out");
+            setTimeout(() => el.remove(), 320);
+        };
+        el.addEventListener("click", dismiss);
+        setTimeout(dismiss, 6500);
+    }
+
+    /* ---------- avatar expressions ---------- */
+
+    let faceTimer = null;
+    let baseFace = "👨‍🍳";
+
+    function setBaseFace(face) {
+        baseFace = face;
+        if (!faceTimer) $(".avatar-face").textContent = face;
+    }
+
+    function reactFace(face, ms) {
+        $(".avatar-face").textContent = face;
+        replayAnim($(".avatar"), "squish-pop");
+        clearTimeout(faceTimer);
+        faceTimer = setTimeout(() => {
+            faceTimer = null;
+            $(".avatar-face").textContent = baseFace;
+        }, ms || 1200);
+    }
 
     function showScreen(id) {
         $$(".screen").forEach((s) => s.classList.toggle("hidden", s.id !== id));
@@ -95,6 +212,8 @@ const UI = (() => {
         $("#home-best").textContent = meta.best.level
             ? "Lv " + meta.best.level + " · " + meta.best.correct + "✓"
             : "—";
+        $("#home-tip").textContent =
+            "💡 " + HOME_TIPS[Math.floor(Math.random() * HOME_TIPS.length)];
     }
 
     /* ---------- HUD ---------- */
@@ -105,11 +224,18 @@ const UI = (() => {
             Math.max(0, (run.hp / CONFIG.maxHp) * 100) + "%";
         $("#hp-label").textContent =
             "HP " + Math.max(0, run.hp) + "/" + CONFIG.maxHp;
+        $("#hp-fill").parentElement.classList.toggle(
+            "low",
+            run.hp > 0 && run.hp <= CONFIG.hpLossOnMiss
+        );
+        setBaseFace(
+            run.hp <= 0 ? "😵" : run.hp <= CONFIG.hpLossOnMiss ? "😰" : "👨‍🍳"
+        );
         $("#xp-fill").style.width =
             Math.min(100, (run.xp / xpNeeded) * 100) + "%";
         $("#xp-label").textContent = "XP " + run.xp + "/" + xpNeeded;
         $("#hud-streak").textContent = "🔥 " + run.streak;
-        $("#hud-gold").textContent = "🪙 " + run.gold;
+        $("#hud-gold").textContent = "💰 " + run.gold;
     }
 
     function popChip(sel) {
@@ -144,9 +270,13 @@ const UI = (() => {
                 btn.classList.add("eliminated");
             }
             btn.style.animationDelay = 0.05 * i + "s";
+            // re-mold the clay for every fresh question
+            knead(btn);
+            knead(btn.querySelector(".choice-let"));
             replayAnim(btn, "squish-in");
         });
 
+        knead($("#question-card"));
         replayAnim($("#question-card"), "squish-in");
         $("#btn-next").classList.add("hidden");
     }
@@ -202,6 +332,7 @@ const UI = (() => {
             btn.disabled = !canUseFn(id);
             btn.addEventListener("click", () => onUse(id, btn));
             bar.appendChild(btn);
+            knead(btn);
         });
     }
 
@@ -266,6 +397,7 @@ const UI = (() => {
                 onPick(i);
             });
             wrap.appendChild(btn);
+            knead(btn);
         });
         $("#modal-levelup").classList.remove("hidden");
         replayAnim($("#modal-levelup .modal-card"), "squish-in");
@@ -292,6 +424,7 @@ const UI = (() => {
 
     function renderSummary(run, fled) {
         $("#summary-title").textContent = fled ? "Run Ended" : "Run Over";
+        splitTitle($("#summary-title"));
         $("#summary-sub").textContent = fled
             ? "you tapped out — the clay remembers"
             : "your health crumbled away";
@@ -308,6 +441,12 @@ const UI = (() => {
         replayAnim,
         floatDelta,
         fireworks,
+        knead,
+        kneadAll,
+        splitTitle,
+        toast,
+        reactFace,
+        setBaseFace,
         renderHome,
         renderHUD,
         popChip,

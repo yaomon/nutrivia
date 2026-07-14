@@ -1,12 +1,16 @@
 /* ============================================================
    GAME LAYOUT — screens, HUD, question card, choices, modals.
    Brutalist bones (huge type, raw stacked blocks) rendered in clay.
+   Mobile-first: this is a PWA that lives on phones.
    ============================================================ */
 
 .screen {
     max-width: 680px;
     margin: 0 auto;
-    padding: 24px 18px 40px;
+    padding: calc(18px + env(safe-area-inset-top, 0px))
+        max(16px, env(safe-area-inset-right, 0px))
+        calc(32px + env(safe-area-inset-bottom, 0px))
+        max(16px, env(safe-area-inset-left, 0px));
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -19,19 +23,25 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 26px;
+    gap: 24px;
 }
 
 .game-title {
-    font-size: clamp(3.2rem, 13vw, 5.5rem);
+    font-size: clamp(3rem, 13vw, 5.5rem);
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: -0.03em;
     line-height: 0.95;
-    text-shadow: 0 2px 1px var(--hi-soft), 0 -1px 1px rgba(93, 68, 51, 0.25);
+    text-shadow: 0 2px 1px var(--hi-soft), 0 -1px 1px rgba(93, 68, 51, 0.18);
 }
 .game-title.small {
-    font-size: clamp(2.4rem, 9vw, 3.6rem);
+    font-size: clamp(2.2rem, 9vw, 3.6rem);
+}
+/* each letter gets its own hand-placed tilt (set by JS) */
+.game-title .tilt {
+    display: inline-block;
+    rotate: var(--tilt, 0deg);
+    translate: 0 var(--tilt-y, 0px);
 }
 
 .tagline {
@@ -58,11 +68,12 @@
 }
 
 .btn-hero {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 0.02em;
-    padding: 22px 54px;
+    padding: 20px 48px;
+    animation: breathe 3.4s ease-in-out infinite;
 }
 
 .btn-quiet {
@@ -72,11 +83,27 @@
     padding: 10px 22px;
 }
 
+.home-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* ambient rotating tip on the home screen */
+.home-tip {
+    font-family: "Caveat", cursive;
+    font-size: 1.3rem;
+    line-height: 1.25;
+    color: var(--ink-soft);
+    max-width: 340px;
+}
+
 /* ---------------- HUD ---------------- */
 .hud {
     display: grid;
     grid-template-columns: auto 1fr auto;
-    gap: 16px;
+    gap: 14px;
     align-items: center;
 }
 
@@ -88,6 +115,10 @@
     display: grid;
     place-items: center;
     font-size: 2.1rem;
+}
+
+.avatar-face {
+    display: inline-block;
 }
 
 .level-badge {
@@ -122,9 +153,9 @@
     height: 100%;
     border-radius: 999px;
     transition: width 0.4s var(--bounce);
-    box-shadow: inset 0 3px 3px rgba(255, 252, 245, 0.45),
-        inset 0 -4px 5px rgba(93, 68, 51, 0.28),
-        2px 2px 4px rgba(93, 68, 51, 0.25);
+    box-shadow: inset 0 2px 2px rgba(255, 252, 245, 0.35),
+        inset 0 -3px 4px rgba(93, 68, 51, 0.22),
+        1px 2px 3px rgba(93, 68, 51, 0.18);
 }
 .hp-fill {
     background-color: var(--red);
@@ -133,6 +164,20 @@
 .xp-fill {
     background-color: var(--blue);
     width: 0%;
+}
+
+/* low HP: the bar throbs like a worried heartbeat */
+.bar.low .bar-fill {
+    animation: hp-throb 0.9s ease-in-out infinite;
+}
+@keyframes hp-throb {
+    0%,
+    100% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.3);
+    }
 }
 
 .bar-label {
@@ -168,12 +213,12 @@
     font-weight: 800;
     font-size: 0.95rem;
     text-align: center;
-    transform: rotate(-0.8deg);
+    animation: sway 4.5s ease-in-out infinite;
 }
 
 /* ---------------- QUESTION ---------------- */
 .question-card {
-    padding: 26px 26px 30px;
+    padding: 24px 24px 28px;
 }
 
 .q-meta {
@@ -186,7 +231,7 @@
 }
 
 .q-text {
-    font-size: 1.18rem;
+    font-size: 1.15rem;
     font-weight: 700;
     line-height: 1.45;
     text-shadow: 0 1px 0 var(--hi-soft);
@@ -196,7 +241,7 @@
 .choices {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 15px;
 }
 
 .choice {
@@ -208,6 +253,7 @@
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.35;
+    min-height: 60px;
 }
 
 .choice-let {
@@ -247,12 +293,13 @@
 .choice.eliminated {
     pointer-events: none;
     background-color: var(--clay-deep);
-    background-image: none;
+    background-image: var(--blotch);
+    background-blend-mode: soft-light;
     color: var(--ink-soft);
     opacity: 0.65;
     transform: scale(0.96, 0.88);
-    box-shadow: inset 4px 5px 9px rgba(93, 68, 51, 0.25),
-        inset -3px -4px 8px var(--hi-soft);
+    box-shadow: inset 3px 4px 8px rgba(93, 68, 51, 0.22),
+        inset -2px -3px 7px var(--hi-soft);
 }
 .choice.eliminated .choice-let {
     background-color: var(--clay-deep);
@@ -271,6 +318,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    flex-wrap: wrap;
 }
 
 .item-bar {
@@ -331,6 +379,35 @@
     padding: 14px 26px;
 }
 
+.btn-round {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: var(--ink-soft);
+    padding: 0;
+}
+
+/* ---------------- COACH TOAST (one-time hints) ---------------- */
+.coach {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    margin: 0 auto;
+    width: fit-content;
+    max-width: min(420px, calc(100vw - 32px));
+    z-index: 700;
+    padding: 13px 22px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.4;
+    text-align: center;
+    cursor: pointer;
+}
+
 /* ---------------- SUMMARY ---------------- */
 .summary-grid {
     display: grid;
@@ -372,7 +449,9 @@
 
 .modal-card {
     width: min(520px, 100%);
-    padding: 30px 26px 28px;
+    max-height: calc(100dvh - 40px);
+    overflow-y: auto;
+    padding: 28px 24px 26px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -381,11 +460,11 @@
 }
 
 .modal-title {
-    font-size: 2rem;
+    font-size: 1.9rem;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: -0.02em;
-    text-shadow: 0 2px 1px var(--hi-soft), 0 -1px 1px rgba(93, 68, 51, 0.25);
+    text-shadow: 0 2px 1px var(--hi-soft), 0 -1px 1px rgba(93, 68, 51, 0.18);
 }
 
 .modal-sub {
@@ -429,6 +508,28 @@
     line-height: 1.35;
 }
 
+/* how-to-play */
+.howto-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.howto-line {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.howto-emoji {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
 /* food reward */
 .food-pedestal {
     width: 160px;
@@ -442,7 +543,7 @@
     width: 110px;
     height: 110px;
     object-fit: contain;
-    filter: drop-shadow(3px 6px 5px rgba(93, 68, 51, 0.35));
+    filter: drop-shadow(3px 6px 5px rgba(93, 68, 51, 0.3));
     animation: wobble 3s ease-in-out infinite;
 }
 
@@ -489,20 +590,67 @@
     text-transform: uppercase;
 }
 
-/* ---------------- RESPONSIVE ---------------- */
+/* ---------------- SMALL PHONES ---------------- */
 @media (max-width: 480px) {
+    .screen {
+        gap: 16px;
+    }
     .hud {
         grid-template-columns: auto 1fr;
+        gap: 12px;
     }
     .chips {
         grid-column: 1 / -1;
         flex-direction: row;
         justify-content: center;
+        gap: 12px;
     }
     .avatar {
-        width: 60px;
-        height: 60px;
+        width: 58px;
+        height: 58px;
         font-size: 1.7rem;
+    }
+    .level-badge {
+        min-width: 28px;
+        height: 28px;
+        font-size: 0.85rem;
+        bottom: -6px;
+        right: -8px;
+    }
+    .bar {
+        height: 24px;
+    }
+    .question-card {
+        padding: 20px 18px 22px;
+    }
+    .q-text {
+        font-size: 1.05rem;
+    }
+    .choices {
+        gap: 12px;
+    }
+    .choice {
+        padding: 12px 14px;
+        gap: 12px;
+        font-size: 0.95rem;
+    }
+    .choice-let {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+    }
+    .item-btn {
+        width: 52px;
+        height: 52px;
+        font-size: 1.35rem;
+    }
+    .btn-hero {
+        font-size: 1.3rem;
+        padding: 18px 40px;
+    }
+    .btn-next {
+        font-size: 0.95rem;
+        padding: 12px 20px;
     }
     .summary-grid {
         grid-template-columns: repeat(2, 1fr);

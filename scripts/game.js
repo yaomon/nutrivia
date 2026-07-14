@@ -18,7 +18,16 @@ const Game = (() => {
         missed: [], // question numbers currently owed a redemption
         runs: 0,
         best: { level: 0, correct: 0 },
+        hintsSeen: {}, // one-time coach hints already shown
     };
+
+    // show a coach hint exactly once, ever
+    function hint(id, text) {
+        if (meta.hintsSeen[id]) return;
+        meta.hintsSeen[id] = true;
+        save();
+        UI.toast(text);
+    }
 
     let run = null;
 
@@ -40,6 +49,7 @@ const Game = (() => {
             sinceEvent: 0,
             q: null, // current question snapshot
             answeredCurrent: false,
+            lowHpWarned: false,
         };
     }
 
@@ -120,6 +130,10 @@ const Game = (() => {
             id: eligible[randInt(0, eligible.length - 1)],
             remaining: CONFIG.eventDuration,
         };
+        hint(
+            "events",
+            "⚡ An event! These twist the next few questions — the banner tells you how."
+        );
     }
 
     /* ---------------- question flow ---------------- */
@@ -169,6 +183,13 @@ const Game = (() => {
         UI.renderEventBanner(run);
         renderItemBar();
         UI.renderBuffs(run);
+
+        if (Object.values(run.items).some((n) => n > 0)) {
+            hint(
+                "items",
+                "🎒 See the button below? That's an item — tap it before answering for a boost."
+            );
+        }
     }
 
     /* ---------------- answering ---------------- */
@@ -212,6 +233,22 @@ const Game = (() => {
         UI.floatDelta(UI.$("#hud-gold"), "+" + goldGain, "#a87e2f");
         UI.popChip("#hud-streak");
         UI.popChip("#hud-gold");
+        UI.reactFace(run.streak >= 5 ? "🤩" : "😋");
+
+        // streak milestones get extra fanfare
+        if (run.streak === 5 || run.streak === 10) {
+            UI.floatDelta(
+                UI.$("#hud-streak"),
+                run.streak === 5 ? "🔥 ON FIRE!" : "🔥🔥 UNSTOPPABLE!",
+                "#d95c4c"
+            );
+            const rect = UI.$("#hud-streak").getBoundingClientRect();
+            UI.fireworks(
+                rect.left + rect.width / 2 + window.scrollX,
+                rect.top + rect.height / 2 + window.scrollY,
+                ["#d95c4c", "#e5a83e"]
+            );
+        }
 
         refreshHUD();
         save();
@@ -238,6 +275,7 @@ const Game = (() => {
             delete run.buffs.streak_protector;
             UI.renderBuffs(run);
             UI.floatDelta(UI.$("#question-card"), "🛡️ protected!", "#6f8fba");
+            UI.reactFace("😅");
         } else {
             run.streak = 0;
             run.hp -= CONFIG.hpLossOnMiss;
@@ -253,10 +291,20 @@ const Game = (() => {
                 "#c04a3b"
             );
             UI.replayAnim(UI.$("#question-card"), "shake");
+            UI.reactFace("😖");
+            hint(
+                "first_miss",
+                "Ouch, −5 ❤️! Missed questions come back around later — get them right to clear them."
+            );
         }
 
         refreshHUD();
         save();
+
+        if (run.hp > 0 && run.hp <= CONFIG.hpLossOnMiss && !run.lowHpWarned) {
+            run.lowHpWarned = true;
+            UI.toast("😰 Careful — one more miss ends the run!");
+        }
 
         if (run.hp <= 0) {
             // dead — no next question, just a beat to see the reveal
@@ -318,7 +366,7 @@ const Game = (() => {
                 },
             },
             {
-                icon: "🪙",
+                icon: "💰",
                 name: "Gold Chunk",
                 desc: "+" + CONFIG.goldRewardAmount + " gold, right now",
                 apply: () => {
@@ -399,6 +447,10 @@ const Game = (() => {
         UI.showScreen("screen-run");
         refreshHUD();
         nextQuestion();
+        hint(
+            "run_basics",
+            "🧠 Answer to earn 💙 XP and 💰 gold. Wrong answers cost 5 ❤️ — at zero, the run ends!"
+        );
     }
 
     function endRun(fled) {
@@ -462,6 +514,23 @@ const Game = (() => {
 
     function init() {
         load();
+
+        // hand-form every clay piece and hand-place the title letters
+        UI.kneadAll();
+        UI.splitTitle(UI.$("#screen-home .game-title"));
+
+        const howto = UI.$("#modal-howto");
+        UI.$("#btn-howto").addEventListener("click", () => {
+            howto.classList.remove("hidden");
+            UI.replayAnim(howto.querySelector(".modal-card"), "squish-in");
+        });
+        UI.$("#btn-howto-run").addEventListener("click", () => {
+            howto.classList.remove("hidden");
+            UI.replayAnim(howto.querySelector(".modal-card"), "squish-in");
+        });
+        UI.$("#btn-howto-ok").addEventListener("click", () =>
+            howto.classList.add("hidden")
+        );
 
         UI.$("#btn-start").addEventListener("click", startRun);
         UI.$("#btn-again").addEventListener("click", startRun);

@@ -17,6 +17,11 @@
             rel="stylesheet"
         />
         <link rel="icon" href="images/logo32.png" type="image/x-icon" />
+        <meta name="theme-color" content="#e7d6bf" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <link rel="apple-touch-icon" href="images/logo192.png" />
         <link rel="stylesheet" href="styles/clay.css" />
         <link rel="stylesheet" href="styles/game.css" />
         <title>Nutrivia</title>
@@ -40,7 +45,7 @@
             </div>
             <div class="home-stats">
                 <div class="home-stat clay-inset">
-                    <span class="home-stat-icon">🪙</span>
+                    <span class="home-stat-icon">💰</span>
                     <span id="home-gold">0</span>
                 </div>
                 <div class="home-stat clay-inset">
@@ -55,16 +60,22 @@
             <button id="btn-start" class="clay clay-btn btn-hero red">
                 Start Run
             </button>
-            <button id="btn-reset" class="clay clay-btn btn-quiet">
-                reset progress
-            </button>
+            <div id="home-tip" class="home-tip"></div>
+            <div class="home-links">
+                <button id="btn-howto" class="clay clay-btn btn-quiet">
+                    ❓ how to play
+                </button>
+                <button id="btn-reset" class="clay clay-btn btn-quiet">
+                    reset progress
+                </button>
+            </div>
         </section>
 
         <!-- ============ RUN ============ -->
         <section id="screen-run" class="screen hidden">
             <header class="hud">
                 <div class="avatar clay">
-                    <span class="avatar-face">🧑‍🍳</span>
+                    <span class="avatar-face">👨‍🍳</span>
                     <span id="hud-level" class="level-badge clay red">1</span>
                 </div>
                 <div class="bars">
@@ -79,7 +90,7 @@
                 </div>
                 <div class="chips">
                     <div id="hud-streak" class="chip clay">🔥 0</div>
-                    <div id="hud-gold" class="chip clay">🪙 0</div>
+                    <div id="hud-gold" class="chip clay">💰 0</div>
                 </div>
             </header>
 
@@ -119,7 +130,18 @@
                     <button id="btn-next" class="clay clay-btn btn-next sage hidden">
                         Next ▶
                     </button>
-                    <button id="btn-flee" class="clay clay-btn btn-quiet">
+                    <button
+                        id="btn-howto-run"
+                        class="clay clay-btn btn-round"
+                        title="How to play"
+                    >
+                        ?
+                    </button>
+                    <button
+                        id="btn-flee"
+                        class="clay clay-btn btn-round"
+                        title="End this run"
+                    >
                         🏳️
                     </button>
                 </div>
@@ -162,6 +184,53 @@
                     now level <span id="levelup-level">2</span> — pick a prize
                 </div>
                 <div id="reward-choices" class="reward-choices"></div>
+            </div>
+        </div>
+
+        <!-- ============ HOW TO PLAY MODAL ============ -->
+        <div id="modal-howto" class="modal hidden">
+            <div class="modal-card clay">
+                <h2 class="modal-title">How to Play</h2>
+                <div class="howto-list">
+                    <div class="howto-line">
+                        <span class="howto-emoji">🧠</span>
+                        <span
+                            >Answer right to earn 💙 XP and 💰 gold. Streaks 🔥
+                            make every answer worth more.</span
+                        >
+                    </div>
+                    <div class="howto-line">
+                        <span class="howto-emoji">❤️</span>
+                        <span
+                            >Wrong answers cost 5 HP. When HP runs out, the run
+                            ends.</span
+                        >
+                    </div>
+                    <div class="howto-line">
+                        <span class="howto-emoji">🎁</span>
+                        <span
+                            >Fill the XP bar to level up and pick a prize —
+                            items, gold, or a new food.</span
+                        >
+                    </div>
+                    <div class="howto-line">
+                        <span class="howto-emoji">🎒</span>
+                        <span
+                            >Items sit at the bottom. Tap one before answering
+                            when you need help.</span
+                        >
+                    </div>
+                    <div class="howto-line">
+                        <span class="howto-emoji">🍱</span>
+                        <span
+                            >Gold and your food collection are yours to keep,
+                            run after run.</span
+                        >
+                    </div>
+                </div>
+                <button id="btn-howto-ok" class="clay clay-btn sage">
+                    Got it!
+                </button>
             </div>
         </div>
 
