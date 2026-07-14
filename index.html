@@ -98,8 +98,7 @@
 
             <main id="question-card" class="question-card clay">
                 <div class="q-meta">
-                    <span id="q-num" class="q-num">#1</span>
-                    <span id="q-count" class="q-count">Q1</span>
+                    <span id="q-num" class="q-num">Question 1</span>
                 </div>
                 <p id="q-text" class="q-text"></p>
             </main>
@@ -123,8 +122,14 @@
                 </button>
             </div>
 
+            <div id="item-hint" class="clay item-hint hidden"></div>
             <footer class="run-footer">
-                <div id="item-bar" class="item-bar"></div>
+                <div class="item-tray">
+                    <div id="item-tray-label" class="tray-label hidden">
+                        your items — tap one
+                    </div>
+                    <div id="item-bar" class="item-bar"></div>
+                </div>
                 <div id="buff-chips" class="buff-chips"></div>
                 <div class="footer-right">
                     <button id="btn-next" class="clay clay-btn btn-next sage hidden">
@@ -139,10 +144,10 @@
                     </button>
                     <button
                         id="btn-flee"
-                        class="clay clay-btn btn-round"
+                        class="clay clay-btn btn-quiet"
                         title="End this run"
                     >
-                        🏳️
+                        🏳️ quit
                     </button>
                 </div>
             </footer>
@@ -216,8 +221,8 @@
                     <div class="howto-line">
                         <span class="howto-emoji">🎒</span>
                         <span
-                            >Items sit at the bottom. Tap one before answering
-                            when you need help.</span
+                            >Your items live at the bottom left. Tap one to see
+                            what it does, tap it again to use it.</span
                         >
                     </div>
                     <div class="howto-line">

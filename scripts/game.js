@@ -175,6 +175,7 @@ const Game = (() => {
             eliminated: [],
         };
         run.answeredCurrent = false;
+        disarmItem();
         if (!run.asked.includes(source.number)) run.asked.push(source.number);
         if (run.event) run.event.remaining--;
 
@@ -184,10 +185,15 @@ const Game = (() => {
         renderItemBar();
         UI.renderBuffs(run);
 
-        if (Object.values(run.items).some((n) => n > 0)) {
+        // wait until question 2 so this doesn't collide with the
+        // run-basics hint shown at the start of the first run
+        if (
+            run.answered >= 1 &&
+            Object.values(run.items).some((n) => n > 0)
+        ) {
             hint(
                 "items",
-                "🎒 See the button below? That's an item — tap it before answering for a boost."
+                "🎒 You have an item, bottom left! Tap it once to see what it does, tap again to use it."
             );
         }
     }
@@ -317,6 +323,7 @@ const Game = (() => {
         run.answeredCurrent = true;
         run.answered++;
         markSeen(run.q.number);
+        disarmItem();
         UI.revealAnswer(run, pickedOption);
         renderItemBar();
     }
@@ -401,17 +408,37 @@ const Game = (() => {
         return item.canUse ? item.canUse(gameApi) : true;
     }
 
+    // Items take two taps: the first explains what the item does,
+    // the second (on the same item) actually uses it.
+    let armedItem = null;
+
+    function disarmItem() {
+        if (!armedItem) return;
+        armedItem = null;
+        UI.hideItemHint();
+    }
+
     function useItem(id, btnEl) {
         if (!canUseItem(id)) {
             UI.replayAnim(btnEl, "shake");
             return;
         }
         const item = ITEMS[id];
+
+        if (armedItem !== id) {
+            armedItem = id;
+            UI.showItemHint(item);
+            renderItemBar();
+            return;
+        }
+
+        disarmItem();
         run.items[id]--;
         if (item.kind === "instant") {
             item.use(gameApi);
         } else if (item.kind === "buff") {
             run.buffs[item.buff] = true;
+            if (item.activeText) UI.toast(item.activeText);
         }
         UI.renderBuffs(run);
         renderItemBar();
@@ -419,7 +446,7 @@ const Game = (() => {
     }
 
     function renderItemBar() {
-        UI.renderItems(run, canUseItem, useItem);
+        UI.renderItems(run, canUseItem, useItem, armedItem);
     }
 
     // helpers exposed to item/event registries
@@ -520,16 +547,12 @@ const Game = (() => {
         UI.splitTitle(UI.$("#screen-home .game-title"));
 
         const howto = UI.$("#modal-howto");
-        UI.$("#btn-howto").addEventListener("click", () => {
-            howto.classList.remove("hidden");
-            UI.replayAnim(howto.querySelector(".modal-card"), "squish-in");
-        });
-        UI.$("#btn-howto-run").addEventListener("click", () => {
-            howto.classList.remove("hidden");
-            UI.replayAnim(howto.querySelector(".modal-card"), "squish-in");
-        });
+        UI.$("#btn-howto").addEventListener("click", () => UI.openModal(howto));
+        UI.$("#btn-howto-run").addEventListener("click", () =>
+            UI.openModal(howto)
+        );
         UI.$("#btn-howto-ok").addEventListener("click", () =>
-            howto.classList.add("hidden")
+            UI.closeModal(howto)
         );
 
         UI.$("#btn-start").addEventListener("click", startRun);

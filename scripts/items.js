@@ -34,6 +34,8 @@ const ITEMS = {
         icon: "🛡️",
         name: "Streak Shield",
         desc: "Your next miss costs no HP, XP, or streak.",
+        activeText:
+            "🛡️ Streak Shield is on — your next miss won't cost you anything.",
         kind: "buff",
         buff: "streak_protector",
         canUse: (game) => !game.run.buffs.streak_protector,
@@ -42,6 +44,8 @@ const ITEMS = {
         icon: "🔁",
         name: "Second Chance",
         desc: "Your next miss just removes that answer — pick again.",
+        activeText:
+            "🔁 Second Chance is ready — if you miss, that answer disappears and you pick again.",
         kind: "buff",
         buff: "second_chance",
         canUse: (game) => !game.run.buffs.second_chance,

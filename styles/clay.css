@@ -129,13 +129,14 @@ body::after {
     }
 }
 
-/* pressed = the thumb pushed it into the slab */
+/* pressed = the thumb pushed it into the slab
+   (plain color while pressed — blended textures can flicker when the
+   browser re-rasterizes a transforming layer) */
 .clay-btn:active:not(:disabled),
 .clay-btn.pressed {
     transform: translateY(3px) scale(0.98, 0.965);
     background-color: var(--clay-deep);
-    background-image: var(--blotch);
-    background-blend-mode: soft-light;
+    background-image: none;
     box-shadow:
         /* recess walls */ inset 4px 6px 10px rgba(93, 68, 51, 0.26),
         inset -2px -4px 8px var(--hi-soft),

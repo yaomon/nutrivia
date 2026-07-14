@@ -45,14 +45,14 @@ const UI = (() => {
         if (
             el.classList.contains("chip") ||
             el.classList.contains("buff-chip") ||
-            el.classList.contains("bar")
+            el.classList.contains("bar") ||
+            el.classList.contains("level-badge")
         )
             return; // pills stay pills
 
         const isBlob =
             el.classList.contains("avatar") ||
             el.classList.contains("choice-let") ||
-            el.classList.contains("level-badge") ||
             el.classList.contains("food-pedestal");
 
         if (isBlob) {
@@ -219,7 +219,7 @@ const UI = (() => {
     /* ---------- HUD ---------- */
 
     function renderHUD(run, xpNeeded) {
-        $("#hud-level").textContent = run.level;
+        $("#hud-level").textContent = "Lv " + run.level;
         $("#hp-fill").style.width =
             Math.max(0, (run.hp / CONFIG.maxHp) * 100) + "%";
         $("#hp-label").textContent =
@@ -246,8 +246,7 @@ const UI = (() => {
 
     function renderQuestion(run) {
         const q = run.q;
-        $("#q-num").textContent = "#" + q.number;
-        $("#q-count").textContent = "Q" + (run.answered + 1);
+        $("#q-num").textContent = "Question " + (run.answered + 1);
         $("#q-text").textContent = q.text;
 
         $$(".choice").forEach((btn, i) => {
@@ -313,15 +312,17 @@ const UI = (() => {
 
     /* ---------- items & buffs ---------- */
 
-    function renderItems(run, canUseFn, onUse) {
+    function renderItems(run, canUseFn, onUse, armedId) {
         const bar = $("#item-bar");
         bar.innerHTML = "";
+        let shown = 0;
         Object.entries(run.items).forEach(([id, count]) => {
             if (count <= 0) return;
             const item = ITEMS[id];
             if (!item) return;
             const btn = document.createElement("button");
             btn.className = "item-btn clay clay-btn";
+            if (id === armedId) btn.classList.add("armed");
             btn.title = item.name + " — " + item.desc;
             btn.innerHTML =
                 "<span>" +
@@ -333,7 +334,27 @@ const UI = (() => {
             btn.addEventListener("click", () => onUse(id, btn));
             bar.appendChild(btn);
             knead(btn);
+            shown++;
         });
+        $("#item-tray-label").classList.toggle("hidden", shown === 0);
+    }
+
+    // first tap on an item: explain it right above the item bar
+    function showItemHint(item) {
+        const el = $("#item-hint");
+        el.innerHTML = "";
+        el.append(item.icon + " " + item.name + " — " + item.desc);
+        const use = document.createElement("span");
+        use.className = "item-hint-use";
+        use.textContent = "tap it again to use it!";
+        el.appendChild(use);
+        el.classList.remove("hidden");
+        knead(el);
+        replayAnim(el, "squish-in");
+    }
+
+    function hideItemHint() {
+        $("#item-hint").classList.add("hidden");
     }
 
     function renderBuffs(run) {
@@ -375,6 +396,24 @@ const UI = (() => {
 
     /* ---------- modals ---------- */
 
+    function openModal(modal) {
+        modal.classList.remove("hidden");
+        replayAnim(modal.querySelector(".modal-card"), "squish-in");
+    }
+
+    // squish the card away instead of snapping shut
+    function closeModal(modal, after) {
+        const card = modal.querySelector(".modal-card");
+        if (card.classList.contains("squish-out")) return; // already closing
+        card.classList.remove("squish-in");
+        card.classList.add("squish-out");
+        setTimeout(() => {
+            modal.classList.add("hidden");
+            card.classList.remove("squish-out");
+            if (after) after();
+        }, 290);
+    }
+
     function showLevelUp(level, cards, onPick) {
         $("#levelup-level").textContent = level;
         const wrap = $("#reward-choices");
@@ -393,14 +432,12 @@ const UI = (() => {
             btn.style.animationDelay = 0.08 * i + "s";
             btn.classList.add("squish-in");
             btn.addEventListener("click", () => {
-                $("#modal-levelup").classList.add("hidden");
-                onPick(i);
+                closeModal($("#modal-levelup"), () => onPick(i));
             });
             wrap.appendChild(btn);
             knead(btn);
         });
-        $("#modal-levelup").classList.remove("hidden");
-        replayAnim($("#modal-levelup .modal-card"), "squish-in");
+        openModal($("#modal-levelup"));
     }
 
     function showFood(food, onOk) {
@@ -413,11 +450,9 @@ const UI = (() => {
         const ok = $("#btn-food-ok");
         ok.textContent = CHEERS[Math.floor(Math.random() * CHEERS.length)];
         ok.onclick = () => {
-            $("#modal-food").classList.add("hidden");
-            if (onOk) onOk();
+            closeModal($("#modal-food"), onOk);
         };
-        $("#modal-food").classList.remove("hidden");
-        replayAnim($("#modal-food .modal-card"), "squish-in");
+        openModal($("#modal-food"));
     }
 
     /* ---------- summary ---------- */
@@ -454,8 +489,12 @@ const UI = (() => {
         markEliminated,
         revealAnswer,
         renderItems,
+        showItemHint,
+        hideItemHint,
         renderBuffs,
         renderEventBanner,
+        openModal,
+        closeModal,
         showLevelUp,
         showFood,
         renderSummary,
