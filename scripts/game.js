@@ -58,6 +58,7 @@ const Game = (() => {
             qStart: 0, // when the current question was served (speed bonus)
             answeredCurrent: false,
             lowHpWarned: false,
+            deathSaveUsed: false,
             bestStreak: 0,
             setIds: [], // question sets locked in for this run
         };
@@ -230,7 +231,11 @@ const Game = (() => {
         }
         if (!run.event) {
             run.sinceEvent++;
-            if (run.sinceEvent >= CONFIG.eventEvery) {
+            const guaranteed = run.sinceEvent >= CONFIG.eventEvery;
+            const surprise =
+                run.sinceEvent >= CONFIG.eventMinGap &&
+                Math.random() < CONFIG.eventRandomChance;
+            if (guaranteed || surprise) {
                 run.sinceEvent = 0;
                 rollEvent();
             }
@@ -301,15 +306,27 @@ const Game = (() => {
 
     function onCorrect(clickEvent) {
         run.streak++;
+        // Chili Pepper: this correct answer builds double streak
+        const chili = !!run.buffs.double_streak;
+        if (chili) {
+            delete run.buffs.double_streak;
+            run.streak++;
+        }
         run.bestStreak = Math.max(run.bestStreak || 0, run.streak);
         let xpGain =
             CONFIG.xpBase + Math.min(run.streak - 1, CONFIG.xpStreakBonusCap);
         let goldGain =
             CONFIG.goldBase + Math.min(run.streak - 1, CONFIG.goldStreakBonusCap);
 
-        // answered fast? bonus XP
+        // answered fast? bonus XP (a Snowflake freezes the clock at 0s)
         const seconds = (Date.now() - run.qStart) / 1000;
-        const speed = CONFIG.speedBonus(seconds);
+        let speed = CONFIG.speedBonus(seconds);
+        if (run.buffs.auto_fast) {
+            delete run.buffs.auto_fast;
+            speed = Object.assign({}, CONFIG.speedBonus(0), {
+                label: "❄️ FROZEN FAST!",
+            });
+        }
         if (speed) xpGain += speed.xp;
 
         // Star Bite: next correct answer is worth double XP
@@ -365,6 +382,17 @@ const Game = (() => {
                 360
             );
         }
+        if (chili) {
+            setTimeout(
+                () =>
+                    UI.floatDelta(
+                        UI.$("#hud-streak"),
+                        "🌶️ +2 STREAK!",
+                        "#d95c4c"
+                    ),
+                270
+            );
+        }
         UI.renderBuffs(run);
         UI.popChip("#hud-streak");
         UI.popChip("#hud-gold");
@@ -414,16 +442,25 @@ const Game = (() => {
             UI.reactFace("😅");
         } else {
             run.streak = 0;
-            run.hp -= CONFIG.hpLossOnMiss;
-            run.xp = Math.max(0, run.xp - CONFIG.xpLossOnMiss);
+            let hpLoss = CONFIG.hpLossOnMiss;
+            let xpLoss = CONFIG.xpLossOnMiss;
+            // event penalty hook (Sudden Death, ...)
+            const ev = run.event ? EVENTS[run.event.id] : null;
+            if (ev && ev.modifyPenalty) {
+                const p = ev.modifyPenalty(gameApi, { hp: hpLoss, xp: xpLoss });
+                hpLoss = p.hp;
+                xpLoss = p.xp;
+            }
+            run.hp -= hpLoss;
+            run.xp = Math.max(0, run.xp - xpLoss);
             UI.floatDelta(
                 UI.$("#hp-fill").parentElement,
-                "-" + CONFIG.hpLossOnMiss + " HP",
+                "-" + hpLoss + " HP",
                 "#c04a3b"
             );
             UI.floatDelta(
                 UI.$("#xp-fill").parentElement,
-                "-" + CONFIG.xpLossOnMiss + " XP",
+                "-" + xpLoss + " XP",
                 "#c04a3b"
             );
             UI.replayAnim(UI.$("#question-card"), "shake");
@@ -443,9 +480,39 @@ const Game = (() => {
         }
 
         if (run.hp <= 0) {
-            // dead — no next question, just a beat to see the reveal
-            UI.$("#btn-next").classList.add("hidden");
-            setTimeout(() => endRun(false), 1100);
+            if (!run.deathSaveUsed) {
+                // once per run, the clay refuses to crumble: come back
+                // with a little HP and a surprise powerup
+                run.deathSaveUsed = true;
+                run.hp = CONFIG.deathSaveHp;
+                const giftId = pickFrom(Object.keys(ITEMS));
+                run.items[giftId] = (run.items[giftId] || 0) + 1;
+                save();
+                setTimeout(() => {
+                    const gift = ITEMS[giftId];
+                    UI.showSaved(
+                        "You're re-kneaded back to " +
+                            CONFIG.deathSaveHp +
+                            " HP — and you found a " +
+                            gift.icon +
+                            " " +
+                            gift.name +
+                            " in the wreckage! (" +
+                            gift.desc +
+                            ")",
+                        () => {
+                            refreshHUD();
+                            renderItemBar();
+                        }
+                    );
+                    UI.reactFace("😇", 2500);
+                    refreshHUD();
+                }, 800);
+            } else {
+                // dead for real — no next question, a beat to see the reveal
+                UI.$("#btn-next").classList.add("hidden");
+                setTimeout(() => endRun(false), 1100);
+            }
         }
     }
 
@@ -483,17 +550,18 @@ const Game = (() => {
     }
 
     function rollRewardCards() {
-        const itemId = pickFrom(Object.keys(ITEMS));
-        const item = ITEMS[itemId];
-        const kinds = [
-            {
-                icon: item.icon,
-                name: item.name,
-                desc: item.desc,
-                apply: () => {
-                    run.items[itemId] = (run.items[itemId] || 0) + 1;
-                },
+        const itemCard = (id) => ({
+            icon: ITEMS[id].icon,
+            name: ITEMS[id].name,
+            desc: ITEMS[id].desc,
+            apply: () => {
+                run.items[id] = (run.items[id] || 0) + 1;
             },
+        });
+        const itemIds = shuffled(Object.keys(ITEMS));
+        const kinds = [
+            itemCard(itemIds[0]),
+            itemCard(itemIds[1]),
             {
                 icon: "❤️",
                 name: "Patch Up",
@@ -573,6 +641,7 @@ const Game = (() => {
         UI.renderBuffs(run);
         renderItemBar();
         save();
+        checkLevelUp(); // a Honey Jar can push you over the line
     }
 
     function renderItemBar() {
@@ -685,6 +754,21 @@ const Game = (() => {
                 UI.$("#hp-fill").parentElement,
                 "+" + n + " HP",
                 "#7a9660"
+            );
+            refreshHUD();
+        },
+        gainGold(n) {
+            run.gold += n;
+            UI.floatDelta(UI.$("#hud-gold"), "+" + n, "#a87e2f");
+            UI.popChip("#hud-gold");
+            refreshHUD();
+        },
+        gainXp(n) {
+            run.xp += n;
+            UI.floatDelta(
+                UI.$("#xp-fill").parentElement,
+                "+" + n + " XP",
+                "#6f8fba"
             );
             refreshHUD();
         },

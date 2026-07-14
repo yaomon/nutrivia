@@ -641,6 +641,14 @@
     line-height: 1.35;
 }
 
+/* saved from death */
+.saved-desc {
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.45;
+    max-width: 360px;
+}
+
 /* how-to-play */
 .howto-list {
     display: flex;

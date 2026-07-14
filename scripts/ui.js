@@ -457,6 +457,15 @@ const UI = (() => {
         openModal($("#modal-food"));
     }
 
+    // saved from death — dramatic once-per-run rescue
+    function showSaved(text, onOk) {
+        $("#saved-desc").textContent = text;
+        $("#btn-saved-ok").onclick = () => {
+            closeModal($("#modal-saved"), onOk);
+        };
+        openModal($("#modal-saved"));
+    }
+
     /* ---------- summary ---------- */
 
     function renderSummary(run, fled) {
@@ -536,6 +545,7 @@ const UI = (() => {
         closeModal,
         showLevelUp,
         showFood,
+        showSaved,
         renderSummary,
         renderSets,
     };

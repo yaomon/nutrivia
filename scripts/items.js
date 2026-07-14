@@ -67,4 +67,46 @@ const ITEMS = {
         buff: "double_xp",
         canUse: (game) => !game.run.buffs.double_xp,
     },
+    golden_spoon: {
+        icon: "🥄",
+        name: "Golden Spoon",
+        desc: "Scoop up 25 gold, right now.",
+        kind: "instant",
+        use: (game) => game.gainGold(25),
+    },
+    feast: {
+        icon: "🍗",
+        name: "Hearty Feast",
+        desc: "A proper meal — restore 10 HP.",
+        kind: "instant",
+        canUse: (game) => game.run.hp < CONFIG.maxHp,
+        use: (game) => game.heal(10),
+    },
+    honey_jar: {
+        icon: "🍯",
+        name: "Honey Jar",
+        desc: "Sweet! Gain 15 XP, right now.",
+        kind: "instant",
+        use: (game) => game.gainXp(15),
+    },
+    chili_pepper: {
+        icon: "🌶️",
+        name: "Chili Pepper",
+        desc: "Spicy! Your next correct answer builds +2 streak.",
+        activeText:
+            "🌶️ Chili eaten — your next correct answer builds double streak!",
+        kind: "buff",
+        buff: "double_streak",
+        canUse: (game) => !game.run.buffs.double_streak,
+    },
+    snowflake: {
+        icon: "❄️",
+        name: "Snowflake",
+        desc: "Freeze the clock — your next correct answer counts as lightning-fast.",
+        activeText:
+            "❄️ Clock frozen — your next correct answer gets the full speed bonus!",
+        kind: "buff",
+        buff: "auto_fast",
+        canUse: (game) => !game.run.buffs.auto_fast,
+    },
 };

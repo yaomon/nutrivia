@@ -22,8 +22,14 @@ const CONFIG = {
     goldStreakBonusCap: 10, // +1 gold per streak point, capped
 
     // Events
-    eventEvery: 8, // answered questions between event rolls
+    eventEvery: 8, // guaranteed event roll after this many questions
     eventDuration: 5, // questions an event lasts
+    eventRandomChance: 0.1, // surprise event chance on any question...
+    eventMinGap: 3, // ...but never sooner than this after the last one
+
+    // Saved from death: the first time HP hits zero each run, the clay
+    // refuses to crumble — you come back with this much HP and a gift
+    deathSaveHp: 5,
 
     // Rewards
     levelUpChoices: 3, // cards offered on level up
