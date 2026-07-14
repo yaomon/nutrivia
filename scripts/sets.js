@@ -31,11 +31,18 @@ const QUESTION_SETS = [
         icon: "🍰",
         name: "Dessert Cart",
         desc: "Domain 1 · 277–366",
-        match: (n) => n >= 277,
+        match: (n) => n >= 277 && n <= 366,
+    },
+    {
+        id: "jp_n5",
+        icon: "🍣",
+        name: "Japanese N5",
+        desc: "JLPT N5 · vocab, kanji & grammar",
+        match: (n) => n >= 1001 && n <= 1100,
     },
 ];
 
 // how many bank questions a set contains
 function setQuestionCount(set) {
-    return domain1_questions.filter((q) => set.match(+q.number)).length;
+    return QUESTION_BANK.filter((q) => set.match(+q.number)).length;
 }
