@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta
             name="viewport"
-            content="width=device-width, initial-scale=0.9, shrink-to-fit=yes"
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,70 +12,279 @@
             href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
             rel="stylesheet"
         />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap"
+            rel="stylesheet"
+        />
         <link rel="icon" href="images/logo32.png" type="image/x-icon" />
-        <link rel="stylesheet" href="styles/style.css" />
-        <link rel="stylesheet" href="styles/bottom_container.css" />
-        <link rel="stylesheet" href="styles/question.css" />
-        <link rel="stylesheet" href="styles/stats.css" />
-        <link rel="stylesheet" href="styles/choices.css" />
-        <link rel="stylesheet" href="styles/firework.css" />
+        <meta name="theme-color" content="#e7d6bf" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <link rel="apple-touch-icon" href="images/logo192.png" />
+        <link rel="stylesheet" href="styles/clay.css" />
+        <link rel="stylesheet" href="styles/game.css" />
         <title>Nutrivia</title>
-        <script src="index.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="scripts/index.js"></script>
+        <script src="scripts/config.js"></script>
         <script src="scripts/domain1.js"></script>
-        <script src="scripts/script.js"></script>
+        <script src="scripts/sets.js"></script>
+        <script src="scripts/foods.js"></script>
+        <script src="scripts/items.js"></script>
+        <script src="scripts/events.js"></script>
+        <script src="scripts/ui.js" defer></script>
+        <script src="scripts/game.js" defer></script>
         <link rel="manifest" href="manifest.json" />
     </head>
 
     <body>
-        <div class="top-container">
-            <div class="button inset-text" id="reset">Reset ↻</div>
-            <div class="stats">
-                <div class="stats-positioner">
-                    <div class="stat-cont inset-text" id="correct-cont">
-                        <div class="correct-num">0</div>
-                        ✔
+        <!-- ============ HOME ============ -->
+        <section id="screen-home" class="screen">
+            <div class="title-plate">
+                <h1 class="game-title">Nutrivia</h1>
+                <div class="tagline">a bite-size trivia roguelite</div>
+            </div>
+            <div class="home-stats">
+                <div class="home-stat clay-inset">
+                    <span class="home-stat-icon">💰</span>
+                    <span id="home-gold">0</span>
+                </div>
+                <div class="home-stat clay-inset">
+                    <span class="home-stat-icon">🍱</span>
+                    <span id="home-foods">0/0</span>
+                </div>
+                <div class="home-stat clay-inset">
+                    <span class="home-stat-icon">🏆</span>
+                    <span id="home-best">—</span>
+                </div>
+            </div>
+            <button id="btn-start" class="clay clay-btn btn-hero red">
+                Start Run
+            </button>
+            <div id="home-tip" class="home-tip"></div>
+            <div class="home-links">
+                <button id="btn-howto" class="clay clay-btn btn-quiet">
+                    ❓ how to play
+                </button>
+                <button id="btn-reset" class="clay clay-btn btn-quiet">
+                    reset progress
+                </button>
+            </div>
+        </section>
+
+        <!-- ============ PICK YOUR MENU ============ -->
+        <section id="screen-sets" class="screen hidden">
+            <h1 class="game-title small">Pick Your Menu</h1>
+            <div class="tagline">choose which questions go in the pot</div>
+            <div id="set-list" class="set-list"></div>
+            <div id="set-total" class="set-total"></div>
+            <button id="btn-run-go" class="clay clay-btn btn-hero red">
+                Cook!
+            </button>
+            <button id="btn-sets-back" class="clay clay-btn btn-quiet">
+                back
+            </button>
+        </section>
+
+        <!-- ============ RUN ============ -->
+        <section id="screen-run" class="screen hidden">
+            <header class="hud">
+                <div class="avatar clay">
+                    <span class="avatar-face">👨‍🍳</span>
+                    <span id="hud-level" class="level-badge clay red">1</span>
+                </div>
+                <div class="bars">
+                    <div class="bar clay-inset">
+                        <div id="hp-fill" class="bar-fill hp-fill"></div>
+                        <span id="hp-label" class="bar-label">HP 20/20</span>
                     </div>
-                    <div class="stat-cont inset-text" id="incorrect-cont">
-                        <div class="incorrect-num">0</div>
-                        ✖
+                    <div class="bar clay-inset">
+                        <div id="xp-fill" class="bar-fill xp-fill"></div>
+                        <span id="xp-label" class="bar-label">XP 0/30</span>
                     </div>
                 </div>
-                <div class="stat-perc inset-text">-- %</div>
+                <div class="chips">
+                    <div id="hud-streak" class="chip clay">🔥 0</div>
+                    <div id="hud-gold" class="chip clay">💰 0</div>
+                </div>
+            </header>
+
+            <div id="event-banner" class="clay mustard hidden"></div>
+
+            <main id="question-card" class="question-card clay">
+                <div class="q-meta">
+                    <span id="q-num" class="q-num">Question 1</span>
+                </div>
+                <p id="q-text" class="q-text"></p>
+            </main>
+
+            <div id="choices" class="choices">
+                <button class="choice clay clay-btn" data-slot="0">
+                    <span class="choice-let clay"></span>
+                    <span class="choice-val"></span>
+                </button>
+                <button class="choice clay clay-btn" data-slot="1">
+                    <span class="choice-let clay"></span>
+                    <span class="choice-val"></span>
+                </button>
+                <button class="choice clay clay-btn" data-slot="2">
+                    <span class="choice-let clay"></span>
+                    <span class="choice-val"></span>
+                </button>
+                <button class="choice clay clay-btn" data-slot="3">
+                    <span class="choice-let clay"></span>
+                    <span class="choice-val"></span>
+                </button>
+            </div>
+
+            <div id="item-hint" class="clay item-hint hidden"></div>
+            <footer class="run-footer">
+                <div class="item-tray">
+                    <div id="item-tray-label" class="tray-label hidden">
+                        your items — tap one
+                    </div>
+                    <div id="item-bar" class="item-bar"></div>
+                </div>
+                <div id="buff-chips" class="buff-chips"></div>
+                <div class="footer-right">
+                    <button id="btn-next" class="clay clay-btn btn-next sage hidden">
+                        Next ▶
+                    </button>
+                    <button
+                        id="btn-howto-run"
+                        class="clay clay-btn btn-round"
+                        title="How to play"
+                    >
+                        ?
+                    </button>
+                    <button
+                        id="btn-flee"
+                        class="clay clay-btn btn-quiet"
+                        title="End this run"
+                    >
+                        🏳️ quit
+                    </button>
+                </div>
+            </footer>
+        </section>
+
+        <!-- ============ RUN SUMMARY ============ -->
+        <section id="screen-summary" class="screen hidden">
+            <h1 id="summary-title" class="game-title small">Run Over</h1>
+            <div id="summary-sub" class="tagline"></div>
+            <div class="summary-grid">
+                <div class="summary-stat clay-inset">
+                    <span class="summary-num" id="sum-level">1</span>
+                    <span class="summary-label">level</span>
+                </div>
+                <div class="summary-stat clay-inset">
+                    <span class="summary-num" id="sum-correct">0</span>
+                    <span class="summary-label">correct</span>
+                </div>
+                <div class="summary-stat clay-inset">
+                    <span class="summary-num" id="sum-missed">0</span>
+                    <span class="summary-label">missed</span>
+                </div>
+                <div class="summary-stat clay-inset">
+                    <span class="summary-num" id="sum-streak">0</span>
+                    <span class="summary-label">best streak</span>
+                </div>
+                <div class="summary-stat clay-inset">
+                    <span class="summary-num" id="sum-gold">0</span>
+                    <span class="summary-label">gold banked</span>
+                </div>
+            </div>
+            <button id="btn-again" class="clay clay-btn btn-hero red">
+                Run It Back
+            </button>
+            <button id="btn-home" class="clay clay-btn btn-quiet">home</button>
+        </section>
+
+        <!-- ============ LEVEL UP MODAL ============ -->
+        <div id="modal-levelup" class="modal hidden">
+            <div class="modal-card clay">
+                <h2 class="modal-title">Level Up!</h2>
+                <div class="modal-sub">
+                    now level <span id="levelup-level">2</span> — pick a prize
+                </div>
+                <div id="reward-choices" class="reward-choices"></div>
             </div>
         </div>
-        <div class="container">
-            <div class="question-num inset-text">00</div>
-            <div class="question-frac inset-text">00/00</div>
-            <p class="question inset-text"></p>
-            <div class="choices">
-                <div class="choice" id="choice-1">
-                    <div class="choice-let inset-text">a</div>
-                    <div class="choice-val"></div>
+
+        <!-- ============ SAVED FROM DEATH MODAL ============ -->
+        <div id="modal-saved" class="modal hidden">
+            <div class="modal-card clay">
+                <h2 class="modal-title">Saved!</h2>
+                <div class="modal-sub">
+                    the clay refuses to crumble — once per run
                 </div>
-                <div class="choice" id="choice-2">
-                    <div class="choice-let inset-text">b</div>
-                    <div class="choice-val"></div>
-                </div>
-                <div class="choice" id="choice-3">
-                    <div class="choice-let inset-text">c</div>
-                    <div class="choice-val"></div>
-                </div>
-                <div class="choice" id="choice-4">
-                    <div class="choice-let inset-text">d</div>
-                    <div class="choice-val"></div>
-                </div>
+                <div id="saved-desc" class="saved-desc"></div>
+                <button id="btn-saved-ok" class="clay clay-btn sage">
+                    Rise Again
+                </button>
             </div>
-            <div class="bottom-container">
-                <div class="bottom-left">
-                    <div class="button inset-text" id="food">🍗</div>
-                </div>
-                <div class="bottom-right">
-                    <div class="streak inset-text">
-                        <div class="pulse">🔥 0</div>
+        </div>
+
+        <!-- ============ HOW TO PLAY MODAL ============ -->
+        <div id="modal-howto" class="modal hidden">
+            <div class="modal-card clay">
+                <h2 class="modal-title">How to Play</h2>
+                <div class="howto-list">
+                    <div class="howto-line">
+                        <span class="howto-emoji">🧠</span>
+                        <span
+                            >Answer right to earn 💙 XP and 💰 gold. Streaks 🔥
+                            and fast answers ⚡ earn bonus XP.</span
+                        >
                     </div>
-                    <div class="button inset-text" id="skip">Next ▶</div>
+                    <div class="howto-line">
+                        <span class="howto-emoji">❤️</span>
+                        <span
+                            >Wrong answers cost 5 HP. When HP runs out, the run
+                            ends.</span
+                        >
+                    </div>
+                    <div class="howto-line">
+                        <span class="howto-emoji">🎁</span>
+                        <span
+                            >Fill the XP bar to level up and pick a prize —
+                            items, gold, or a new food.</span
+                        >
+                    </div>
+                    <div class="howto-line">
+                        <span class="howto-emoji">🎒</span>
+                        <span
+                            >Your items live at the bottom left. Tap one to see
+                            what it does, tap it again to use it.</span
+                        >
+                    </div>
+                    <div class="howto-line">
+                        <span class="howto-emoji">🍱</span>
+                        <span
+                            >Gold and your food collection are yours to keep,
+                            run after run.</span
+                        >
+                    </div>
                 </div>
+                <button id="btn-howto-ok" class="clay clay-btn sage">
+                    Got it!
+                </button>
+            </div>
+        </div>
+
+        <!-- ============ FOOD REWARD MODAL ============ -->
+        <div id="modal-food" class="modal hidden">
+            <div class="modal-card clay food-card">
+                <div class="modal-sub">you got</div>
+                <div class="food-pedestal clay-inset">
+                    <img id="food-img" class="food-img" src="" alt="" />
+                </div>
+                <div id="food-name" class="food-name">Apple</div>
+                <div id="food-rarity" class="food-rarity">Savory</div>
+                <p id="food-desc" class="food-desc"></p>
+                <button id="btn-food-ok" class="clay clay-btn sage">
+                    Woo!
+                </button>
             </div>
         </div>
     </body>

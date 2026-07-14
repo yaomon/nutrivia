@@ -1,0 +1,421 @@
+/* ============================================================
+   CLAY DESIGN SYSTEM
+   One material everywhere: every surface is the same clay as the
+   page background. "Raised" pieces bulge up out of the surface
+   (soft light top-left, soft shade bottom-right, rounded inset
+   edges). "Pressed" pieces sink into a thumbed recess. Colored
+   pieces read as different-colored clay smooshed onto the slab.
+
+   Imperfection is the point: shadows stay faint, every piece gets
+   a blotchy hand-worked texture, and JS (UI.knead) gives each
+   element its own slightly-off corners and tilt via --knead-rot.
+   ============================================================ */
+
+:root {
+    /* the slab */
+    --clay: #e7d6bf;
+    --clay-deep: #dcc7a9; /* recess floor */
+    --ink: #4a382c;
+    --ink-soft: #7a6350;
+
+    /* colored clays */
+    --red: #d95c4c;
+    --red-deep: #c04a3b;
+    --mustard: #e5a83e;
+    --sage: #8fac72;
+    --sage-deep: #7a9660;
+    --blue: #6f8fba;
+    --purple: #a37bb8;
+
+    /* the visible underside of raised pressable pieces, plus a soft
+       translucent version of each so the side can melt into the slab
+       instead of ending at a hard silhouette */
+    --clay-side: #c6ae8d;
+    --clay-side-soft: rgba(198, 174, 141, 0.55);
+    --red-side: #a8402f;
+    --red-side-soft: rgba(168, 64, 47, 0.55);
+    --mustard-side: #bb8124;
+    --mustard-side-soft: rgba(187, 129, 36, 0.55);
+    --sage-side: #69854f;
+    --sage-side-soft: rgba(105, 133, 79, 0.55);
+    --blue-side: #54709b;
+    --blue-side-soft: rgba(84, 112, 155, 0.55);
+    --purple-side: #855e9c;
+    --purple-side-soft: rgba(133, 94, 156, 0.55);
+
+    /* light & shade of the material — kept faint so nothing looks
+       machine-perfect */
+    --hi: rgba(255, 252, 245, 0.6);
+    --hi-soft: rgba(255, 252, 245, 0.38);
+    --lo: rgba(93, 68, 51, 0.28);
+    --lo-soft: rgba(93, 68, 51, 0.13);
+
+    /* blotchy unevenness, like clay of varying thickness */
+    --blotch: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.014' numOctaves='3' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.5 0 0 0 0 0.44 0 0 0 0.45 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23b)'/%3E%3C/svg%3E");
+
+    --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    background-color: var(--clay);
+    /* gentle overhead light + hand-worked blotches on the slab itself */
+    background-image: radial-gradient(
+            ellipse 120% 90% at 50% 0%,
+            rgba(255, 252, 245, 0.22),
+            rgba(255, 252, 245, 0) 55%,
+            rgba(93, 68, 51, 0.08) 100%
+        ),
+        var(--blotch);
+    background-blend-mode: normal, soft-light;
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: "Montserrat", sans-serif;
+    overflow-x: hidden;
+    overscroll-behavior-y: contain;
+}
+
+/* clay grain — subtle fingerprint-y noise over everything */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.04;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- raised clay ---------- */
+.clay {
+    background-color: var(--clay);
+    /* faint bulge highlight + the same worked-surface blotches */
+    background-image: radial-gradient(
+            ellipse 90% 70% at 42% 28%,
+            rgba(255, 252, 245, 0.14),
+            rgba(255, 252, 245, 0) 65%
+        ),
+        var(--blotch);
+    background-blend-mode: normal, soft-light;
+    /* slightly uneven, hand-formed corners (JS re-kneads these) */
+    border-radius: 24px 27px 23px 28px / 27px 23px 28px 24px;
+    /* every piece sits a hair off-true */
+    rotate: var(--knead-rot, 0deg);
+    box-shadow:
+        /* light spilling onto the slab, top-left */ -5px -5px 10px
+            var(--hi-soft),
+        /* shade cast onto the slab, bottom-right */ 6px 8px 14px var(--lo-soft),
+        /* contact shadow hugging the base */ 2px 3px 3px rgba(93, 68, 51, 0.1),
+        /* rounded edge catching light on top */ inset 1px 2px 2px var(--hi-soft),
+        /* rounded edge rolling into shade below */ inset -2px -3px 5px
+            rgba(93, 68, 51, 0.1);
+}
+
+/* ---------- pressable clay ---------- */
+/* Buttons have real thickness: a solid clay underside plus a soft
+   translucent skirt beneath it, so the side reads as the material
+   curving down into the slab rather than a stacked hard edge.
+
+   All three states (rest, hover, pressed) declare the SAME number of
+   shadow layers in the same inset order — box-shadow only animates
+   smoothly between matching lists, and this is what makes the press
+   morph instead of snap. Layers 5-6 are the recess walls: transparent
+   at rest, solid + feathered when pressed. */
+.clay-btn {
+    --side: var(--clay-side);
+    --side-soft: var(--clay-side-soft);
+    appearance: none;
+    border: none;
+    font-family: inherit;
+    color: inherit;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition: transform 0.1s ease, box-shadow 0.1s ease,
+        background-color 0.1s ease, border-radius 0.2s ease,
+        opacity 0.2s ease;
+    box-shadow:
+        /* 1 solid underside core */ 0 3px 0 var(--side),
+        /* 2 skirt melting into the slab */ 0 5px 4px var(--side-soft),
+        /* 3 light spilling onto the slab */ -5px -4px 10px var(--hi-soft),
+        /* 4 shade cast past the underside */ 6px 12px 14px var(--lo-soft),
+        /* 5 recess top wall (pressed only) */ inset 0 0 0 transparent,
+        /* 6 wall feather (pressed only) */ inset 0 0 0 transparent,
+        /* 7 rounded edge catching light */ inset 1px 2px 2px var(--hi-soft),
+        /* 8 rounded edge rolling into shade */ inset -2px -3px 5px
+            rgba(93, 68, 51, 0.1);
+}
+
+/* hover lifts the piece a touch higher off the slab (not on touch) */
+@media (hover: hover) {
+    .clay-btn:hover:not(:disabled):not(.pressed) {
+        transform: translateY(-2px) rotate(-0.4deg);
+        border-radius: 27px 23px 28px 24px / 23px 28px 24px 27px;
+        box-shadow: 0 5px 0 var(--side), 0 8px 5px var(--side-soft),
+            -5px -5px 11px var(--hi-soft), 7px 15px 16px var(--lo-soft),
+            inset 0 0 0 transparent, inset 0 0 0 transparent,
+            inset 1px 2px 2px var(--hi-soft),
+            inset -2px -3px 5px rgba(93, 68, 51, 0.1);
+    }
+}
+
+/* pressed = squashed down flush with the slab. The underside compresses
+   to a sliver, and the dent shows its near wall: a solid line of side
+   color under the top edge, feathering down to the recess floor.
+   (plain background while pressed — blended textures can flicker when
+   the browser re-rasterizes a transforming layer) */
+.clay-btn:active:not(:disabled),
+.clay-btn.pressed {
+    transform: translateY(4px) scale(0.98, 0.965);
+    background-color: var(--clay-deep);
+    background-image: none;
+    box-shadow:
+        /* 1 a sliver of underside remains */ 0 1px 0 var(--side),
+        /* 2 its skirt hugs the slab */ 0 2px 2px var(--side-soft),
+        /* 3 rim light around the dent */ -2px -2px 5px var(--hi-soft),
+        /* 4 faint remaining cast shade */ 2px 4px 6px rgba(93, 68, 51, 0.08),
+        /* 5 visible top wall of the recess */ inset 0 3px 0 var(--side),
+        /* 6 wall melting down to the floor */ inset 0 6px 5px
+            var(--side-soft),
+        /* 7 light catching the far rim */ inset 0 -2px 2px var(--hi-soft),
+        /* 8 general recess shading */ inset 2px 4px 8px
+            rgba(93, 68, 51, 0.18);
+}
+
+.clay-btn:disabled {
+    cursor: default;
+    opacity: 0.55;
+}
+
+/* ---------- recessed clay (tracks, wells, stat slots) ----------
+   Same language as a pressed button: a visible near wall under the
+   top edge that feathers down to the floor of the recess. */
+.clay-inset {
+    background-color: var(--clay-deep);
+    background-image: var(--blotch);
+    background-blend-mode: soft-light;
+    border-radius: 18px 20px 17px 21px / 20px 17px 21px 18px;
+    box-shadow: inset 0 2px 0 var(--clay-side),
+        inset 0 5px 4px var(--clay-side-soft),
+        inset 2px 3px 7px rgba(93, 68, 51, 0.16),
+        inset 0 -2px 2px var(--hi-soft), 1px 2px 2px var(--hi-soft);
+}
+
+/* ---------- colored clays ---------- */
+.clay.red,
+.clay.mustard,
+.clay.sage,
+.clay.blue,
+.clay.purple {
+    color: #fff8ef;
+    text-shadow: 0 1px 2px rgba(93, 68, 51, 0.3);
+}
+.clay.red {
+    background-color: var(--red);
+    --side: var(--red-side);
+    --side-soft: var(--red-side-soft);
+}
+.clay.mustard {
+    background-color: var(--mustard);
+    --side: var(--mustard-side);
+    --side-soft: var(--mustard-side-soft);
+}
+.clay.sage {
+    background-color: var(--sage);
+    --side: var(--sage-side);
+    --side-soft: var(--sage-side-soft);
+}
+.clay.blue {
+    background-color: var(--blue);
+    --side: var(--blue-side);
+    --side-soft: var(--blue-side-soft);
+}
+.clay.purple {
+    background-color: var(--purple);
+    --side: var(--purple-side);
+    --side-soft: var(--purple-side-soft);
+}
+
+.clay.red.clay-btn:active,
+.clay.red.clay-btn.pressed {
+    background-color: var(--red-deep);
+}
+.clay.sage.clay-btn:active,
+.clay.sage.clay-btn.pressed {
+    background-color: var(--sage-deep);
+}
+
+/* text stamped into the clay */
+.stamp {
+    text-shadow: 0 1px 1px var(--hi-soft);
+}
+
+/* ---------- motion ---------- */
+@keyframes squish-in {
+    0% {
+        transform: scale(0.55, 0.7);
+        opacity: 0;
+    }
+    55% {
+        transform: scale(1.06, 0.94);
+        opacity: 1;
+    }
+    78% {
+        transform: scale(0.97, 1.04);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes squish-pop {
+    0% {
+        transform: scale(1);
+    }
+    35% {
+        transform: scale(1.12, 0.86);
+    }
+    70% {
+        transform: scale(0.94, 1.08);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes squish-out {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    35% {
+        transform: scale(1.08, 0.9);
+    }
+    100% {
+        transform: scale(0.6, 0.5);
+        opacity: 0;
+    }
+}
+
+@keyframes wobble {
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-2.5deg) scale(1.03, 0.97);
+    }
+    75% {
+        transform: rotate(2deg) scale(0.98, 1.02);
+    }
+}
+
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-7px) rotate(-0.6deg);
+    }
+    40% {
+        transform: translateX(6px) rotate(0.5deg);
+    }
+    60% {
+        transform: translateX(-4px);
+    }
+    80% {
+        transform: translateX(3px);
+    }
+}
+
+/* idle breathing, like the clay is alive */
+@keyframes breathe {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02, 0.985);
+    }
+}
+
+/* gentle sway for banners */
+@keyframes sway {
+    0%,
+    100% {
+        rotate: -0.9deg;
+    }
+    50% {
+        rotate: -0.2deg;
+    }
+}
+
+.squish-in {
+    animation: squish-in 0.42s var(--bounce) both;
+}
+.squish-pop {
+    animation: squish-pop 0.4s var(--bounce);
+}
+.squish-out {
+    animation: squish-out 0.3s ease-in both;
+}
+.shake {
+    animation: shake 0.4s ease;
+}
+
+/* floating +XP / -HP deltas */
+.float-delta {
+    position: fixed;
+    z-index: 500;
+    font-weight: 900;
+    font-size: 1.05rem;
+    pointer-events: none;
+    text-shadow: 0 1px 0 var(--hi-soft);
+    animation: float-up 1s ease-out forwards;
+}
+@keyframes float-up {
+    0% {
+        opacity: 0;
+        transform: translateY(6px) scale(0.7) rotate(-2deg);
+    }
+    15% {
+        opacity: 1;
+        transform: translateY(0) scale(1.1) rotate(1deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-42px) scale(1) rotate(-1deg);
+    }
+}
+
+/* firework sparks (clay crumbs) */
+.firework {
+    position: absolute;
+    z-index: 600;
+    pointer-events: none;
+}
+.fire-span {
+    display: block;
+    position: absolute;
+    border-radius: 45% 55% 50% 50% / 55% 45% 50% 50%;
+    box-shadow: inset 1px 1px 1px rgba(255, 252, 245, 0.5),
+        inset -1px -1px 2px rgba(93, 68, 51, 0.3);
+}
+
+.hidden {
+    display: none !important;
+}

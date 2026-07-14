@@ -3,13 +3,15 @@
     let curr_ques;
     let total_ques = domain1_questions.length;
 
-    let saveObj = {
+    let save_objs = {
         missed_ques: [],
         not_answered_ques: [],
         answered_ques: [],
         num_corr: 0,
         num_incorr: 0,
         streak: 0,
+        collected_items: [],
+        not_collected_items: [],
     };
 
     let rarities_arr = [
@@ -23,14 +25,16 @@
         "Divine",
     ];
 
+    let unusual_fx = ["Old-Timey", "Dark", "Blurry", "Fiery", "Icy"];
+
     function saveStorage() {
-        localStorage.setItem("data", JSON.stringify(saveObj));
+        localStorage.setItem("data", JSON.stringify(save_objs));
     }
 
     function loadStorage() {
         let storage = localStorage.getItem("data");
         if (storage !== null) {
-            saveObj = JSON.parse(storage);
+            save_objs = JSON.parse(storage);
         } else {
             saveStorage();
         }
@@ -44,15 +48,17 @@
             )
         ) {
             localStorage.removeItem("data");
-            saveObj = {
+            save_objs = {
                 missed_ques: [],
                 not_answered_ques: [],
                 answered_ques: [],
                 num_corr: 0,
                 num_incorr: 0,
                 streak: 0,
+                not_collected_items: [],
             };
             updateStats();
+            updateQuestion();
         }
     }
 
@@ -63,15 +69,16 @@
 
     function updateStats(correct) {
         $(".question-frac").text(
-            saveObj.answered_ques.length + "/" + total_ques
+            save_objs.answered_ques.length + "/" + total_ques
         );
-        $(".incorrect-num").text(saveObj.num_incorr);
-        $(".correct-num").text(saveObj.num_corr);
-        $(".pulse").text("🔥 " + saveObj.streak);
+        $(".incorrect-num").text(save_objs.num_incorr);
+        $(".correct-num").text(save_objs.num_corr);
+        $(".pulse").text("🔥 " + save_objs.streak);
 
         // Set correct percent and color
-        let perc = saveObj.num_corr / (saveObj.num_corr + saveObj.num_incorr);
-        if (saveObj.num_corr === 0) {
+        let perc =
+            save_objs.num_corr / (save_objs.num_corr + save_objs.num_incorr);
+        if (save_objs.num_corr === 0) {
             perc = 0;
         }
         // Lerp toward new percentage
@@ -106,11 +113,11 @@
         );
 
         // Update streak color
-        // Set saveObj.streak test and color
-        perc = Math.min(saveObj.streak / 10, 1.0);
+        // Set save_objs.streak test and color
+        perc = Math.min(save_objs.streak / 10, 1.0);
 
         if (correct) {
-            // Set pulse anim based on saveObj.streak
+            // Set pulse anim based on save_objs.streak
             let minDuration = 0.1; // Minimum duration in seconds
             let maxDuration = 1.0; // Maximum duration in seconds
             let animationDuration =
@@ -124,7 +131,7 @@
         r = Math.round(0 * (1 - perc) + 255 * perc);
         g = Math.round(40 * (1 - perc) + 50 * perc);
         b = Math.round(42 * (1 - perc) + 52 * perc);
-        let scale = 1 + 0.05 + saveObj.streak * 0.05;
+        let scale = 1 + 0.05 + save_objs.streak * 0.05;
         let $streak = $(".streak");
 
         $streak.css(
@@ -157,31 +164,31 @@
     }
 
     function updateQuestion() {
-        saveObj.missed_ques_counter++;
+        save_objs.missed_ques_counter++;
         // Every 5 questions, try to re-ask a missed question
         // Get a random index within the array length
-        if (saveObj.not_answered_ques.length <= 0) {
-            loadUnasweredQuesetions();
+        if (save_objs.not_answered_ques.length <= 0) {
+            loadUnasweredQuesAndRewards();
         }
-        let randomIndex = getRandomInt(0, saveObj.not_answered_ques.length);
-        if (saveObj.missed_ques_counter > 4) {
-            saveObj.missed_ques_counter = 0;
-            if (saveObj.missed_ques.length > 0) {
+        let random_index = getRandomInt(0, save_objs.not_answered_ques.length);
+        if (save_objs.missed_ques_counter > 4) {
+            save_objs.missed_ques_counter = 0;
+            if (save_objs.missed_ques.length > 0) {
                 // Override the index with one of the missed questions
                 const randomMissedQuesIndex = getRandomInt(
                     0,
-                    saveObj.missed_ques.length - 1
+                    save_objs.missed_ques.length - 1
                 );
                 // Remove the missed question from the array
-                randomIndex = parseInt(
-                    saveObj.missed_ques[randomMissedQuesIndex]
+                random_index = parseInt(
+                    save_objs.missed_ques[randomMissedQuesIndex]
                 );
-                saveObj.missed_ques.splice(randomMissedQuesIndex, 1);
+                save_objs.missed_ques.splice(randomMissedQuesIndex, 1);
             }
         }
 
         // Retrieve the random object
-        const randomQuestion = saveObj.not_answered_ques[randomIndex];
+        const randomQuestion = save_objs.not_answered_ques[random_index];
 
         curr_ques = randomQuestion;
         // Clear correct/incorrect
@@ -204,32 +211,32 @@
         let ques_number = curr_ques.number;
 
         // Remove answered questions
-        if (!saveObj.answered_ques.includes(ques_number)) {
+        if (!save_objs.answered_ques.includes(ques_number)) {
             // Only add if not already in, can't use set becaue of localStorage
-            saveObj.answered_ques.push(ques_number);
+            save_objs.answered_ques.push(ques_number);
         }
 
-        saveObj.not_answered_ques.splice(
-            saveObj.not_answered_ques.indexOf(curr_ques),
+        save_objs.not_answered_ques.splice(
+            save_objs.not_answered_ques.indexOf(curr_ques),
             1
         );
 
         if (guess !== curr_ques.correct_answer) {
             // Incorrect
             $(this).addClass("incorrect");
-            saveObj.streak = 0;
+            save_objs.streak = 0;
             $(".pulse").css({
                 animationDuration: "0s",
             });
-            saveObj.num_incorr++;
+            save_objs.num_incorr++;
             // Add the missed question to the missed questions
             // Subtract 1 to convert to 0 based index
-            saveObj.missed_ques.push(ques_number - 1);
-            saveObj.missed_ques.push(ques_number - 1);
+            save_objs.missed_ques.push(ques_number - 1);
+            save_objs.missed_ques.push(ques_number - 1);
         } else {
             // Correct
-            saveObj.streak++;
-            saveObj.num_corr++;
+            save_objs.streak++;
+            save_objs.num_corr++;
         }
         // Add correct answer
         switch (curr_ques.correct_answer) {
@@ -248,11 +255,15 @@
         }
         saveStorage();
         updateStats(guess === curr_ques.correct_answer);
+        giveReward();
     }
 
-    function loadUnasweredQuesetions() {
+    function loadUnasweredQuesAndRewards() {
         for (let i = 0; i < domain1_questions.length; i++) {
-            saveObj.not_answered_ques[i] = domain1_questions[i];
+            save_objs.not_answered_ques[i] = domain1_questions[i];
+        }
+        for (let i = 0; i < foods.length; i++) {
+            save_objs.not_collected_items[i] = foods[i];
         }
     }
 
@@ -319,18 +330,90 @@
         });
     }
 
+    function giveReward() {
+        let random_index = getRandomInt(
+            0,
+            save_objs.not_collected_items.length
+        );
+        let selected_item = save_objs.not_collected_items[random_index];
+        $(".reward-pic-src").attr("src", "images/food/" + selected_item.name);
+        $(".reward-name").text(selected_item.displayName);
+        $(".reward-rarity").text(rarities_arr[selected_item.rarity]);
+        $(".reward-desc").text(selected_item.description);
+        $(".reward-next").text(
+            [
+                "Woo!",
+                "Sweet!",
+                "Nice!",
+                "Awesome!",
+                "Wow!",
+                "Spectacular",
+                "Wonderful!",
+            ][Math.floor(Math.random() * 7)]
+        );
+        $(".reward").css("display", "flex");
+        $(".reward-name").removeClass("inedible");
+        $(".reward-rarity").removeClass("inedible");
+        $(".reward-name").removeClass("tasty");
+        $(".reward-rarity").removeClass("tasty");
+        $(".reward-name").removeClass("savory");
+        $(".reward-rarity").removeClass("savory");
+        $(".reward-name").removeClass("delicious");
+        $(".reward-rarity").removeClass("delicious");
+        $(".reward-name").removeClass("gourmet");
+        $(".reward-rarity").removeClass("gourmet");
+        $(".reward-name").removeClass("decadent");
+        $(".reward-rarity").removeClass("decadent");
+        $(".reward-name").removeClass("divine");
+        $(".reward-rarity").removeClass("divine");
+        switch (selected_item.rarity) {
+            case 0:
+                $(".reward-name").addClass("inedible");
+                $(".reward-rarity").addClass("inedible");
+                break;
+            case 2:
+                $(".reward-name").addClass("tasty");
+                $(".reward-rarity").addClass("tasty");
+                break;
+            case 3:
+                $(".reward-name").addClass("savory");
+                $(".reward-rarity").addClass("savory");
+                break;
+            case 4:
+                $(".reward-name").addClass("delicious");
+                $(".reward-rarity").addClass("delicious");
+                break;
+            case 5:
+                $(".reward-name").addClass("gourmet");
+                $(".reward-rarity").addClass("gourmet");
+                break;
+            case 6:
+                $(".reward-name").addClass("decadent");
+                $(".reward-rarity").addClass("decadent");
+                break;
+            case 7:
+                $(".reward-name").addClass("divine");
+                $(".reward-rarity").addClass("divine");
+                break;
+        }
+    }
+
+    function hideReward() {
+        $(".reward").css("display", "none");
+    }
+
     $(document).ready(function () {
         // Code to run when the document is ready
-        loadUnasweredQuesetions();
+        loadUnasweredQuesAndRewards();
         loadStorage();
         $(".question-frac").text(
-            saveObj.answered_ques.length + "/" + total_ques
+            save_objs.answered_ques.length + "/" + total_ques
         );
         updateQuestion();
         $("#skip").click(updateQuestion);
         $("#reset").click(clearStorage);
         $(".choice").click(guessAnswer);
-
+        $(".reward-next").click(hideReward);
         setupFireworkOnClick();
     });
 })(jQuery);
