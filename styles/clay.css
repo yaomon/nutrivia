@@ -1,0 +1,294 @@
+/* ============================================================
+   CLAY DESIGN SYSTEM
+   One material everywhere: every surface is the same clay as the
+   page background. "Raised" pieces bulge up out of the surface
+   (soft light top-left, soft shade bottom-right, rounded inset
+   edges). "Pressed" pieces sink into a thumbed recess. Colored
+   pieces read as different-colored clay smooshed onto the slab.
+   ============================================================ */
+
+:root {
+    /* the slab */
+    --clay: #e7d6bf;
+    --clay-deep: #dcc7a9; /* recess floor */
+    --ink: #4a382c;
+    --ink-soft: #7a6350;
+
+    /* colored clays */
+    --red: #d95c4c;
+    --red-deep: #c04a3b;
+    --mustard: #e5a83e;
+    --sage: #8fac72;
+    --sage-deep: #7a9660;
+    --blue: #6f8fba;
+    --purple: #a37bb8;
+
+    /* light & shade of the material */
+    --hi: rgba(255, 252, 245, 0.85);
+    --hi-soft: rgba(255, 252, 245, 0.55);
+    --lo: rgba(93, 68, 51, 0.38);
+    --lo-soft: rgba(93, 68, 51, 0.2);
+
+    --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    background: var(--clay);
+    /* big soft vignette so the slab feels lit from above */
+    background-image: radial-gradient(
+        ellipse 120% 90% at 50% 0%,
+        rgba(255, 252, 245, 0.35),
+        rgba(255, 252, 245, 0) 55%,
+        rgba(93, 68, 51, 0.12) 100%
+    );
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: "Montserrat", sans-serif;
+    overflow-x: hidden;
+}
+
+/* clay grain — subtle fingerprint-y noise over everything */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- raised clay ---------- */
+.clay {
+    background-color: var(--clay);
+    /* faint bulge highlight in the middle of the piece */
+    background-image: radial-gradient(
+        ellipse 90% 70% at 42% 28%,
+        rgba(255, 252, 245, 0.32),
+        rgba(255, 252, 245, 0) 65%
+    );
+    /* slightly uneven, hand-formed corners */
+    border-radius: 24px 27px 23px 28px / 27px 23px 28px 24px;
+    box-shadow:
+        /* light spilling onto the slab, top-left */ -7px -7px 14px
+            var(--hi-soft),
+        /* shade cast onto the slab, bottom-right */ 9px 11px 18px var(--lo-soft),
+        /* contact shadow hugging the base */ 2px 3px 4px rgba(93, 68, 51, 0.16),
+        /* rounded edge catching light on top */ inset 2px 3px 3px var(--hi-soft),
+        /* rounded edge rolling into shade below */ inset -3px -4px 6px
+            rgba(93, 68, 51, 0.15);
+}
+
+/* ---------- pressable clay ---------- */
+.clay-btn {
+    appearance: none;
+    border: none;
+    font-family: inherit;
+    color: inherit;
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+    transition: transform 0.09s ease, box-shadow 0.09s ease,
+        border-radius 0.2s ease, opacity 0.2s ease;
+}
+
+.clay-btn:hover:not(:disabled):not(.pressed) {
+    transform: translateY(-1px) rotate(-0.4deg);
+    border-radius: 27px 23px 28px 24px / 23px 28px 24px 27px;
+}
+
+/* pressed = the thumb pushed it into the slab */
+.clay-btn:active:not(:disabled),
+.clay-btn.pressed {
+    transform: translateY(3px) scale(0.98, 0.965);
+    background-color: var(--clay-deep);
+    background-image: none;
+    box-shadow:
+        /* recess walls */ inset 5px 7px 12px rgba(93, 68, 51, 0.32),
+        inset -3px -5px 9px var(--hi-soft),
+        /* faint rim light around the dent */ -2px -2px 5px var(--hi-soft),
+        2px 3px 6px rgba(93, 68, 51, 0.12);
+}
+
+.clay-btn:disabled {
+    cursor: default;
+    opacity: 0.55;
+}
+
+/* ---------- recessed clay (tracks, wells, stat slots) ---------- */
+.clay-inset {
+    background-color: var(--clay-deep);
+    border-radius: 18px 20px 17px 21px / 20px 17px 21px 18px;
+    box-shadow: inset 4px 5px 9px rgba(93, 68, 51, 0.3),
+        inset -3px -4px 8px var(--hi-soft), 1px 2px 3px var(--hi-soft);
+}
+
+/* ---------- colored clays ---------- */
+.clay.red,
+.clay.mustard,
+.clay.sage,
+.clay.blue,
+.clay.purple {
+    color: #fff8ef;
+    text-shadow: 0 1px 2px rgba(93, 68, 51, 0.3);
+}
+.clay.red {
+    background-color: var(--red);
+}
+.clay.mustard {
+    background-color: var(--mustard);
+}
+.clay.sage {
+    background-color: var(--sage);
+}
+.clay.blue {
+    background-color: var(--blue);
+}
+.clay.purple {
+    background-color: var(--purple);
+}
+
+.clay.red.clay-btn:active,
+.clay.red.clay-btn.pressed {
+    background-color: var(--red-deep);
+}
+.clay.sage.clay-btn:active,
+.clay.sage.clay-btn.pressed {
+    background-color: var(--sage-deep);
+}
+
+/* text stamped into the clay */
+.stamp {
+    text-shadow: 0 1px 1px var(--hi-soft);
+}
+
+/* ---------- motion ---------- */
+@keyframes squish-in {
+    0% {
+        transform: scale(0.55, 0.7);
+        opacity: 0;
+    }
+    55% {
+        transform: scale(1.06, 0.94);
+        opacity: 1;
+    }
+    78% {
+        transform: scale(0.97, 1.04);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes squish-pop {
+    0% {
+        transform: scale(1);
+    }
+    35% {
+        transform: scale(1.12, 0.86);
+    }
+    70% {
+        transform: scale(0.94, 1.08);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes wobble {
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-2.5deg) scale(1.03, 0.97);
+    }
+    75% {
+        transform: rotate(2deg) scale(0.98, 1.02);
+    }
+}
+
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-7px) rotate(-0.6deg);
+    }
+    40% {
+        transform: translateX(6px) rotate(0.5deg);
+    }
+    60% {
+        transform: translateX(-4px);
+    }
+    80% {
+        transform: translateX(3px);
+    }
+}
+
+.squish-in {
+    animation: squish-in 0.42s var(--bounce) both;
+}
+.squish-pop {
+    animation: squish-pop 0.4s var(--bounce);
+}
+.shake {
+    animation: shake 0.4s ease;
+}
+
+/* floating +XP / -HP deltas */
+.float-delta {
+    position: fixed;
+    z-index: 500;
+    font-weight: 900;
+    font-size: 1.05rem;
+    pointer-events: none;
+    text-shadow: 0 1px 0 var(--hi-soft);
+    animation: float-up 1s ease-out forwards;
+}
+@keyframes float-up {
+    0% {
+        opacity: 0;
+        transform: translateY(6px) scale(0.7);
+    }
+    15% {
+        opacity: 1;
+        transform: translateY(0) scale(1.1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-42px) scale(1);
+    }
+}
+
+/* firework sparks (clay crumbs) */
+.firework {
+    position: absolute;
+    z-index: 600;
+    pointer-events: none;
+}
+.fire-span {
+    display: block;
+    position: absolute;
+    border-radius: 45% 55% 50% 50% / 55% 45% 50% 50%;
+    box-shadow: inset 1px 1px 1px rgba(255, 252, 245, 0.5),
+        inset -1px -1px 2px rgba(93, 68, 51, 0.3);
+}
+
+.hidden {
+    display: none !important;
+}

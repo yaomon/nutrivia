@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta
             name="viewport"
-            content="width=device-width, initial-scale=0.9, shrink-to-fit=yes"
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,108 +17,167 @@
             rel="stylesheet"
         />
         <link rel="icon" href="images/logo32.png" type="image/x-icon" />
-        <link rel="stylesheet" href="styles/style.css" />
-        <link rel="stylesheet" href="styles/bottom_container.css" />
-        <link rel="stylesheet" href="styles/question.css" />
-        <link rel="stylesheet" href="styles/stats.css" />
-        <link rel="stylesheet" href="styles/choices.css" />
-        <link rel="stylesheet" href="styles/firework.css" />
-        <link rel="stylesheet" href="styles/reward.css" />
+        <link rel="stylesheet" href="styles/clay.css" />
+        <link rel="stylesheet" href="styles/game.css" />
         <title>Nutrivia</title>
-        <script src="index.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="scripts/index.js"></script>
+        <script src="scripts/config.js"></script>
         <script src="scripts/domain1.js"></script>
         <script src="scripts/foods.js"></script>
-        <script src="scripts/script.js"></script>
+        <script src="scripts/items.js"></script>
+        <script src="scripts/events.js"></script>
+        <script src="scripts/ui.js" defer></script>
+        <script src="scripts/game.js" defer></script>
         <link rel="manifest" href="manifest.json" />
     </head>
 
     <body>
-        <div class="reward">
-            <div class="reward-label">You got</div>
-            <div class="reward-pic">
-                <div class="rare-bg">
-                    <div class="tasty-bg"></div>
-                    <div class="savory-bg"><div class="savory-star"></div></div>
-                    <div class="delicious-bg">
-                        <div class="delicious-star-wrapper-1">
-                            <div class="delicious-star-1"></div>
-                        </div>
-                        <div class="delicious-star-wrapper-2">
-                            <div class="delicious-star-2"></div>
-                        </div>
-                        <div class="delicious-star-wrapper-3">
-                            <div class="delicious-star-3"></div>
-                        </div>
+        <!-- ============ HOME ============ -->
+        <section id="screen-home" class="screen">
+            <div class="title-plate">
+                <h1 class="game-title">Nutrivia</h1>
+                <div class="tagline">a bite-size trivia roguelite</div>
+            </div>
+            <div class="home-stats">
+                <div class="home-stat clay-inset">
+                    <span class="home-stat-icon">🪙</span>
+                    <span id="home-gold">0</span>
+                </div>
+                <div class="home-stat clay-inset">
+                    <span class="home-stat-icon">🍱</span>
+                    <span id="home-foods">0/0</span>
+                </div>
+                <div class="home-stat clay-inset">
+                    <span class="home-stat-icon">🏆</span>
+                    <span id="home-best">—</span>
+                </div>
+            </div>
+            <button id="btn-start" class="clay clay-btn btn-hero red">
+                Start Run
+            </button>
+            <button id="btn-reset" class="clay clay-btn btn-quiet">
+                reset progress
+            </button>
+        </section>
+
+        <!-- ============ RUN ============ -->
+        <section id="screen-run" class="screen hidden">
+            <header class="hud">
+                <div class="avatar clay">
+                    <span class="avatar-face">🧑‍🍳</span>
+                    <span id="hud-level" class="level-badge clay red">1</span>
+                </div>
+                <div class="bars">
+                    <div class="bar clay-inset">
+                        <div id="hp-fill" class="bar-fill hp-fill"></div>
+                        <span id="hp-label" class="bar-label">HP 20/20</span>
                     </div>
-                    <div class="gourmet-bg">
-                        <div class="delicious-star-wrapper-1">
-                            <div class="delicious-star-1"></div>
-                        </div>
-                        <div class="delicious-star-wrapper-2">
-                            <div class="delicious-star-2"></div>
-                        </div>
-                        <div class="delicious-star-wrapper-3">
-                            <div class="delicious-star-3"></div>
-                        </div>
+                    <div class="bar clay-inset">
+                        <div id="xp-fill" class="bar-fill xp-fill"></div>
+                        <span id="xp-label" class="bar-label">XP 0/30</span>
                     </div>
-                    <div class="decadent-bg"></div>
-                    <div class="divine-bg"></div>
                 </div>
-                <img class="reward-pic-src" src="images/food/apple.png" />
+                <div class="chips">
+                    <div id="hud-streak" class="chip clay">🔥 0</div>
+                    <div id="hud-gold" class="chip clay">🪙 0</div>
+                </div>
+            </header>
+
+            <div id="event-banner" class="clay mustard hidden"></div>
+
+            <main id="question-card" class="question-card clay">
+                <div class="q-meta">
+                    <span id="q-num" class="q-num">#1</span>
+                    <span id="q-count" class="q-count">Q1</span>
+                </div>
+                <p id="q-text" class="q-text"></p>
+            </main>
+
+            <div id="choices" class="choices">
+                <button class="choice clay clay-btn" data-slot="0">
+                    <span class="choice-let clay"></span>
+                    <span class="choice-val"></span>
+                </button>
+                <button class="choice clay clay-btn" data-slot="1">
+                    <span class="choice-let clay"></span>
+                    <span class="choice-val"></span>
+                </button>
+                <button class="choice clay clay-btn" data-slot="2">
+                    <span class="choice-let clay"></span>
+                    <span class="choice-val"></span>
+                </button>
+                <button class="choice clay clay-btn" data-slot="3">
+                    <span class="choice-let clay"></span>
+                    <span class="choice-val"></span>
+                </button>
             </div>
-            <div class="reward-info">
-                <div class="reward-name inset-text">Apple</div>
-                <div class="reward-divider"></div>
-                <div class="reward-rarity inset-text">Legendary</div>
-                <div class="reward-desc">
-                    Crunchy or soft, tacos are filled with flavorful ingredients
-                    and always satisfying.
+
+            <footer class="run-footer">
+                <div id="item-bar" class="item-bar"></div>
+                <div id="buff-chips" class="buff-chips"></div>
+                <div class="footer-right">
+                    <button id="btn-next" class="clay clay-btn btn-next sage hidden">
+                        Next ▶
+                    </button>
+                    <button id="btn-flee" class="clay clay-btn btn-quiet">
+                        🏳️
+                    </button>
+                </div>
+            </footer>
+        </section>
+
+        <!-- ============ RUN SUMMARY ============ -->
+        <section id="screen-summary" class="screen hidden">
+            <h1 id="summary-title" class="game-title small">Run Over</h1>
+            <div id="summary-sub" class="tagline"></div>
+            <div class="summary-grid">
+                <div class="summary-stat clay-inset">
+                    <span class="summary-num" id="sum-level">1</span>
+                    <span class="summary-label">level</span>
+                </div>
+                <div class="summary-stat clay-inset">
+                    <span class="summary-num" id="sum-correct">0</span>
+                    <span class="summary-label">correct</span>
+                </div>
+                <div class="summary-stat clay-inset">
+                    <span class="summary-num" id="sum-missed">0</span>
+                    <span class="summary-label">missed</span>
+                </div>
+                <div class="summary-stat clay-inset">
+                    <span class="summary-num" id="sum-gold">0</span>
+                    <span class="summary-label">gold banked</span>
                 </div>
             </div>
-            <div class="reward-next button inset-text">Woo!</div>
+            <button id="btn-again" class="clay clay-btn btn-hero red">
+                Run It Back
+            </button>
+            <button id="btn-home" class="clay clay-btn btn-quiet">home</button>
+        </section>
+
+        <!-- ============ LEVEL UP MODAL ============ -->
+        <div id="modal-levelup" class="modal hidden">
+            <div class="modal-card clay">
+                <h2 class="modal-title">Level Up!</h2>
+                <div class="modal-sub">
+                    now level <span id="levelup-level">2</span> — pick a prize
+                </div>
+                <div id="reward-choices" class="reward-choices"></div>
+            </div>
         </div>
-        <div class="top-container">
-            <div class="bottom-left">
-                <div class="inset-text" id="level">Lv 1</div>
-                <div class="streak inset-text">
-                    <div class="pulse">🔥 0</div>
+
+        <!-- ============ FOOD REWARD MODAL ============ -->
+        <div id="modal-food" class="modal hidden">
+            <div class="modal-card clay food-card">
+                <div class="modal-sub">you got</div>
+                <div class="food-pedestal clay-inset">
+                    <img id="food-img" class="food-img" src="" alt="" />
                 </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="question-num inset-text">00</div>
-            <div class="question-frac inset-text">00/00</div>
-            <p class="question inset-text"></p>
-            <div class="choices">
-                <div class="choice" id="choice-1">
-                    <div class="choice-let inset-text">a</div>
-                    <div class="choice-val"></div>
-                </div>
-                <div class="choice" id="choice-2">
-                    <div class="choice-let inset-text">b</div>
-                    <div class="choice-val"></div>
-                </div>
-                <div class="choice" id="choice-3">
-                    <div class="choice-let inset-text">c</div>
-                    <div class="choice-val"></div>
-                </div>
-                <div class="choice" id="choice-4">
-                    <div class="choice-let inset-text">d</div>
-                    <div class="choice-val"></div>
-                </div>
-            </div>
-            <div class="bottom-container">
-                <div class="bottom-left">
-                    <div class="button inset-text" id="items">🥦</div>
-                    <div class="button inset-text" id="items">🍗</div>
-                    <div class="button inset-text" id="items">🍦</div>
-                    <div class="button inset-text" id="items">🍞</div>
-                    <div class="button inset-text" id="items">🥛</div>
-                </div>
-                <div class="bottom-right">
-                    <div class="button inset-text" id="skip">▶</div>
-                </div>
+                <div id="food-name" class="food-name">Apple</div>
+                <div id="food-rarity" class="food-rarity">Savory</div>
+                <p id="food-desc" class="food-desc"></p>
+                <button id="btn-food-ok" class="clay clay-btn sage">
+                    Woo!
+                </button>
             </div>
         </div>
     </body>
