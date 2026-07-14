@@ -222,6 +222,17 @@
     padding: 24px 24px 28px;
 }
 
+/* event cards are a different clay — a warm mustard-washed slab */
+.question-card.event-mode {
+    background-color: #e9d3a4;
+    --side: var(--mustard-side);
+    --side-soft: var(--mustard-side-soft);
+}
+.question-card.event-mode .q-meta {
+    color: #8a6a30;
+    font-weight: 700;
+}
+
 .q-meta {
     display: flex;
     justify-content: space-between;

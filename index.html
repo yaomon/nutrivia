@@ -29,6 +29,8 @@
         <script src="scripts/config.js"></script>
         <script src="scripts/domain1.js"></script>
         <script src="scripts/japanese_n5.js"></script>
+        <script src="scripts/japanese_n4.js"></script>
+        <script src="scripts/dietetics.js"></script>
         <script src="scripts/bank.js"></script>
         <script src="scripts/sets.js"></script>
         <script src="scripts/foods.js"></script>
@@ -116,6 +118,7 @@
             <main id="question-card" class="question-card clay">
                 <div class="q-meta">
                     <span id="q-num" class="q-num">Question 1</span>
+                    <span id="q-timer" class="q-timer">⏱️ 0:00</span>
                 </div>
                 <p id="q-text" class="q-text"></p>
             </main>
@@ -190,6 +193,10 @@
                 <div class="summary-stat clay-inset">
                     <span class="summary-num" id="sum-streak">0</span>
                     <span class="summary-label">best streak</span>
+                </div>
+                <div class="summary-stat clay-inset">
+                    <span class="summary-num" id="sum-time">0:00</span>
+                    <span class="summary-label">time</span>
                 </div>
                 <div class="summary-stat clay-inset">
                     <span class="summary-num" id="sum-gold">0</span>

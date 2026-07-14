@@ -38,7 +38,21 @@ const QUESTION_SETS = [
         icon: "🍣",
         name: "Japanese N5",
         desc: "JLPT N5 · vocab, kanji & grammar",
-        match: (n) => n >= 1001 && n <= 1100,
+        match: (n) => n >= 1001 && n <= 1199,
+    },
+    {
+        id: "jp_n4",
+        icon: "🍱",
+        name: "Japanese N4",
+        desc: "JLPT N4 · kanji, vocab & grammar",
+        match: (n) => n >= 1201 && n <= 1399,
+    },
+    {
+        id: "dietetics",
+        icon: "🩺",
+        name: "Dietetics",
+        desc: "RD exam · nutrition science & MNT",
+        match: (n) => n >= 2001 && n <= 2999,
     },
 ];
 

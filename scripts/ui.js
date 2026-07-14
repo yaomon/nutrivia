@@ -246,8 +246,18 @@ const UI = (() => {
 
     /* ---------- question & choices ---------- */
 
+    function formatTime(ms) {
+        const s = Math.max(0, Math.floor(ms / 1000));
+        return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+    }
+
+    function setTimer(ms) {
+        $("#q-timer").textContent = "⏱️ " + formatTime(ms);
+    }
+
     function renderQuestion(run) {
         const q = run.q;
+        $("#question-card").classList.remove("event-mode");
         $("#q-num").textContent = "Question " + (run.answered + 1);
         $("#q-text").textContent = q.text;
 
@@ -280,6 +290,59 @@ const UI = (() => {
         knead($("#question-card"));
         replayAnim($("#question-card"), "squish-in");
         $("#btn-next").classList.add("hidden");
+    }
+
+    /* ---------- event cards ---------- */
+
+    // an event pauses the run on a story card whose choices ARE the answers
+    function renderEventCard(run, def) {
+        $("#question-card").classList.add("event-mode");
+        $("#q-num").textContent = def.icon + " Event: " + def.name;
+        $("#q-text").textContent = def.intro;
+
+        $$(".choice").forEach((btn, i) => {
+            const choice = def.choices[i];
+            btn.classList.remove(
+                "correct",
+                "incorrect",
+                "eliminated",
+                "answered",
+                "squish-in"
+            );
+            if (!choice) {
+                btn.classList.add("hidden");
+                return;
+            }
+            btn.classList.remove("hidden");
+            btn.querySelector(".choice-let").textContent = "abcd"[i];
+            btn.querySelector(".choice-val").textContent = choice.text;
+            btn.style.animationDelay = 0.05 * i + "s";
+            knead(btn);
+            knead(btn.querySelector(".choice-let"));
+            replayAnim(btn, "squish-in");
+        });
+
+        knead($("#question-card"));
+        replayAnim($("#question-card"), "squish-in");
+        $("#btn-next").classList.add("hidden");
+    }
+
+    // show what the chosen path did: chosen card glows, others flatten,
+    // the story text becomes the outcome
+    function resolveEventCard(slotIndex, resultText) {
+        $$(".choice").forEach((btn, i) => {
+            btn.classList.add("answered");
+            if (i === slotIndex) {
+                btn.classList.add("correct");
+                replayAnim(btn, "squish-pop");
+            } else if (!btn.classList.contains("hidden")) {
+                btn.classList.add("eliminated");
+            }
+        });
+        $("#q-text").textContent = resultText;
+        replayAnim($("#q-text"), "squish-in");
+        $("#btn-next").classList.remove("hidden");
+        replayAnim($("#btn-next"), "squish-in");
     }
 
     function slotFor(run, option) {
@@ -478,6 +541,7 @@ const UI = (() => {
         $("#sum-correct").textContent = run.correct;
         $("#sum-missed").textContent = run.missed;
         $("#sum-streak").textContent = "🔥 " + (run.bestStreak || 0);
+        $("#sum-time").textContent = formatTime(run.duration || 0);
         $("#sum-gold").textContent = run.gold;
     }
 
@@ -533,7 +597,10 @@ const UI = (() => {
         renderHome,
         renderHUD,
         popChip,
+        setTimer,
         renderQuestion,
+        renderEventCard,
+        resolveEventCard,
         markEliminated,
         revealAnswer,
         renderItems,

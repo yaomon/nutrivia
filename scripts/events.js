@@ -1,7 +1,15 @@
-// Event registry. Events are temporary run modifiers lasting CONFIG.eventDuration
-// questions. To add one, add an entry — the engine rolls among eligible events.
+// Event registry. When an event triggers, the run pauses and deals an
+// EVENT CARD — a little story with choices. Each choice has its own
+// outcome: start the event's modifier, trade for gold/XP/HP/items, or
+// gamble. Outcomes return the text shown after choosing.
 //
-// Hooks (all optional):
+// Card fields:
+//   icon, name    — shown on the card and the banner
+//   desc          — short banner text while the modifier is active
+//   intro         — the story shown on the event card
+//   choices: [{ text, outcome(game) -> result text }]
+//
+// Modifier hooks (all optional, used while the event is active):
 //   eligible(game)              -> bool, can this event trigger right now
 //   pickQuestion(game)          -> question object, overrides normal selection
 //   modifyChoices(game, q, cs)  -> choices array, reshape the displayed answers
@@ -12,20 +20,55 @@ const EVENTS = {
         icon: "🔥",
         name: "Redemption Round",
         desc: "questions you've missed before",
+        intro: "The questions you've missed rise out of the clay, hungry for a rematch. They're chanting your name.",
         eligible: (game) => game.missedPool().length >= 3,
         pickQuestion: (game) => game.pickFrom(game.missedPool()),
+        choices: [
+            {
+                text: "Face them — the next 5 questions are ones you've missed",
+                outcome: (game) => {
+                    game.startEvent("redemption");
+                    return "🔥 The rematch begins. Show them who's boss!";
+                },
+            },
+            {
+                text: "Hit the books instead — gain 8 XP and move on",
+                outcome: (game) => {
+                    game.gainXp(8);
+                    return "📚 A quiet study session. The grudges can wait.";
+                },
+            },
+        ],
     },
     deja_vu: {
         icon: "👀",
         name: "Déjà Vu",
         desc: "questions you've seen before",
+        intro: "The pot stirs itself and familiar questions float to the surface. Haven't you been here before?",
         eligible: (game) => game.seenPool().length >= 5,
         pickQuestion: (game) => game.pickFrom(game.seenPool()),
+        choices: [
+            {
+                text: "Lean in — the next 5 questions are ones you've seen",
+                outcome: (game) => {
+                    game.startEvent("deja_vu");
+                    return "👀 Everything feels strangely familiar...";
+                },
+            },
+            {
+                text: "Shake it off — take 10 gold and move on",
+                outcome: (game) => {
+                    game.gainGold(10);
+                    return "💰 You blink, and the feeling passes. Profitably.";
+                },
+            },
+        ],
     },
     coin_flip: {
         icon: "💰",
         name: "Coin Flip",
         desc: "every question has only two choices",
+        intro: "A clay merchant flips a golden coin. \"Care to simplify your life? Or shall we let the coin decide your pay?\"",
         eligible: () => true,
         modifyChoices: (game, q, choices) => {
             const correct = choices.find((c) => c.option === q.correct_answer);
@@ -34,25 +77,83 @@ const EVENTS = {
             )[0];
             return choices.filter((c) => c === correct || c === wrong);
         },
+        choices: [
+            {
+                text: "Take the deal — only 2 choices per question for 5 questions",
+                outcome: (game) => {
+                    game.startEvent("coin_flip");
+                    return "💰 The merchant smiles. Life is simpler now.";
+                },
+            },
+            {
+                text: "Flip for gold — heads +25, tails nothing",
+                outcome: (game) => {
+                    if (Math.random() < 0.5) {
+                        game.gainGold(25);
+                        return "🪄 HEADS! The merchant grumbles and pays up.";
+                    }
+                    return "😬 Tails. The merchant pockets the coin and winks.";
+                },
+            },
+            {
+                text: "Walk away",
+                outcome: () => "🚶 You keep walking. The coin clinks behind you.",
+            },
+        ],
     },
     gold_rush: {
         icon: "🤑",
         name: "Gold Rush",
         desc: "gold rewards are doubled",
+        intro: "Your shovel strikes something hard — a vein of gold glitters deep in the clay!",
         eligible: () => true,
         modifyRewards: (game, r) => ({ xp: r.xp, gold: r.gold * 2 }),
+        choices: [
+            {
+                text: "Mine it carefully — gold rewards ×2 for 5 questions",
+                outcome: (game) => {
+                    game.startEvent("gold_rush");
+                    return "🤑 Every answer sparkles with gold dust!";
+                },
+            },
+            {
+                text: "Grab a nugget and run — +15 gold right now",
+                outcome: (game) => {
+                    game.gainGold(15);
+                    return "💰 A bird in the hand. The vein sinks away.";
+                },
+            },
+        ],
     },
     brain_wave: {
         icon: "🧠",
         name: "Brain Wave",
         desc: "XP rewards are doubled",
+        intro: "A surge of perfect clarity washes over you. For a moment, you understand everything.",
         eligible: () => true,
         modifyRewards: (game, r) => ({ xp: r.xp * 2, gold: r.gold }),
+        choices: [
+            {
+                text: "Ride the wave — XP rewards ×2 for 5 questions",
+                outcome: (game) => {
+                    game.startEvent("brain_wave");
+                    return "🧠 Your thoughts crackle with lightning!";
+                },
+            },
+            {
+                text: "Bottle it for later — gain a 🍯 Honey Jar",
+                outcome: (game) => {
+                    game.gainItem("honey_jar");
+                    return "🍯 Clarity, preserved. Sip it when you need it.";
+                },
+            },
+        ],
     },
     lucky_day: {
         icon: "🍀",
         name: "Lucky Day",
         desc: "one wrong answer is already gone",
+        intro: "A four-leaf clover grows right out of the question pot. It hums with good fortune.",
         eligible: () => true,
         modifyChoices: (game, q, choices) => {
             const wrong = game.shuffled(
@@ -60,29 +161,108 @@ const EVENTS = {
             )[0];
             return choices.filter((c) => c !== wrong);
         },
+        choices: [
+            {
+                text: "Wear it — one wrong answer removed for 5 questions",
+                outcome: (game) => {
+                    game.startEvent("lucky_day");
+                    return "🍀 Luck settles on your shoulders like pollen.";
+                },
+            },
+            {
+                text: "Sell it to a collector — +20 gold",
+                outcome: (game) => {
+                    game.gainGold(20);
+                    return "💰 The collector cradles it like a jewel. Cha-ching.";
+                },
+            },
+        ],
     },
     mix_up: {
         icon: "🌪️",
         name: "Mix-Up",
         desc: "the answers are shuffled out of order",
+        intro: "A whirlwind tears across the table, scattering every answer sheet into the air!",
         eligible: () => true,
         modifyChoices: (game, q, choices) => game.shuffled(choices),
+        choices: [
+            {
+                text: "Brace yourself — answers come shuffled for 5 questions",
+                outcome: (game) => {
+                    game.startEvent("mix_up");
+                    return "🌪️ Papers everywhere! Keep your eyes sharp.";
+                },
+            },
+            {
+                text: "Hold everything down — costs 3 XP, no event",
+                outcome: (game) => {
+                    game.loseXp(3);
+                    return "🙌 You pin the papers down. Order is exhausting.";
+                },
+            },
+        ],
     },
     harvest: {
         icon: "🌾",
         name: "Harvest",
         desc: "XP and gold rewards ×1.5",
+        intro: "The question fields are heavy with grain, swaying gold in the wind. Harvest time.",
         eligible: () => true,
         modifyRewards: (game, r) => ({
             xp: Math.round(r.xp * 1.5),
             gold: Math.round(r.gold * 1.5),
         }),
+        choices: [
+            {
+                text: "Harvest steadily — rewards ×1.5 for 5 questions",
+                outcome: (game) => {
+                    game.startEvent("harvest");
+                    return "🌾 Swish, swish. The bounty piles up.";
+                },
+            },
+            {
+                text: "Sell the whole crop now — +20 gold",
+                outcome: (game) => {
+                    game.gainGold(20);
+                    return "💰 Sold at the gate. No blisters, no bounty.";
+                },
+            },
+        ],
     },
     sudden_death: {
         icon: "💀",
         name: "Sudden Death",
-        desc: "misses cost DOUBLE HP — stay sharp!",
+        desc: "misses cost DOUBLE HP, but gold is doubled too",
+        intro: "The room goes cold. Death himself sits across the table and proposes a wager, grinning.",
         eligible: (game) => game.run.hp >= 15, // only when you can take it
         modifyPenalty: (game, p) => ({ hp: p.hp * 2, xp: p.xp }),
+        modifyRewards: (game, r) => ({ xp: r.xp, gold: r.gold * 2 }),
+        choices: [
+            {
+                text: "Accept the wager — double HP loss AND double gold for 5 questions",
+                outcome: (game) => {
+                    game.startEvent("sudden_death");
+                    return "💀 Death shuffles the questions personally. Good luck.";
+                },
+            },
+            {
+                text: "Refuse politely — pay 5 gold as tribute",
+                outcome: (game) => {
+                    game.loseGold(5);
+                    return "🙏 Death sighs, takes the coins, and dissolves into mist.";
+                },
+            },
+            {
+                text: "Flip his hourglass — gamble: 50% +30 gold, 50% −4 HP",
+                outcome: (game) => {
+                    if (Math.random() < 0.5) {
+                        game.gainGold(30);
+                        return "⏳ Death laughs so hard he tips you. +30 gold!";
+                    }
+                    game.damage(4);
+                    return "⏳ Time snaps back and bites. −4 HP. Rude.";
+                },
+            },
+        ],
     },
 };

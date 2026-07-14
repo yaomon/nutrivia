@@ -52,8 +52,10 @@ const Game = (() => {
             asked: [], // question numbers asked this run
             items: Object.assign({}, CONFIG.startingItems),
             buffs: {},
-            event: null,
+            event: null, // active modifier {id, remaining}
+            eventCard: null, // pending event card awaiting a choice
             sinceEvent: 0,
+            startedAt: Date.now(), // run stopwatch
             q: null, // current question snapshot
             qStart: 0, // when the current question was served (speed bonus)
             answeredCurrent: false,
@@ -204,19 +206,44 @@ const Game = (() => {
 
     /* ---------------- events ---------------- */
 
-    function rollEvent() {
+    // rolling an event now deals an EVENT CARD: the run pauses on a
+    // story card whose choices decide what actually happens
+    function rollEventCard() {
         const eligible = Object.keys(EVENTS).filter((id) =>
             EVENTS[id].eligible(gameApi)
         );
         if (!eligible.length) return;
-        run.event = {
-            id: eligible[randInt(0, eligible.length - 1)],
-            remaining: CONFIG.eventDuration,
-        };
+        run.eventCard = eligible[randInt(0, eligible.length - 1)];
         hint(
             "events",
-            "⚡ An event! These twist the next few questions — the banner tells you how."
+            "⚡ An event! Read the card and pick — different choices, different rewards."
         );
+    }
+
+    function serveEventCard() {
+        run.q = null;
+        run.answeredCurrent = false;
+        disarmItem();
+        save();
+        UI.renderEventCard(run, EVENTS[run.eventCard]);
+        UI.renderEventBanner(run);
+        renderItemBar();
+        UI.renderBuffs(run);
+    }
+
+    function handleEventChoice(slotIndex) {
+        const def = EVENTS[run.eventCard];
+        const choice = def.choices[slotIndex];
+        if (!choice) return;
+        run.eventCard = null;
+        run.answeredCurrent = true;
+        const result = choice.outcome(gameApi);
+        UI.resolveEventCard(slotIndex, result);
+        UI.renderEventBanner(run);
+        refreshHUD();
+        renderItemBar();
+        save();
+        checkLevelUp(); // an XP outcome can level you up
     }
 
     /* ---------------- question flow ---------------- */
@@ -229,7 +256,7 @@ const Game = (() => {
         if (run.event && run.event.remaining <= 0) {
             run.event = null;
         }
-        if (!run.event) {
+        if (!run.event && !run.eventCard) {
             run.sinceEvent++;
             const guaranteed = run.sinceEvent >= CONFIG.eventEvery;
             const surprise =
@@ -237,8 +264,12 @@ const Game = (() => {
                 Math.random() < CONFIG.eventRandomChance;
             if (guaranteed || surprise) {
                 run.sinceEvent = 0;
-                rollEvent();
+                rollEventCard();
             }
+        }
+        if (run.eventCard) {
+            serveEventCard();
+            return;
         }
 
         const ev = run.event ? EVENTS[run.event.id] : null;
@@ -294,6 +325,11 @@ const Game = (() => {
 
     function answer(slotIndex, clickEvent) {
         if (!run || !run.active || run.answeredCurrent) return;
+        if (run.eventCard) {
+            handleEventChoice(slotIndex);
+            return;
+        }
+        if (!run.q) return;
         const choice = run.q.choices[slotIndex];
         if (!choice || run.q.eliminated.includes(choice.option)) return;
 
@@ -545,7 +581,8 @@ const Game = (() => {
             refreshHUD();
             renderItemBar();
             save();
-            checkLevelUp(); // banked enough xp for another level?
+            // every level up also discovers a food for the collection
+            grantFood(() => checkLevelUp()); // then: banked another level?
         });
     }
 
@@ -578,29 +615,23 @@ const Game = (() => {
                     run.gold += CONFIG.goldRewardAmount;
                 },
             },
-            {
-                icon: "🍱",
-                name: "Mystery Food",
-                desc: "Discover a food for your collection",
-                apply: grantFood,
-            },
         ];
         return shuffled(kinds).slice(0, CONFIG.levelUpChoices);
     }
 
-    function grantFood() {
+    function grantFood(after) {
         let pool = foods.filter((f) => !meta.foods.includes(f.name));
         if (!pool.length) pool = foods;
         const food = pool[randInt(0, pool.length - 1)];
         if (!meta.foods.includes(food.name)) meta.foods.push(food.name);
         save();
-        UI.showFood(food);
+        UI.showFood(food, after);
     }
 
     /* ---------------- items ---------------- */
 
     function canUseItem(id) {
-        if (run.answeredCurrent) return false;
+        if (run.answeredCurrent || run.eventCard || !run.q) return false;
         const item = ITEMS[id];
         if (!item) return false;
         return item.canUse ? item.canUse(gameApi) : true;
@@ -711,6 +742,7 @@ const Game = (() => {
         ) {
             meta.best = { level: run.level, correct: run.correct };
         }
+        run.duration = Date.now() - (run.startedAt || Date.now());
         UI.renderSummary(run, fled);
         save();
         UI.showScreen("screen-summary");
@@ -772,6 +804,38 @@ const Game = (() => {
             );
             refreshHUD();
         },
+        loseXp(n) {
+            run.xp = Math.max(0, run.xp - n);
+            UI.floatDelta(
+                UI.$("#xp-fill").parentElement,
+                "-" + n + " XP",
+                "#c04a3b"
+            );
+            refreshHUD();
+        },
+        loseGold(n) {
+            run.gold = Math.max(0, run.gold - n);
+            UI.floatDelta(UI.$("#hud-gold"), "-" + n, "#c04a3b");
+            refreshHUD();
+        },
+        // event damage never kills — the clay only crumbles to a miss
+        damage(n) {
+            run.hp = Math.max(1, run.hp - n);
+            UI.floatDelta(
+                UI.$("#hp-fill").parentElement,
+                "-" + n + " HP",
+                "#c04a3b"
+            );
+            UI.reactFace("😖");
+            refreshHUD();
+        },
+        gainItem(id) {
+            run.items[id] = (run.items[id] || 0) + 1;
+            renderItemBar();
+        },
+        startEvent(id) {
+            run.event = { id: id, remaining: CONFIG.eventDuration };
+        },
     };
 
     /* ---------------- boot ---------------- */
@@ -809,18 +873,33 @@ const Game = (() => {
             });
         });
 
-        if (run && run.active && run.q) {
+        // run stopwatch — ticks whenever a run is on screen
+        setInterval(() => {
+            if (
+                run &&
+                run.active &&
+                !UI.$("#screen-run").classList.contains("hidden")
+            ) {
+                UI.setTimer(Date.now() - (run.startedAt || Date.now()));
+            }
+        }, 1000);
+
+        if (run && run.active && (run.q || run.eventCard)) {
             // resume mid-run after a refresh
             rebuildActivePool();
             UI.showScreen("screen-run");
             refreshHUD();
-            UI.renderQuestion(run);
-            UI.renderEventBanner(run);
-            renderItemBar();
-            UI.renderBuffs(run);
-            if (run.answeredCurrent) {
-                // was between questions — just serve the next one
-                nextQuestion();
+            if (run.eventCard) {
+                serveEventCard();
+            } else {
+                UI.renderQuestion(run);
+                UI.renderEventBanner(run);
+                renderItemBar();
+                UI.renderBuffs(run);
+                if (run.answeredCurrent) {
+                    // was between questions — just serve the next one
+                    nextQuestion();
+                }
             }
         } else {
             goHome();

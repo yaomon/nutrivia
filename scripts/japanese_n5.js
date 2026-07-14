@@ -411,4 +411,212 @@ const n5_questions = [
         { option: "a", text: "どうぞ" }, { option: "b", text: "どうも" },
         { option: "c", text: "ちょっと" }, { option: "d", text: "どれ" },
     ], correct_answer: "a" },
+
+    // ---------- more vocabulary ----------
+    { number: "1101", question: "What does 「あかい」 mean?", answers: [
+        { option: "a", text: "blue" }, { option: "b", text: "red" },
+        { option: "c", text: "white" }, { option: "d", text: "green" },
+    ], correct_answer: "b" },
+    { number: "1102", question: "What does 「あおい」 mean?", answers: [
+        { option: "a", text: "blue" }, { option: "b", text: "yellow" },
+        { option: "c", text: "red" }, { option: "d", text: "brown" },
+    ], correct_answer: "a" },
+    { number: "1103", question: "What does 「くろい」 mean?", answers: [
+        { option: "a", text: "white" }, { option: "b", text: "gray" },
+        { option: "c", text: "black" }, { option: "d", text: "dark blue" },
+    ], correct_answer: "c" },
+    { number: "1104", question: "What does 「ちち」 mean (talking about your own family)?", answers: [
+        { option: "a", text: "my mother" }, { option: "b", text: "my father" },
+        { option: "c", text: "my uncle" }, { option: "d", text: "my grandfather" },
+    ], correct_answer: "b" },
+    { number: "1105", question: "What does 「はは」 mean (talking about your own family)?", answers: [
+        { option: "a", text: "my mother" }, { option: "b", text: "my aunt" },
+        { option: "c", text: "my sister" }, { option: "d", text: "my grandmother" },
+    ], correct_answer: "a" },
+    { number: "1106", question: "What does 「あに」 mean?", answers: [
+        { option: "a", text: "my younger brother" }, { option: "b", text: "my older sister" },
+        { option: "c", text: "my cousin" }, { option: "d", text: "my older brother" },
+    ], correct_answer: "d" },
+    { number: "1107", question: "What does 「あね」 mean?", answers: [
+        { option: "a", text: "my older sister" }, { option: "b", text: "my younger sister" },
+        { option: "c", text: "my mother" }, { option: "d", text: "my aunt" },
+    ], correct_answer: "a" },
+    { number: "1108", question: "What does 「おとうと」 mean?", answers: [
+        { option: "a", text: "my older brother" }, { option: "b", text: "my father" },
+        { option: "c", text: "my younger brother" }, { option: "d", text: "my son" },
+    ], correct_answer: "c" },
+    { number: "1109", question: "What does 「いもうと」 mean?", answers: [
+        { option: "a", text: "my older sister" }, { option: "b", text: "my younger sister" },
+        { option: "c", text: "my daughter" }, { option: "d", text: "my niece" },
+    ], correct_answer: "b" },
+    { number: "1110", question: "What does 「あめ」 mean (weather)?", answers: [
+        { option: "a", text: "snow" }, { option: "b", text: "wind" },
+        { option: "c", text: "cloud" }, { option: "d", text: "rain" },
+    ], correct_answer: "d" },
+    { number: "1111", question: "What does 「ゆき」 mean?", answers: [
+        { option: "a", text: "snow" }, { option: "b", text: "rain" },
+        { option: "c", text: "ice" }, { option: "d", text: "fog" },
+    ], correct_answer: "a" },
+    { number: "1112", question: "What does 「かぜ」 mean (weather)?", answers: [
+        { option: "a", text: "storm" }, { option: "b", text: "wind" },
+        { option: "c", text: "thunder" }, { option: "d", text: "cloud" },
+    ], correct_answer: "b" },
+    { number: "1113", question: "What does 「はれ」 mean?", answers: [
+        { option: "a", text: "rainy weather" }, { option: "b", text: "cloudy weather" },
+        { option: "c", text: "sunny weather" }, { option: "d", text: "snowy weather" },
+    ], correct_answer: "c" },
+    { number: "1114", question: "What does 「ひこうき」 mean?", answers: [
+        { option: "a", text: "airplane" }, { option: "b", text: "helicopter" },
+        { option: "c", text: "ship" }, { option: "d", text: "rocket" },
+    ], correct_answer: "a" },
+    { number: "1115", question: "What does 「じてんしゃ」 mean?", answers: [
+        { option: "a", text: "car" }, { option: "b", text: "motorcycle" },
+        { option: "c", text: "train" }, { option: "d", text: "bicycle" },
+    ], correct_answer: "d" },
+
+    // ---------- more kanji readings ----------
+    { number: "1116", question: "How do you read 「月曜日」?", answers: [
+        { option: "a", text: "げつようび" }, { option: "b", text: "にちようび" },
+        { option: "c", text: "どようび" }, { option: "d", text: "かようび" },
+    ], correct_answer: "a" },
+    { number: "1117", question: "How do you read 「木」 (tree)?", answers: [
+        { option: "a", text: "ほん" }, { option: "b", text: "き" },
+        { option: "c", text: "はな" }, { option: "d", text: "くさ" },
+    ], correct_answer: "b" },
+    { number: "1118", question: "How do you read 「金曜日」?", answers: [
+        { option: "a", text: "きんようび" }, { option: "b", text: "ぎんようび" },
+        { option: "c", text: "もくようび" }, { option: "d", text: "すいようび" },
+    ], correct_answer: "a" },
+    { number: "1119", question: "How do you read 「土曜日」?", answers: [
+        { option: "a", text: "つちようび" }, { option: "b", text: "とようび" },
+        { option: "c", text: "どようび" }, { option: "d", text: "だようび" },
+    ], correct_answer: "c" },
+    { number: "1120", question: "How do you read 「年」 (year, age)?", answers: [
+        { option: "a", text: "とし" }, { option: "b", text: "つき" },
+        { option: "c", text: "ひ" }, { option: "d", text: "とき" },
+    ], correct_answer: "a" },
+    { number: "1121", question: "How do you read 「何」 in 「何を たべますか」?", answers: [
+        { option: "a", text: "なん" }, { option: "b", text: "どれ" },
+        { option: "c", text: "なぜ" }, { option: "d", text: "なに" },
+    ], correct_answer: "d" },
+    { number: "1122", question: "How do you read 「外国」?", answers: [
+        { option: "a", text: "がいこく" }, { option: "b", text: "そとくに" },
+        { option: "c", text: "げこく" }, { option: "d", text: "がいごく" },
+    ], correct_answer: "a" },
+    { number: "1123", question: "How do you read 「毎日」?", answers: [
+        { option: "a", text: "まいにち" }, { option: "b", text: "まいび" },
+        { option: "c", text: "ごとにち" }, { option: "d", text: "まいじつ" },
+    ], correct_answer: "a" },
+    { number: "1124", question: "How do you read 「午前」?", answers: [
+        { option: "a", text: "ごご" }, { option: "b", text: "ごぜん" },
+        { option: "c", text: "うしまえ" }, { option: "d", text: "こぜん" },
+    ], correct_answer: "b" },
+    { number: "1125", question: "How do you read 「午後」?", answers: [
+        { option: "a", text: "ごぜん" }, { option: "b", text: "ごこう" },
+        { option: "c", text: "ごご" }, { option: "d", text: "ごのち" },
+    ], correct_answer: "c" },
+    { number: "1126", question: "How do you read 「会社」?", answers: [
+        { option: "a", text: "かいしゃ" }, { option: "b", text: "がっこう" },
+        { option: "c", text: "かいぎ" }, { option: "d", text: "しゃかい" },
+    ], correct_answer: "a" },
+    { number: "1127", question: "How do you read 「買う」?", answers: [
+        { option: "a", text: "かう" }, { option: "b", text: "うる" },
+        { option: "c", text: "はらう" }, { option: "d", text: "もらう" },
+    ], correct_answer: "a" },
+    { number: "1128", question: "How do you read 「読む」?", answers: [
+        { option: "a", text: "のむ" }, { option: "b", text: "よむ" },
+        { option: "c", text: "やすむ" }, { option: "d", text: "たのむ" },
+    ], correct_answer: "b" },
+    { number: "1129", question: "How do you read 「書く」?", answers: [
+        { option: "a", text: "きく" }, { option: "b", text: "はく" },
+        { option: "c", text: "おく" }, { option: "d", text: "かく" },
+    ], correct_answer: "d" },
+    { number: "1130", question: "How do you read 「話す」?", answers: [
+        { option: "a", text: "はなす" }, { option: "b", text: "だす" },
+        { option: "c", text: "わす" }, { option: "d", text: "かえす" },
+    ], correct_answer: "a" },
+
+    // ---------- more grammar ----------
+    { number: "1131", question: "How do you suggest 'let's eat' politely?", answers: [
+        { option: "a", text: "たべてください" }, { option: "b", text: "たべましょう" },
+        { option: "c", text: "たべたいです" }, { option: "d", text: "たべます" },
+    ], correct_answer: "b" },
+    { number: "1132", question: "What does 「しゃしんを とってもいいですか」 ask?", answers: [
+        { option: "a", text: "May I take a photo?" }, { option: "b", text: "Will you take my photo?" },
+        { option: "c", text: "Is this a good photo?" }, { option: "d", text: "Do you like photos?" },
+    ], correct_answer: "a" },
+    { number: "1133", question: "What does 「もう たべました」 mean?", answers: [
+        { option: "a", text: "I will eat more" }, { option: "b", text: "I ate too much" },
+        { option: "c", text: "I already ate" }, { option: "d", text: "I want to eat again" },
+    ], correct_answer: "c" },
+    { number: "1134", question: "In 「まだ たべていません」, what does 「まだ」 mean?", answers: [
+        { option: "a", text: "not yet" }, { option: "b", text: "already" },
+        { option: "c", text: "never" }, { option: "d", text: "again" },
+    ], correct_answer: "a" },
+    { number: "1135", question: "Choose the particle: きのう えいが ___ みました。", answers: [
+        { option: "a", text: "が" }, { option: "b", text: "に" },
+        { option: "c", text: "を" }, { option: "d", text: "で" },
+    ], correct_answer: "c" },
+    { number: "1136", question: "In 「あついですから、まどを あけます」, what does 「から」 mean?", answers: [
+        { option: "a", text: "but" }, { option: "b", text: "because" },
+        { option: "c", text: "after" }, { option: "d", text: "if" },
+    ], correct_answer: "b" },
+    { number: "1137", question: "Which counter is used for flat things like paper? かみを 2___ ください。", answers: [
+        { option: "a", text: "ほん" }, { option: "b", text: "こ" },
+        { option: "c", text: "だい" }, { option: "d", text: "まい" },
+    ], correct_answer: "d" },
+    { number: "1138", question: "What does 「どのぐらい」 ask about?", answers: [
+        { option: "a", text: "how long / how much" }, { option: "b", text: "which one" },
+        { option: "c", text: "what kind" }, { option: "d", text: "whose" },
+    ], correct_answer: "a" },
+    { number: "1139", question: "What does 「うちから えきまで」 mean?", answers: [
+        { option: "a", text: "at home and at the station" }, { option: "b", text: "from home to the station" },
+        { option: "c", text: "near home and the station" }, { option: "d", text: "either home or the station" },
+    ], correct_answer: "b" },
+    { number: "1140", question: "Complete naturally: けさ、なにも ___。", answers: [
+        { option: "a", text: "たべました" }, { option: "b", text: "たべます" },
+        { option: "c", text: "たべませんでした" }, { option: "d", text: "たべたいです" },
+    ], correct_answer: "c" },
+    { number: "1141", question: "What does 「いっしょに」 mean?", answers: [
+        { option: "a", text: "together" }, { option: "b", text: "alone" },
+        { option: "c", text: "quickly" }, { option: "d", text: "slowly" },
+    ], correct_answer: "a" },
+    { number: "1142", question: "What does 「ごはんのまえに、てを あらいます」 mean?", answers: [
+        { option: "a", text: "I wash my hands after meals" }, { option: "b", text: "I wash my hands during meals" },
+        { option: "c", text: "I wash the rice before cooking" }, { option: "d", text: "I wash my hands before meals" },
+    ], correct_answer: "d" },
+
+    // ---------- more numbers, time & phrases ----------
+    { number: "1143", question: "What number is 「六」?", answers: [
+        { option: "a", text: "6" }, { option: "b", text: "8" },
+        { option: "c", text: "9" }, { option: "d", text: "3" },
+    ], correct_answer: "a" },
+    { number: "1144", question: "What number is 「八」?", answers: [
+        { option: "a", text: "6" }, { option: "b", text: "8" },
+        { option: "c", text: "4" }, { option: "d", text: "10" },
+    ], correct_answer: "b" },
+    { number: "1145", question: "「ここのつ」 is how many things?", answers: [
+        { option: "a", text: "5" }, { option: "b", text: "7" },
+        { option: "c", text: "9" }, { option: "d", text: "10" },
+    ], correct_answer: "c" },
+    { number: "1146", question: "「はたち」 means what age?", answers: [
+        { option: "a", text: "18 years old" }, { option: "b", text: "20 years old" },
+        { option: "c", text: "28 years old" }, { option: "d", text: "8 years old" },
+    ], correct_answer: "b" },
+    { number: "1147", question: "What does 「いくらですか」 ask?", answers: [
+        { option: "a", text: "How much does it cost?" }, { option: "b", text: "How many are there?" },
+        { option: "c", text: "What time is it?" }, { option: "d", text: "How far is it?" },
+    ], correct_answer: "a" },
+    { number: "1148", question: "What does 「おいくつですか」 usually ask?", answers: [
+        { option: "a", text: "How much is it?" }, { option: "b", text: "How many people?" },
+        { option: "c", text: "What size?" }, { option: "d", text: "How old are you?" },
+    ], correct_answer: "d" },
+    { number: "1149", question: "What do you say when answering the phone?", answers: [
+        { option: "a", text: "もしもし" }, { option: "b", text: "どうぞどうぞ" },
+        { option: "c", text: "おーい" }, { option: "d", text: "こちらこそ" },
+    ], correct_answer: "a" },
+    { number: "1150", question: "A shop clerk greets you with:", answers: [
+        { option: "a", text: "おじゃまします" }, { option: "b", text: "ただいま" },
+        { option: "c", text: "いらっしゃいませ" }, { option: "d", text: "おかえりなさい" },
+    ], correct_answer: "c" },
 ];
