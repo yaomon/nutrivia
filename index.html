@@ -65,6 +65,9 @@
             <button id="btn-start" class="clay clay-btn btn-hero red">
                 Start Run
             </button>
+            <button id="btn-shop" class="clay clay-btn btn-shop mustard">
+                🛒 Pantry Shop
+            </button>
             <div id="home-tip" class="home-tip"></div>
             <div class="home-links">
                 <button id="btn-howto" class="clay clay-btn btn-quiet">
@@ -74,6 +77,20 @@
                     reset progress
                 </button>
             </div>
+        </section>
+
+        <!-- ============ PANTRY SHOP ============ -->
+        <section id="screen-shop" class="screen hidden">
+            <h1 class="game-title small">The Pantry</h1>
+            <div class="tagline">spend gold to stock your next run</div>
+            <div class="shop-purse clay-inset">
+                💰 <span id="shop-gold">0</span> gold
+            </div>
+            <div id="shop-stocked" class="shop-stocked"></div>
+            <div id="shop-list" class="shop-list"></div>
+            <button id="btn-shop-back" class="clay clay-btn btn-hero red">
+                Done
+            </button>
         </section>
 
         <!-- ============ PICK YOUR MENU ============ -->
@@ -256,8 +273,8 @@
                     <div class="howto-line">
                         <span class="howto-emoji">🎁</span>
                         <span
-                            >Fill the XP bar to level up and pick a prize —
-                            items, gold, or a new food.</span
+                            >Fill the XP bar to level up: pick a prize, then
+                            discover a new food every single time.</span
                         >
                     </div>
                     <div class="howto-line">
@@ -268,10 +285,10 @@
                         >
                     </div>
                     <div class="howto-line">
-                        <span class="howto-emoji">🍱</span>
+                        <span class="howto-emoji">🛒</span>
                         <span
-                            >Gold and your food collection are yours to keep,
-                            run after run.</span
+                            >Gold banks between runs — spend it in the Pantry
+                            Shop to stock items for your next run.</span
                         >
                     </div>
                 </div>
@@ -284,16 +301,27 @@
         <!-- ============ FOOD REWARD MODAL ============ -->
         <div id="modal-food" class="modal hidden">
             <div class="modal-card clay food-card">
-                <div class="modal-sub">you got</div>
-                <div class="food-pedestal clay-inset">
-                    <img id="food-img" class="food-img" src="" alt="" />
+                <!-- phase 1: wrapped mystery, tap to open -->
+                <div id="food-wrap" class="food-wrap">
+                    <div class="modal-sub">a mystery ingredient…</div>
+                    <button id="food-mystery" class="food-mystery clay clay-btn">
+                        <span class="mystery-mark">?</span>
+                    </button>
+                    <div class="mystery-prompt">tap to unwrap!</div>
                 </div>
-                <div id="food-name" class="food-name">Apple</div>
-                <div id="food-rarity" class="food-rarity">Savory</div>
-                <p id="food-desc" class="food-desc"></p>
-                <button id="btn-food-ok" class="clay clay-btn sage">
-                    Woo!
-                </button>
+                <!-- phase 2: the reveal -->
+                <div id="food-result" class="food-result hidden">
+                    <div class="modal-sub">you got</div>
+                    <div class="food-pedestal clay-inset">
+                        <img id="food-img" class="food-img" src="" alt="" />
+                    </div>
+                    <div id="food-name" class="food-name">Apple</div>
+                    <div id="food-rarity" class="food-rarity">Savory</div>
+                    <p id="food-desc" class="food-desc"></p>
+                    <button id="btn-food-ok" class="clay clay-btn sage">
+                        Woo!
+                    </button>
+                </div>
             </div>
         </div>
     </body>

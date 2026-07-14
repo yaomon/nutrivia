@@ -505,18 +505,84 @@ const UI = (() => {
         openModal($("#modal-levelup"));
     }
 
+    // crumb-burst colors per rarity tier (0 dull → 7 rainbow-ish)
+    const RARITY_COLORS = [
+        ["#b7a891"], // inedible
+        ["#b7a891", "#c9b89c"], // unappetizing
+        ["#8fac72", "#a7c07f"], // tasty
+        ["#6f8fba", "#8aa8d0"], // savory
+        ["#a37bb8", "#c194d6"], // delicious
+        ["#e5a83e", "#f2c96b"], // gourmet
+        ["#d95c4c", "#f0836f"], // decadent
+        ["#d95c4c", "#e5a83e", "#8fac72", "#6f8fba", "#a37bb8"], // divine
+    ];
+
+    // Two-phase reveal: a wrapped mystery you tap to unwrap, then a
+    // rarity-scaled burst. Rarer foods shake longer and erupt bigger.
     function showFood(food, onOk) {
+        const rarity = food.rarity || 0;
+        const colors = RARITY_COLORS[rarity] || RARITY_COLORS[0];
+
+        // preload the result content (kept hidden until the reveal)
         $("#food-img").src = "images/food/" + food.name;
         $("#food-name").textContent = food.displayName;
         const rarityEl = $("#food-rarity");
-        rarityEl.textContent = RARITIES[food.rarity] || "?";
-        rarityEl.className = "food-rarity rarity-" + food.rarity;
+        rarityEl.textContent = RARITIES[rarity] || "?";
+        rarityEl.className = "food-rarity rarity-" + rarity;
         $("#food-desc").textContent = food.description;
         const ok = $("#btn-food-ok");
         ok.textContent = CHEERS[Math.floor(Math.random() * CHEERS.length)];
-        ok.onclick = () => {
-            closeModal($("#modal-food"), onOk);
+        ok.onclick = () => closeModal($("#modal-food"), onOk);
+
+        // reset to phase 1 (mystery)
+        const wrap = $("#food-wrap");
+        const result = $("#food-result");
+        const mystery = $("#food-mystery");
+        wrap.classList.remove("hidden");
+        result.classList.add("hidden");
+        mystery.classList.remove("opening");
+        mystery.disabled = false;
+
+        let opened = false;
+        mystery.onclick = () => {
+            if (opened) return;
+            opened = true;
+            mystery.disabled = true;
+            // rarer = longer anticipatory shake before it pops
+            const buildup = 350 + rarity * 130;
+            mystery.classList.add("opening");
+            mystery.style.animationDuration = Math.max(0.12, 0.34 - rarity * 0.03) + "s";
+
+            setTimeout(() => {
+                // erupt from where the mystery box sits
+                const r = mystery.getBoundingClientRect();
+                const cx = r.left + r.width / 2;
+                const cy = r.top + r.height / 2;
+                const bursts = 1 + Math.ceil(rarity / 2); // 1..4 bursts
+                for (let b = 0; b < bursts; b++) {
+                    setTimeout(
+                        () =>
+                            fireworks(
+                                cx + (Math.random() * 60 - 30),
+                                cy + (Math.random() * 60 - 30),
+                                colors
+                            ),
+                        b * 90
+                    );
+                }
+                // high rarity: a colored flash washes the card
+                if (rarity >= 5) {
+                    const card = $("#modal-food .modal-card");
+                    card.style.setProperty("--flash", colors[0]);
+                    replayAnim(card, "rarity-flash");
+                }
+                wrap.classList.add("hidden");
+                result.classList.remove("hidden");
+                replayAnim(result, "squish-in");
+                replayAnim($("#food-rarity"), "squish-pop");
+            }, buildup);
         };
+
         openModal($("#modal-food"));
     }
 
@@ -581,6 +647,68 @@ const UI = (() => {
                 : "the pot is empty — pick at least one!";
     }
 
+    /* ---------- pantry shop ---------- */
+
+    function renderShop(meta, onBuy) {
+        $("#shop-gold").textContent = meta.gold;
+
+        // what's already queued for the next run
+        const stocked = Object.entries(meta.stock || {}).filter(
+            ([, n]) => n > 0
+        );
+        const stockEl = $("#shop-stocked");
+        if (stocked.length) {
+            stockEl.classList.remove("hidden");
+            stockEl.textContent =
+                "🎒 stocked for next run: " +
+                stocked
+                    .map(([id, n]) => ITEMS[id].icon + "×" + n)
+                    .join("  ");
+        } else {
+            stockEl.classList.add("hidden");
+        }
+
+        const list = $("#shop-list");
+        list.innerHTML = "";
+        Object.keys(ITEMS)
+            .filter((id) => !ITEMS[id].noShop)
+            .forEach((id) => {
+                const item = ITEMS[id];
+                const owned = (meta.stock && meta.stock[id]) || 0;
+                const afford = meta.gold >= item.cost;
+                const btn = document.createElement("button");
+                btn.className =
+                    "shop-card clay clay-btn" + (afford ? "" : " cant-afford");
+                btn.innerHTML =
+                    '<span class="shop-icon">' +
+                    item.icon +
+                    '</span><div class="shop-info"><div class="shop-name">' +
+                    item.name +
+                    (owned ? ' <span class="shop-owned">×' + owned + "</span>" : "") +
+                    '</div><div class="shop-desc">' +
+                    item.desc +
+                    '</div></div><span class="shop-cost clay ' +
+                    (afford ? "mustard" : "") +
+                    '">💰 ' +
+                    item.cost +
+                    "</span>";
+                btn.addEventListener("click", () => onBuy(id, btn));
+                list.appendChild(btn);
+                knead(btn);
+            });
+    }
+
+    // little celebration when a purchase lands
+    function onItemBought(btnEl, item) {
+        replayAnim(btnEl, "squish-pop");
+        const r = btnEl.getBoundingClientRect();
+        fireworks(r.left + r.width / 2, r.top + r.height / 2, [
+            "#e5a83e",
+            "#8fac72",
+        ]);
+        floatDelta(btnEl, "-💰" + item.cost, "#a87e2f");
+    }
+
     return {
         $,
         $$,
@@ -615,5 +743,7 @@ const UI = (() => {
         showSaved,
         renderSummary,
         renderSets,
+        renderShop,
+        onItemBought,
     };
 })();

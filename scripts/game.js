@@ -22,6 +22,7 @@ const Game = (() => {
             sr: {}, // spaced repetition: number -> {itv, due}
             totalAnswered: 0, // global clock the sr intervals count against
             selectedSets: QUESTION_SETS.map((s) => s.id), // pool choices
+            stock: {}, // items bought in the shop, added to the next run
         };
     }
 
@@ -50,7 +51,8 @@ const Game = (() => {
             correct: 0,
             missed: 0,
             asked: [], // question numbers asked this run
-            items: Object.assign({}, CONFIG.startingItems),
+            // start with the freebies plus anything bought in the shop
+            items: Object.assign({}, CONFIG.startingItems, meta.stock),
             buffs: {},
             event: null, // active modifier {id, remaining}
             eventCard: null, // pending event card awaiting a choice
@@ -280,16 +282,28 @@ const Game = (() => {
         let choices = source.answers.map((a) => ({
             option: a.option,
             text: a.text,
+            isCorrect: a.option === source.correct_answer,
         }));
         if (ev && ev.modifyChoices) {
             choices = ev.modifyChoices(gameApi, source, choices);
         }
 
+        // Assign the displayed letter by final position so answers always
+        // read a, b, c, d top-to-bottom — and track which letter now holds
+        // the correct text. This is what lets a shuffle actually move the
+        // answer, and keeps Coin Flip / Lucky Day from showing gaps like a, c.
+        const LETTERS = ["a", "b", "c", "d"];
+        let correct = source.correct_answer;
+        choices.forEach((c, i) => {
+            c.option = LETTERS[i];
+            if (c.isCorrect) correct = c.option;
+        });
+
         run.q = {
             number: source.number,
             text: source.question,
             choices: choices,
-            correct: source.correct_answer,
+            correct: correct,
             eliminated: [],
         };
         run.answeredCurrent = false;
@@ -379,6 +393,8 @@ const Game = (() => {
             xpGain = r.xp;
             goldGain = r.gold;
         }
+        // event per-correct hook (Tea Break heals, ...)
+        if (ev && ev.onCorrect) ev.onCorrect(gameApi);
 
         run.xp += xpGain;
         run.gold += goldGain;
@@ -720,6 +736,7 @@ const Game = (() => {
             return;
         }
         run = newRun();
+        meta.stock = {}; // purchased items are now in the run
         run.setIds = meta.selectedSets.slice();
         rebuildActivePool();
         UI.showScreen("screen-run");
@@ -751,6 +768,28 @@ const Game = (() => {
     function goHome() {
         UI.renderHome(meta, foods.length);
         UI.showScreen("screen-home");
+    }
+
+    /* ---------------- shop ---------------- */
+
+    function openShop() {
+        UI.renderShop(meta, buyItem);
+        UI.showScreen("screen-shop");
+    }
+
+    function buyItem(id, btnEl) {
+        const item = ITEMS[id];
+        if (!item || item.noShop) return;
+        if (meta.gold < item.cost) {
+            UI.replayAnim(btnEl, "shake");
+            UI.toast("💰 Not enough gold for that yet — go win a run!");
+            return;
+        }
+        meta.gold -= item.cost;
+        meta.stock[id] = (meta.stock[id] || 0) + 1;
+        save();
+        UI.onItemBought(btnEl, item);
+        UI.renderShop(meta, buyItem);
     }
 
     function resetProgress() {
@@ -859,6 +898,8 @@ const Game = (() => {
         UI.$("#btn-start").addEventListener("click", showSetsScreen);
         UI.$("#btn-run-go").addEventListener("click", beginRun);
         UI.$("#btn-sets-back").addEventListener("click", goHome);
+        UI.$("#btn-shop").addEventListener("click", openShop);
+        UI.$("#btn-shop-back").addEventListener("click", goHome);
         UI.$("#btn-again").addEventListener("click", beginRun);
         UI.$("#btn-home").addEventListener("click", goHome);
         UI.$("#btn-reset").addEventListener("click", resetProgress);

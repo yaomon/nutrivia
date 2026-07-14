@@ -178,26 +178,26 @@ const EVENTS = {
             },
         ],
     },
-    mix_up: {
-        icon: "🌪️",
-        name: "Mix-Up",
-        desc: "the answers are shuffled out of order",
-        intro: "A whirlwind tears across the table, scattering every answer sheet into the air!",
-        eligible: () => true,
-        modifyChoices: (game, q, choices) => game.shuffled(choices),
+    tea_break: {
+        icon: "🍵",
+        name: "Tea Break",
+        desc: "correct answers also restore HP",
+        intro: "A kettle whistles somewhere warm. A steaming cup of clay-pot tea slides across the table toward you. Rest a moment?",
+        eligible: (game) => game.run.hp < CONFIG.maxHp, // only if hurt
+        onCorrect: (game) => game.heal(2), // fires per correct while active
         choices: [
             {
-                text: "Brace yourself — answers come shuffled for 5 questions",
+                text: "Sip slowly — restore 2 HP per correct answer for 5 questions",
                 outcome: (game) => {
-                    game.startEvent("mix_up");
-                    return "🌪️ Papers everywhere! Keep your eyes sharp.";
+                    game.startEvent("tea_break");
+                    return "🍵 Warmth spreads through you. Steady now.";
                 },
             },
             {
-                text: "Hold everything down — costs 3 XP, no event",
+                text: "Gulp it down — restore 8 HP right now",
                 outcome: (game) => {
-                    game.loseXp(3);
-                    return "🙌 You pin the papers down. Order is exhausting.";
+                    game.heal(8);
+                    return "🍵 Ahh — that hit the spot. Back to it!";
                 },
             },
         ],

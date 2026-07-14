@@ -463,6 +463,90 @@
     color: var(--ink-soft);
 }
 
+/* ---------------- PANTRY SHOP ---------------- */
+.btn-shop {
+    font-size: 1.05rem;
+    font-weight: 800;
+    padding: 12px 28px;
+}
+
+#screen-shop {
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+}
+
+.shop-purse {
+    padding: 10px 24px;
+    font-weight: 900;
+    font-size: 1.15rem;
+}
+
+.shop-stocked {
+    font-family: "Caveat", cursive;
+    font-size: 1.2rem;
+    color: var(--sage-deep);
+    line-height: 1.3;
+}
+
+.shop-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: min(460px, 100%);
+}
+
+.shop-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    text-align: left;
+}
+
+.shop-card.cant-afford {
+    opacity: 0.6;
+}
+
+.shop-icon {
+    font-size: 1.7rem;
+    flex-shrink: 0;
+    width: 34px;
+    text-align: center;
+}
+
+.shop-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.shop-name {
+    font-weight: 900;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+}
+
+.shop-owned {
+    color: var(--purple);
+    font-size: 0.8rem;
+}
+
+.shop-desc {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    line-height: 1.3;
+}
+
+.shop-cost {
+    flex-shrink: 0;
+    padding: 7px 12px;
+    font-weight: 900;
+    font-size: 0.9rem;
+    border-radius: 999px;
+}
+
 .item-btn {
     position: relative;
     width: 56px;
@@ -683,6 +767,72 @@
 }
 
 /* food reward */
+/* food reveal — phase 1: the wrapped mystery */
+.food-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 6px 0;
+}
+
+.food-mystery {
+    width: 150px;
+    height: 150px;
+    display: grid;
+    place-items: center;
+    border-radius: 46% 54% 50% 50% / 52% 48% 54% 46%;
+    background-color: var(--mustard);
+    --side: var(--mustard-side);
+    --side-soft: var(--mustard-side-soft);
+    animation: mystery-idle 1.4s ease-in-out infinite;
+}
+
+.mystery-mark {
+    font-size: 4rem;
+    font-weight: 900;
+    color: #fff8ef;
+    text-shadow: 0 2px 3px rgba(93, 68, 51, 0.35);
+}
+
+.mystery-prompt {
+    font-family: "Caveat", cursive;
+    font-size: 1.5rem;
+    color: var(--ink-soft);
+    animation: breathe 1.6s ease-in-out infinite;
+}
+
+/* the anticipatory rattle once tapped (JS shortens duration by rarity) */
+.food-mystery.opening {
+    animation: mystery-shake 0.3s linear infinite;
+}
+
+@keyframes mystery-idle {
+    0%, 100% { transform: rotate(-2deg) scale(1); }
+    50% { transform: rotate(2deg) scale(1.03); }
+}
+
+@keyframes mystery-shake {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-4px, 2px) rotate(-4deg) scale(1.05); }
+    50% { transform: translate(4px, -2px) rotate(4deg) scale(0.97); }
+    75% { transform: translate(-3px, -2px) rotate(-3deg) scale(1.04); }
+}
+
+/* a colored wash for rare pulls (var --flash set by JS) */
+@keyframes rarity-flash {
+    0% { box-shadow: 0 0 0 0 var(--flash); }
+    30% { box-shadow: 0 0 60px 20px var(--flash); }
+    100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+.food-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
 .food-pedestal {
     width: 160px;
     height: 160px;
