@@ -6,7 +6,7 @@ const Game = (() => {
     const STORAGE_KEY = "nutrivia_rogue_v1";
 
     const qByNumber = {};
-    domain1_questions.forEach((q) => (qByNumber[q.number] = q));
+    QUESTION_BANK.forEach((q) => (qByNumber[q.number] = q));
 
     /* ---------------- state ---------------- */
 
@@ -103,20 +103,20 @@ const Game = (() => {
     /* ---------------- question pools ---------------- */
 
     // the bank restricted to the sets picked for this run
-    let activePool = domain1_questions;
+    let activePool = QUESTION_BANK;
 
     function rebuildActivePool() {
         const ids = run && run.setIds && run.setIds.length ? run.setIds : null;
         if (!ids) {
-            activePool = domain1_questions;
+            activePool = QUESTION_BANK;
             return;
         }
         const sel = QUESTION_SETS.filter((s) => ids.includes(s.id));
         activePool = sel.length
-            ? domain1_questions.filter((q) =>
+            ? QUESTION_BANK.filter((q) =>
                   sel.some((s) => s.match(+q.number))
               )
-            : domain1_questions;
+            : QUESTION_BANK;
     }
 
     function notCurrent(q) {
