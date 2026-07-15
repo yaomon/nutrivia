@@ -100,6 +100,7 @@ body::after {
 
 /* ---------- raised clay ---------- */
 .clay {
+    position: relative;
     background-color: var(--clay);
     /* faint bulge highlight + the same worked-surface blotches */
     background-image: radial-gradient(
@@ -121,6 +122,20 @@ body::after {
         /* rounded edge catching light on top */ inset 1px 2px 2px var(--hi-soft),
         /* rounded edge rolling into shade below */ inset -2px -3px 5px
             rgba(93, 68, 51, 0.1);
+}
+
+/* pushed-in dents and pushed-out bumps — JS fills --dents with pairs of
+   soft radial gradients; soft-light blend keeps them as gentle undulations
+   in the surface rather than hard marks. */
+.clay::after,
+.clay-inset::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-image: var(--dents, none);
+    opacity: 0.6;
+    pointer-events: none;
 }
 
 /* ---------- pressable clay ---------- */
@@ -204,6 +219,7 @@ body::after {
    Same language as a pressed button: a visible near wall under the
    top edge that feathers down to the floor of the recess. */
 .clay-inset {
+    position: relative;
     background-color: var(--clay-deep);
     background-image: var(--blotch);
     background-blend-mode: soft-light;

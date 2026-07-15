@@ -265,4 +265,118 @@ const EVENTS = {
             },
         ],
     },
+
+    // ---------- gold-spending events (mid-run gold sinks) ----------
+    traveling_merchant: {
+        icon: "🧺",
+        name: "Traveling Merchant",
+        intro: "A merchant unrolls a woven blanket, laying out oddments that smell faintly of spice. \"Coin for wares, friend?\"",
+        eligible: (game) => game.run.gold >= 15,
+        choices: [
+            {
+                text: "Buy a surprise item (15 gold)",
+                outcome: (game) => {
+                    if (!game.spendGold(15))
+                        return "🪙 You count your coins… not quite enough.";
+                    const pool = Object.keys(ITEMS).filter(
+                        (id) => !ITEMS[id].noShop
+                    );
+                    const id = game.pickFrom(pool);
+                    game.gainItem(id);
+                    return (
+                        "🧺 The merchant wraps up a " +
+                        ITEMS[id].icon +
+                        " " +
+                        ITEMS[id].name +
+                        " for you!"
+                    );
+                },
+            },
+            {
+                text: "Buy a hot meal — restore 10 HP (20 gold)",
+                outcome: (game) => {
+                    if (!game.spendGold(20))
+                        return "🪙 You count your coins… not quite enough.";
+                    game.heal(10);
+                    return "🍲 Piping hot and restorative. +10 HP.";
+                },
+            },
+            {
+                text: "Browse and move on",
+                outcome: () =>
+                    "🚶 \"Suit yourself,\" the merchant shrugs, rolling up the blanket.",
+            },
+        ],
+    },
+    wishing_well: {
+        icon: "🪙",
+        name: "Wishing Well",
+        intro: "A little clay well burbles in the corner, its water winking with tossed coins and half-forgotten wishes.",
+        eligible: (game) => game.run.gold >= 20,
+        choices: [
+            {
+                text: "Toss 20 gold and wish (50% chance: 45 gold back)",
+                outcome: (game) => {
+                    if (!game.spendGold(20))
+                        return "🪙 Your pockets come up empty.";
+                    if (Math.random() < 0.5) {
+                        game.gainGold(45);
+                        return "✨ Coins bubble back up — 45 gold! The well is generous today.";
+                    }
+                    return "💧 Ripples, then silence. The well keeps your coins.";
+                },
+            },
+            {
+                text: "Toss 10 gold for a flash of insight (+15 XP)",
+                outcome: (game) => {
+                    if (!game.spendGold(10))
+                        return "🪙 Your pockets come up empty.";
+                    game.gainXp(15);
+                    return "🔮 Clarity ripples outward through you. +15 XP.";
+                },
+            },
+            {
+                text: "Save your coins",
+                outcome: () =>
+                    "🪙 You pocket your gold and make a silent wish instead.",
+            },
+        ],
+    },
+    dice_game: {
+        icon: "🎲",
+        name: "Back-Alley Dice",
+        intro: "A hooded figure rattles a cup of clay dice in a shadowed doorway. \"One roll, friend. Double your bet… or lose the lot.\"",
+        eligible: (game) => game.run.gold >= 15,
+        choices: [
+            {
+                text: "Bet 15 gold (55% chance: win 30 back)",
+                outcome: (game) => {
+                    if (!game.spendGold(15))
+                        return "🎲 The figure eyes your empty purse and turns away.";
+                    if (Math.random() < 0.55) {
+                        game.gainGold(30);
+                        return "🎲 Lucky sevens! You rake in 30 gold.";
+                    }
+                    return "🎲 Snake eyes. The figure pockets your bet with a chuckle.";
+                },
+            },
+            {
+                text: "High roll — bet 30 gold (50% chance: win 60 back)",
+                outcome: (game) => {
+                    if (!game.spendGold(30))
+                        return "🎲 Not enough on you for the high table.";
+                    if (Math.random() < 0.5) {
+                        game.gainGold(60);
+                        return "🎲 A perfect roll — 60 gold clatters your way!";
+                    }
+                    return "🎲 The dice betray you. Gone in an instant.";
+                },
+            },
+            {
+                text: "Walk away clean",
+                outcome: () =>
+                    "🚶 Wise. The alley isn't kind to the greedy.",
+            },
+        ],
+    },
 };

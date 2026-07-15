@@ -857,6 +857,14 @@ const Game = (() => {
             UI.floatDelta(UI.$("#hud-gold"), "-" + n, "#c04a3b");
             refreshHUD();
         },
+        // deduct only if affordable; returns whether the purchase went through
+        spendGold(n) {
+            if (run.gold < n) return false;
+            run.gold -= n;
+            UI.floatDelta(UI.$("#hud-gold"), "-" + n, "#c04a3b");
+            refreshHUD();
+            return true;
+        },
         // event damage never kills — the clay only crumbles to a miss
         damage(n) {
             run.hp = Math.max(1, run.hp - n);

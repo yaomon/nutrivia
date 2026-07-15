@@ -58,7 +58,8 @@ const UI = (() => {
             el.classList.contains("food-pedestal");
 
         if (isBlob) {
-            const r = () => 42 + Math.random() * 16;
+            // wider spread so blobs read as hand-pinched, lopsided lumps
+            const r = () => 36 + Math.random() * 28;
             const a = r(),
                 b = r(),
                 c = r(),
@@ -67,12 +68,42 @@ const UI = (() => {
                 a + "% " + (100 - a) + "% " + b + "% " + (100 - b) + "% / " +
                 c + "% " + d + "% " + (100 - d) + "% " + (100 - c) + "%";
         } else {
-            const r = () => (20 + Math.random() * 12).toFixed(1) + "px";
+            // each corner rolled to its own radius, more variance than before
+            const r = () => (14 + Math.random() * 22).toFixed(1) + "px";
             el.style.borderRadius =
                 r() + " " + r() + " " + r() + " " + r() + " / " +
                 r() + " " + r() + " " + r() + " " + r();
         }
-        el.style.rotate = ((Math.random() * 2 - 1) * 0.5).toFixed(2) + "deg";
+        el.style.rotate = ((Math.random() * 2 - 1) * 0.9).toFixed(2) + "deg";
+        el.style.setProperty("--dents", clayDents(2 + Math.floor(Math.random() * 3)));
+    }
+
+    // Fake pushed-in dents and pushed-out bumps as pairs of soft radial
+    // gradients (light + shadow offset for a top-left light source),
+    // composited over the clay surface by the .clay::after overlay.
+    function clayDents(count) {
+        const layers = [];
+        for (let i = 0; i < count; i++) {
+            const x = 14 + Math.random() * 72;
+            const y = 14 + Math.random() * 72;
+            const rad = (9 + Math.random() * 15).toFixed(1);
+            const dent = Math.random() < 0.5;
+            // dent: shadow up-left, light down-right (concave); bump: reversed
+            const off = 2.4;
+            const sx = (dent ? x - off : x + off).toFixed(1);
+            const sy = (dent ? y - off : y + off).toFixed(1);
+            const lx = (dent ? x + off : x - off).toFixed(1);
+            const ly = (dent ? y + off : y - off).toFixed(1);
+            layers.push(
+                "radial-gradient(circle at " + sx + "% " + sy + "%, " +
+                    "rgba(93,68,51,0.4) 0, rgba(93,68,51,0) " + rad + "%)"
+            );
+            layers.push(
+                "radial-gradient(circle at " + lx + "% " + ly + "%, " +
+                    "rgba(255,252,245,0.5) 0, rgba(255,252,245,0) " + rad + "%)"
+            );
+        }
+        return layers.join(", ");
     }
 
     function kneadAll(root) {
