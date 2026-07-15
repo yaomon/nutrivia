@@ -134,7 +134,9 @@ body::after {
     inset: 0;
     border-radius: inherit;
     background-image: var(--dents, none);
-    opacity: 0.6;
+    /* modulate the material's own luminance so dents blend with any clay
+       colour instead of sitting on top as grey/brown spots */
+    mix-blend-mode: soft-light;
     pointer-events: none;
 }
 
@@ -434,4 +436,40 @@ body::after {
 
 .hidden {
     display: none !important;
+}
+
+/* ---------- full-screen edge flash (damage / level-up juice) ---------- */
+.fx-flash {
+    position: fixed;
+    inset: 0;
+    z-index: 360;
+    pointer-events: none;
+    opacity: 0;
+}
+.fx-flash.show-dmg {
+    background: radial-gradient(
+        ellipse 100% 100% at 50% 50%,
+        transparent 52%,
+        rgba(192, 74, 59, 0.55) 100%
+    );
+    animation: fx-pulse 0.5s ease;
+}
+.fx-flash.show-level {
+    background: radial-gradient(
+        ellipse 120% 120% at 50% 50%,
+        transparent 42%,
+        rgba(229, 168, 62, 0.5) 100%
+    );
+    animation: fx-pulse 0.75s ease;
+}
+@keyframes fx-pulse {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }

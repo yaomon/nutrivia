@@ -78,29 +78,32 @@ const UI = (() => {
         el.style.setProperty("--dents", clayDents(2 + Math.floor(Math.random() * 3)));
     }
 
-    // Fake pushed-in dents and pushed-out bumps as pairs of soft radial
-    // gradients (light + shadow offset for a top-left light source),
-    // composited over the clay surface by the .clay::after overlay.
+    // Pushed-in dents and pushed-out bumps. Each is a tight highlight+shadow
+    // dipole (offset for a top-left light source) that overlaps into a single
+    // round emboss. Pure white/black — the .clay::after overlay blends them
+    // with SOFT-LIGHT, so they only modulate the material's own luminance and
+    // never stain it (grey-brown blobs are what read as "mold"). Small and
+    // few, so they read as gentle surface variation, not spots.
     function clayDents(count) {
         const layers = [];
         for (let i = 0; i < count; i++) {
-            const x = 14 + Math.random() * 72;
-            const y = 14 + Math.random() * 72;
-            const rad = (9 + Math.random() * 15).toFixed(1);
+            const x = 16 + Math.random() * 68;
+            const y = 16 + Math.random() * 68;
+            const rad = (5 + Math.random() * 7).toFixed(1); // tighter = crisper
             const dent = Math.random() < 0.5;
             // dent: shadow up-left, light down-right (concave); bump: reversed
-            const off = 2.4;
+            const off = 2.8;
             const sx = (dent ? x - off : x + off).toFixed(1);
             const sy = (dent ? y - off : y + off).toFixed(1);
             const lx = (dent ? x + off : x - off).toFixed(1);
             const ly = (dent ? y + off : y - off).toFixed(1);
             layers.push(
                 "radial-gradient(circle at " + sx + "% " + sy + "%, " +
-                    "rgba(93,68,51,0.4) 0, rgba(93,68,51,0) " + rad + "%)"
+                    "rgba(0,0,0,0.16) 0, rgba(0,0,0,0) " + rad + "%)"
             );
             layers.push(
                 "radial-gradient(circle at " + lx + "% " + ly + "%, " +
-                    "rgba(255,252,245,0.5) 0, rgba(255,252,245,0) " + rad + "%)"
+                    "rgba(255,255,255,0.3) 0, rgba(255,255,255,0) " + rad + "%)"
             );
         }
         return layers.join(", ");
@@ -134,6 +137,14 @@ const UI = (() => {
             );
             el.appendChild(span);
         }
+    }
+
+    // full-screen edge flash for feedback (type: "dmg" | "level")
+    function flash(type) {
+        const el = $("#fx-flash");
+        el.classList.remove("show-dmg", "show-level");
+        void el.offsetWidth; // restart the animation
+        el.classList.add("show-" + type);
     }
 
     /* ---------- coach toast (one hint at a time, tap to dismiss) ---------- */
@@ -550,9 +561,15 @@ const UI = (() => {
 
     // Two-phase reveal: a wrapped mystery you tap to unwrap, then a
     // rarity-scaled burst. Rarer foods shake longer and erupt bigger.
-    function showFood(food, onOk) {
+    function showFood(food, onOk, isNew) {
         const rarity = food.rarity || 0;
         const colors = RARITY_COLORS[rarity] || RARITY_COLORS[0];
+
+        // first-time discovery gets a NEW! badge; a repeat says so gently
+        $("#food-new").classList.toggle("hidden", !isNew);
+        $("#food-sub").textContent = isNew
+            ? "you discovered"
+            : "you got another";
 
         // preload the result content (kept hidden until the reveal)
         $("#food-img").src = "images/food/" + food.name;
@@ -750,6 +767,7 @@ const UI = (() => {
         knead,
         kneadAll,
         splitTitle,
+        flash,
         toast,
         reactFace,
         setBaseFace,

@@ -42,6 +42,9 @@
     </head>
 
     <body>
+        <!-- full-screen edge-flash for damage / level-up feedback -->
+        <div id="fx-flash" class="fx-flash"></div>
+
         <!-- ============ HOME ============ -->
         <section id="screen-home" class="screen">
             <div class="title-plate">
@@ -311,7 +314,8 @@
                 </div>
                 <!-- phase 2: the reveal -->
                 <div id="food-result" class="food-result hidden">
-                    <div class="modal-sub">you got</div>
+                    <div id="food-new" class="food-new hidden">✨ NEW! ✨</div>
+                    <div id="food-sub" class="modal-sub">you got</div>
                     <div class="food-pedestal clay-inset">
                         <img id="food-img" class="food-img" src="" alt="" />
                     </div>

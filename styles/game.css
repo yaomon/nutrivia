@@ -849,6 +849,15 @@
     animation: wobble 3s ease-in-out infinite;
 }
 
+.food-new {
+    font-family: "Caveat", cursive;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--mustard);
+    letter-spacing: 0.03em;
+    animation: wobble 1.4s ease-in-out infinite;
+}
+
 .food-name {
     font-size: 1.5rem;
     font-weight: 900;

@@ -516,6 +516,7 @@ const Game = (() => {
                 "#c04a3b"
             );
             UI.replayAnim(UI.$("#question-card"), "shake");
+            UI.flash("dmg");
             UI.reactFace("😖");
             hint(
                 "first_miss",
@@ -589,6 +590,8 @@ const Game = (() => {
         run.xp -= needed;
         run.level++;
         refreshHUD();
+        UI.flash("level");
+        UI.reactFace("🥳");
         save();
 
         const cards = rollRewardCards();
@@ -636,12 +639,13 @@ const Game = (() => {
     }
 
     function grantFood(after) {
-        let pool = foods.filter((f) => !meta.foods.includes(f.name));
-        if (!pool.length) pool = foods;
+        const uncollected = foods.filter((f) => !meta.foods.includes(f.name));
+        const isNew = uncollected.length > 0; // false only once every food is owned
+        const pool = isNew ? uncollected : foods;
         const food = pool[randInt(0, pool.length - 1)];
-        if (!meta.foods.includes(food.name)) meta.foods.push(food.name);
+        if (isNew) meta.foods.push(food.name);
         save();
-        UI.showFood(food, after);
+        UI.showFood(food, after, isNew);
     }
 
     /* ---------------- items ---------------- */
@@ -920,6 +924,38 @@ const Game = (() => {
             btn.addEventListener("click", (e) => {
                 answer(parseInt(btn.dataset.slot, 10), e);
             });
+        });
+
+        // keyboard: 1-4 / a-d to answer (or pick an event choice), and
+        // Enter / Space / → for Next. Only during a run with no modal open.
+        const SLOT = { 1: 0, 2: 1, 3: 2, 4: 3, a: 0, b: 1, c: 2, d: 3 };
+        document.addEventListener("keydown", (e) => {
+            if (UI.$("#screen-run").classList.contains("hidden")) return;
+            if (UI.$$(".modal").some((m) => !m.classList.contains("hidden")))
+                return;
+            const k = e.key.toLowerCase();
+            const nextVisible = !UI.$("#btn-next").classList.contains("hidden");
+            if (nextVisible && (k === "enter" || k === " " || k === "arrowright")) {
+                e.preventDefault();
+                nextQuestion();
+                return;
+            }
+            if (k in SLOT) {
+                const btn = UI.$$(".choice")[SLOT[k]];
+                if (btn && !btn.classList.contains("hidden")) {
+                    e.preventDefault();
+                    // dispatch a click at the button's centre so the firework
+                    // and answer handler get sensible coordinates
+                    const r = btn.getBoundingClientRect();
+                    btn.dispatchEvent(
+                        new MouseEvent("click", {
+                            bubbles: true,
+                            clientX: r.left + r.width / 2,
+                            clientY: r.top + r.height / 2,
+                        })
+                    );
+                }
+            }
         });
 
         // run stopwatch — ticks whenever a run is on screen
