@@ -213,15 +213,15 @@ const UI = (() => {
         setTimeout(() => el.remove(), 1000);
     }
 
-    // clay-crumb burst at a point
-    function fireworks(x, y, colors) {
+    // clay-crumb burst at a point (count controls how many crumbs fly)
+    function fireworks(x, y, colors, count) {
         const div = document.createElement("div");
         div.className = "firework";
         div.style.left = x + "px";
         div.style.top = y + "px";
         document.body.appendChild(div);
 
-        const count = 14;
+        count = count || 14;
         for (let i = 0; i < count; i++) {
             const span = document.createElement("span");
             span.className = "fire-span";
@@ -278,12 +278,35 @@ const UI = (() => {
         $("#xp-fill").style.width =
             Math.min(100, (run.xp / xpNeeded) * 100) + "%";
         $("#xp-label").textContent = "XP " + run.xp + "/" + xpNeeded;
-        $("#hud-streak").textContent = "🔥 " + run.streak;
         $("#hud-gold").textContent = "💰 " + run.gold;
+
+        // streak chip heats up the higher the streak climbs (0→none, then
+        // four escalating tiers of colour / glow / animation speed)
+        const streakEl = $("#hud-streak");
+        streakEl.textContent = "🔥 " + run.streak;
+        const heat =
+            run.streak >= 12
+                ? 4
+                : run.streak >= 8
+                ? 3
+                : run.streak >= 5
+                ? 2
+                : run.streak >= 3
+                ? 1
+                : 0;
+        streakEl.className = "chip clay" + (heat ? " heat heat-" + heat : "");
     }
 
     function popChip(sel) {
         replayAnim($(sel), "squish-pop");
+    }
+
+    // Show/hide Next via visibility so its footer slot is always reserved —
+    // the button appearing never shifts the items or ?/quit around.
+    function showNext(show) {
+        const btn = $("#btn-next");
+        btn.classList.toggle("showing", show);
+        if (show) replayAnim(btn, "squish-in");
     }
 
     /* ---------- question & choices ---------- */
@@ -331,7 +354,7 @@ const UI = (() => {
 
         knead($("#question-card"));
         replayAnim($("#question-card"), "squish-in");
-        $("#btn-next").classList.add("hidden");
+        showNext(false);
     }
 
     /* ---------- event cards ---------- */
@@ -366,7 +389,7 @@ const UI = (() => {
 
         knead($("#question-card"));
         replayAnim($("#question-card"), "squish-in");
-        $("#btn-next").classList.add("hidden");
+        showNext(false);
     }
 
     // show what the chosen path did: chosen card glows, others flatten,
@@ -383,8 +406,7 @@ const UI = (() => {
         });
         $("#q-text").textContent = resultText;
         replayAnim($("#q-text"), "squish-in");
-        $("#btn-next").classList.remove("hidden");
-        replayAnim($("#btn-next"), "squish-in");
+        showNext(true);
     }
 
     function slotFor(run, option) {
@@ -413,8 +435,7 @@ const UI = (() => {
                 replayAnim(pickedBtn, "shake");
             }
         }
-        $("#btn-next").classList.remove("hidden");
-        replayAnim($("#btn-next"), "squish-in");
+        showNext(true);
     }
 
     /* ---------- items & buffs ---------- */
@@ -527,8 +548,13 @@ const UI = (() => {
         wrap.innerHTML = "";
         cards.forEach((card, i) => {
             const btn = document.createElement("button");
-            btn.className = "reward-card clay clay-btn";
+            btn.className =
+                "reward-card clay clay-btn" +
+                (card.kind === "item" ? " is-item" : "");
             btn.innerHTML =
+                (card.kind === "item"
+                    ? '<span class="reward-tag">🎒 ITEM</span>'
+                    : "") +
                 '<span class="reward-card-icon">' +
                 card.icon +
                 '</span><span class="reward-card-name">' +
@@ -586,49 +612,72 @@ const UI = (() => {
         const wrap = $("#food-wrap");
         const result = $("#food-result");
         const mystery = $("#food-mystery");
+        const prompt = $(".mystery-prompt");
         wrap.classList.remove("hidden");
         result.classList.add("hidden");
-        mystery.classList.remove("opening");
         mystery.disabled = false;
+        prompt.textContent = "tap to unwrap!";
 
+        // A few taps pop it open — each tap jiggles the box and spits out a
+        // little rarity-coloured spark, so mashing feels responsive and builds
+        // anticipation. A fallback timer opens it if they stop after tapping.
         let opened = false;
-        mystery.onclick = () => {
+        let taps = 0;
+        const needed = 2 + Math.ceil(rarity / 3); // 2..4 taps, rarer takes more
+        let fallback = null;
+
+        function doOpen() {
             if (opened) return;
             opened = true;
             mystery.disabled = true;
-            // rarer = longer anticipatory shake before it pops
-            const buildup = 350 + rarity * 130;
-            mystery.classList.add("opening");
-            mystery.style.animationDuration = Math.max(0.12, 0.34 - rarity * 0.03) + "s";
+            clearTimeout(fallback);
 
-            setTimeout(() => {
-                // erupt from where the mystery box sits
-                const r = mystery.getBoundingClientRect();
-                const cx = r.left + r.width / 2;
-                const cy = r.top + r.height / 2;
-                const bursts = 1 + Math.ceil(rarity / 2); // 1..4 bursts
-                for (let b = 0; b < bursts; b++) {
-                    setTimeout(
-                        () =>
-                            fireworks(
-                                cx + (Math.random() * 60 - 30),
-                                cy + (Math.random() * 60 - 30),
-                                colors
-                            ),
-                        b * 90
-                    );
-                }
-                // high rarity: a colored flash washes the card
-                if (rarity >= 5) {
-                    const card = $("#modal-food .modal-card");
-                    card.style.setProperty("--flash", colors[0]);
-                    replayAnim(card, "rarity-flash");
-                }
-                wrap.classList.add("hidden");
-                result.classList.remove("hidden");
-                replayAnim(result, "squish-in");
-                replayAnim($("#food-rarity"), "squish-pop");
-            }, buildup);
+            const r = mystery.getBoundingClientRect();
+            const cx = r.left + r.width / 2;
+            const cy = r.top + r.height / 2;
+            // bigger, rarity-scaled eruption
+            const bursts = 2 + rarity;
+            for (let b = 0; b < bursts; b++) {
+                setTimeout(
+                    () =>
+                        fireworks(
+                            cx + (Math.random() * 90 - 45),
+                            cy + (Math.random() * 90 - 45),
+                            colors
+                        ),
+                    b * 70
+                );
+            }
+            // rarity flourishes: a colour wash from Delicious up, plus a
+            // celebratory card shake for the very top tiers
+            const card = $("#modal-food .modal-card");
+            if (rarity >= 4) {
+                card.style.setProperty("--flash", colors[0]);
+                replayAnim(card, "rarity-flash");
+            }
+            if (rarity >= 6) replayAnim($("#modal-food"), "rarity-shake");
+
+            wrap.classList.add("hidden");
+            result.classList.remove("hidden");
+            replayAnim(result, "squish-in");
+            replayAnim($("#food-rarity"), "squish-pop");
+        }
+
+        mystery.onclick = () => {
+            if (opened) return;
+            taps++;
+            replayAnim(mystery, "mystery-jiggle");
+            const r = mystery.getBoundingClientRect();
+            fireworks(
+                r.left + r.width / 2 + (Math.random() * 40 - 20),
+                r.top + r.height / 2 + (Math.random() * 40 - 20),
+                colors,
+                6
+            );
+            if (taps >= needed) return doOpen();
+            prompt.textContent = "keep tapping!";
+            clearTimeout(fallback);
+            fallback = setTimeout(doOpen, 1300);
         };
 
         openModal($("#modal-food"));
@@ -774,6 +823,7 @@ const UI = (() => {
         renderHome,
         renderHUD,
         popChip,
+        showNext,
         setTimer,
         renderQuestion,
         renderEventCard,

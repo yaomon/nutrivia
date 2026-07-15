@@ -284,6 +284,9 @@ const Game = (() => {
             text: a.text,
             isCorrect: a.option === source.correct_answer,
         }));
+        // shuffle the answer order every time so the correct choice lands in a
+        // different slot on repeats — no memorising "it was C"
+        choices = shuffled(choices);
         if (ev && ev.modifyChoices) {
             choices = ev.modifyChoices(gameApi, source, choices);
         }
@@ -563,7 +566,7 @@ const Game = (() => {
                 }, 800);
             } else {
                 // dead for real — no next question, a beat to see the reveal
-                UI.$("#btn-next").classList.add("hidden");
+                UI.showNext(false);
                 setTimeout(() => endRun(false), 1100);
             }
         }
@@ -610,6 +613,7 @@ const Game = (() => {
             icon: ITEMS[id].icon,
             name: ITEMS[id].name,
             desc: ITEMS[id].desc,
+            kind: "item", // flagged so the level-up UI can badge it
             apply: () => {
                 run.items[id] = (run.items[id] || 0) + 1;
             },
@@ -934,7 +938,7 @@ const Game = (() => {
             if (UI.$$(".modal").some((m) => !m.classList.contains("hidden")))
                 return;
             const k = e.key.toLowerCase();
-            const nextVisible = !UI.$("#btn-next").classList.contains("hidden");
+            const nextVisible = UI.$("#btn-next").classList.contains("showing");
             if (nextVisible && (k === "enter" || k === " " || k === "arrowright")) {
                 e.preventDefault();
                 nextQuestion();

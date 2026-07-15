@@ -205,7 +205,61 @@
     font-size: 0.95rem;
     text-align: center;
     border-radius: 999px;
-    transition: transform 0.15s var(--bounce), background-color 0.3s ease;
+    transition: transform 0.15s var(--bounce), background-color 0.3s ease,
+        box-shadow 0.3s ease, color 0.3s ease;
+}
+
+/* streak chip heats up as the streak climbs — each tier is warmer, glowier
+   and pulses faster than the last */
+.chip.heat {
+    color: #fff8ef;
+    text-shadow: 0 1px 2px rgba(93, 68, 51, 0.35);
+    animation: streak-pulse 1.1s ease-in-out infinite;
+}
+.chip.heat-1 {
+    background-color: #e5a83e;
+    --side: var(--mustard-side);
+}
+.chip.heat-2 {
+    background-color: #e78a3c;
+    animation-duration: 0.85s;
+}
+.chip.heat-3 {
+    background-color: #dd6a3e;
+    animation-duration: 0.62s;
+    box-shadow: 0 0 12px rgba(217, 92, 76, 0.55);
+}
+.chip.heat-4 {
+    background-color: #d95c4c;
+    animation-duration: 0.42s;
+    box-shadow: 0 0 20px rgba(217, 92, 76, 0.8);
+}
+@keyframes streak-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.14); }
+}
+
+/* item reward cards on level up wear a badge so they read as items */
+.reward-card {
+    position: relative;
+}
+.reward-tag {
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    background-color: var(--purple);
+    color: #fff8ef;
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    padding: 3px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+    box-shadow: 1px 2px 3px rgba(93, 68, 51, 0.3);
+}
+.reward-card.is-item {
+    background-color: #efe0c6;
 }
 
 /* ---------------- EVENT BANNER ---------------- */
@@ -592,11 +646,17 @@
     gap: 12px;
 }
 
+/* Next reserves its footer slot always (visibility, not display) so it
+   never shoves the items or ?/quit around when it appears. */
 .btn-next {
     font-size: 1.05rem;
     font-weight: 900;
     text-transform: uppercase;
     padding: 14px 26px;
+    visibility: hidden;
+}
+.btn-next.showing {
+    visibility: visible;
 }
 
 .btn-round {
@@ -802,9 +862,9 @@
     animation: breathe 1.6s ease-in-out infinite;
 }
 
-/* the anticipatory rattle once tapped (JS shortens duration by rarity) */
-.food-mystery.opening {
-    animation: mystery-shake 0.3s linear infinite;
+/* a punchy one-shot jiggle fired on every unwrap tap */
+.food-mystery.mystery-jiggle {
+    animation: mystery-jiggle 0.26s ease;
 }
 
 @keyframes mystery-idle {
@@ -812,11 +872,25 @@
     50% { transform: rotate(2deg) scale(1.03); }
 }
 
-@keyframes mystery-shake {
-    0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(-4px, 2px) rotate(-4deg) scale(1.05); }
-    50% { transform: translate(4px, -2px) rotate(4deg) scale(0.97); }
-    75% { transform: translate(-3px, -2px) rotate(-3deg) scale(1.04); }
+@keyframes mystery-jiggle {
+    0% { transform: scale(1) rotate(0deg); }
+    30% { transform: scale(1.16, 0.86) rotate(-7deg); }
+    60% { transform: scale(0.92, 1.1) rotate(6deg); }
+    80% { transform: scale(1.05, 0.97) rotate(-3deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+/* celebratory shake of the whole modal for top-tier pulls */
+.modal.rarity-shake {
+    animation: rarity-shake 0.5s ease;
+}
+@keyframes rarity-shake {
+    0%, 100% { transform: translate(0, 0); }
+    15% { transform: translate(-8px, 4px); }
+    30% { transform: translate(7px, -5px); }
+    45% { transform: translate(-6px, -3px); }
+    60% { transform: translate(5px, 4px); }
+    80% { transform: translate(-3px, 2px); }
 }
 
 /* a colored wash for rare pulls (var --flash set by JS) */
