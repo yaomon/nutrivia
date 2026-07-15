@@ -17,6 +17,49 @@
     min-height: 100dvh;
 }
 
+/* Run screen is a fixed-height column: HUD pinned on top, footer pinned on
+   the bottom, and only the middle (.run-scroll) scrolls — so HP/XP and the
+   item bar / Next stay in view no matter how long the question is. */
+#screen-run {
+    height: 100dvh;
+    min-height: 0;
+    justify-content: flex-start;
+    gap: 12px;
+    overflow: hidden;
+}
+#screen-run .hud,
+#screen-run .run-footer {
+    flex: 0 0 auto;
+}
+.run-scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    /* breathing room so clay shadows aren't clipped by the scroll box */
+    padding: 6px 12px 8px;
+    margin: -6px -12px 0;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+}
+.run-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+.run-scroll::-webkit-scrollbar-thumb {
+    background: var(--clay-side);
+    border-radius: 999px;
+}
+
+/* lock background scroll while a modal is open */
+body.modal-open {
+    overflow: hidden;
+}
+body.modal-open .run-scroll {
+    overflow: hidden;
+}
+
 /* ---------------- HOME ---------------- */
 #screen-home,
 #screen-summary {
@@ -965,6 +1008,18 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+}
+/* Ambrosial — the pinnacle: a shimmering gold-led sweep */
+.rarity-8 {
+    background: linear-gradient(90deg, var(--mustard), #fff2cf, var(--red), var(--purple), var(--mustard));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: ambrosial-shimmer 2.4s linear infinite;
+}
+@keyframes ambrosial-shimmer {
+    to { background-position: 200% 0; }
 }
 
 #btn-food-ok,

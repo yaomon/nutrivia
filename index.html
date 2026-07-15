@@ -133,36 +133,41 @@
                 </div>
             </header>
 
-            <div id="event-banner" class="clay mustard hidden"></div>
+            <!-- only this middle scrolls when a long question expands, so the
+                 HUD above and the item bar / Next below stay in view -->
+            <div class="run-scroll">
+                <div id="event-banner" class="clay mustard hidden"></div>
 
-            <main id="question-card" class="question-card clay">
-                <div class="q-meta">
-                    <span id="q-num" class="q-num">Question 1</span>
-                    <span id="q-timer" class="q-timer">⏱️ 0:00</span>
+                <main id="question-card" class="question-card clay">
+                    <div class="q-meta">
+                        <span id="q-num" class="q-num">Question 1</span>
+                        <span id="q-timer" class="q-timer">⏱️ 0:00</span>
+                    </div>
+                    <p id="q-text" class="q-text"></p>
+                </main>
+
+                <div id="choices" class="choices">
+                    <button class="choice clay clay-btn" data-slot="0">
+                        <span class="choice-let clay"></span>
+                        <span class="choice-val"></span>
+                    </button>
+                    <button class="choice clay clay-btn" data-slot="1">
+                        <span class="choice-let clay"></span>
+                        <span class="choice-val"></span>
+                    </button>
+                    <button class="choice clay clay-btn" data-slot="2">
+                        <span class="choice-let clay"></span>
+                        <span class="choice-val"></span>
+                    </button>
+                    <button class="choice clay clay-btn" data-slot="3">
+                        <span class="choice-let clay"></span>
+                        <span class="choice-val"></span>
+                    </button>
                 </div>
-                <p id="q-text" class="q-text"></p>
-            </main>
 
-            <div id="choices" class="choices">
-                <button class="choice clay clay-btn" data-slot="0">
-                    <span class="choice-let clay"></span>
-                    <span class="choice-val"></span>
-                </button>
-                <button class="choice clay clay-btn" data-slot="1">
-                    <span class="choice-let clay"></span>
-                    <span class="choice-val"></span>
-                </button>
-                <button class="choice clay clay-btn" data-slot="2">
-                    <span class="choice-let clay"></span>
-                    <span class="choice-val"></span>
-                </button>
-                <button class="choice clay clay-btn" data-slot="3">
-                    <span class="choice-let clay"></span>
-                    <span class="choice-val"></span>
-                </button>
+                <div id="item-hint" class="clay item-hint hidden"></div>
             </div>
 
-            <div id="item-hint" class="clay item-hint hidden"></div>
             <footer class="run-footer">
                 <div class="item-tray">
                     <div id="item-tray-label" class="tray-label hidden">

@@ -15,6 +15,7 @@ const UI = (() => {
         "Gourmet",
         "Decadent",
         "Divine",
+        "Ambrosial",
     ];
 
     const CHEERS = [
@@ -264,10 +265,11 @@ const UI = (() => {
 
     function renderHUD(run, xpNeeded) {
         $("#hud-level").textContent = "Lv " + run.level;
+        const maxHp = run.maxHp || CONFIG.maxHp;
         $("#hp-fill").style.width =
-            Math.max(0, (run.hp / CONFIG.maxHp) * 100) + "%";
+            Math.max(0, (run.hp / maxHp) * 100) + "%";
         $("#hp-label").textContent =
-            "HP " + Math.max(0, run.hp) + "/" + CONFIG.maxHp;
+            "HP " + Math.max(0, run.hp) + "/" + maxHp;
         $("#hp-fill").parentElement.classList.toggle(
             "low",
             run.hp > 0 && run.hp <= CONFIG.hpLossOnMiss
@@ -524,8 +526,17 @@ const UI = (() => {
 
     /* ---------- modals ---------- */
 
+    // lock background scroll while any modal is open
+    function syncScrollLock() {
+        const anyOpen = $$(".modal").some(
+            (m) => !m.classList.contains("hidden")
+        );
+        document.body.classList.toggle("modal-open", anyOpen);
+    }
+
     function openModal(modal) {
         modal.classList.remove("hidden");
+        syncScrollLock();
         replayAnim(modal.querySelector(".modal-card"), "squish-in");
     }
 
@@ -538,6 +549,7 @@ const UI = (() => {
         setTimeout(() => {
             modal.classList.add("hidden");
             card.classList.remove("squish-out");
+            syncScrollLock();
             if (after) after();
         }, 290);
     }
@@ -583,6 +595,7 @@ const UI = (() => {
         ["#e5a83e", "#f2c96b"], // gourmet
         ["#d95c4c", "#f0836f"], // decadent
         ["#d95c4c", "#e5a83e", "#8fac72", "#6f8fba", "#a37bb8"], // divine
+        ["#f2c96b", "#fff8ef", "#d95c4c", "#a37bb8", "#6f8fba"], // ambrosial
     ];
 
     // Two-phase reveal: a wrapped mystery you tap to unwrap, then a

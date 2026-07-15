@@ -1,7 +1,7 @@
 let foods = [
     {
         name: "advocado-half.png",
-        displayName: "Half Avacado",
+        displayName: "Half Avocado",
         description:
             "A half avocado—almost perfect, just needs its other half.",
         rarity: 4,
@@ -106,7 +106,7 @@ let foods = [
     },
     {
         name: "bowl-cereal.png",
-        displayName: "Bowl of Ceral",
+        displayName: "Bowl of Cereal",
         description:
             "Perfect for a morning start or a late-night snack. Milk not included!",
         rarity: 5,
@@ -120,7 +120,7 @@ let foods = [
     },
     {
         name: "bowl.png",
-        displayName: "Bowl of Soup",
+        displayName: "Empty Bowl",
         description: "An empty bowl. So barren, yet so full of potential.",
         rarity: 3,
     },
@@ -133,7 +133,7 @@ let foods = [
     },
     {
         name: "broccoli.png",
-        displayName: "Brocolli",
+        displayName: "Broccoli",
         description:
             "Green and nutritious—steamed, stir-fried, or raw, it's a healthy choice.",
         rarity: 5,
@@ -189,7 +189,7 @@ let foods = [
     },
     {
         name: "cake.png",
-        displayName: "Cake ",
+        displayName: "Cake",
         description:
             "Celebrations are incomplete without cake—sweet, moist, and simply irresistible.",
         rarity: 6,
@@ -342,7 +342,7 @@ let foods = [
         name: "coconut-half.png",
         displayName: "Half Coconut",
         description:
-            "Tropical and sweet, perfect for a beachy vibe or adding to your favorite recipes.",
+            "Cracked open to reveal its milk and tender white flesh—half the shell, all the tropics.",
         rarity: 5,
     },
     {
@@ -502,7 +502,7 @@ let foods = [
     },
     {
         name: "egg-half.png",
-        displayName: "Half egg",
+        displayName: "Half Egg",
         description:
             "Half an egg—great for a light meal or to complement other dishes.",
         rarity: 4,
@@ -681,7 +681,7 @@ let foods = [
     },
     {
         name: "lemon-half.png",
-        displayName: "HalfLemon",
+        displayName: "Half Lemon",
         description:
             "A zesty half lemon—ideal for adding a touch of citrus to your recipes.",
         rarity: 4,
@@ -723,7 +723,7 @@ let foods = [
     },
     {
         name: "maki-roe.png",
-        displayName: "Roe Mai",
+        displayName: "Roe Maki",
         description:
             "Sushi with roe—fish eggs adding a pop of flavor to your sushi experience.",
         rarity: 6,
@@ -825,7 +825,7 @@ let foods = [
     {
         name: "mushroom-half.png",
         displayName: "Half Mushroom",
-        description: "Half of a mushroom, read to be served.",
+        description: "Half of a mushroom, ready to be served.",
         rarity: 4,
     },
     {
@@ -855,7 +855,7 @@ let foods = [
     {
         name: "orange.png",
         displayName: "Orange",
-        description: "Citrus, the final fronteir of fruit-kind.",
+        description: "Citrus, the final frontier of fruit-kind.",
         rarity: 4,
     },
     {
@@ -907,7 +907,7 @@ let foods = [
     },
     {
         name: "pear.png",
-        displayName: "PEar",
+        displayName: "Pear",
         description:
             "Sweet and succulent—perfect for snacking or adding to salads.",
         rarity: 5,
@@ -977,7 +977,7 @@ let foods = [
     },
     {
         name: "plate.png",
-        displayName: " Plate",
+        displayName: "Plate",
         description:
             "A plate that can hold anything from noodles, to rice, to fish.",
         rarity: 4,
@@ -1251,8 +1251,8 @@ let foods = [
     },
     {
         name: "tajine-lid.png",
-        displayName: "Tajine",
-        description: "A lid vital to cook Tajine, a delicious Moroccan dish.",
+        displayName: "Tajine Lid",
+        description: "A conical lid, vital to cooking tajine—a delicious Moroccan dish.",
         rarity: 2,
     },
     {
@@ -1293,7 +1293,7 @@ let foods = [
         name: "utensil-knife.png",
         displayName: "Knife",
         description: "A knife—perfect for cutting and preparing your food.",
-        rarity: 42,
+        rarity: 2,
     },
     {
         name: "utensil-spoon.png",

@@ -183,7 +183,7 @@ const EVENTS = {
         name: "Tea Break",
         desc: "correct answers also restore HP",
         intro: "A kettle whistles somewhere warm. A steaming cup of clay-pot tea slides across the table toward you. Rest a moment?",
-        eligible: (game) => game.run.hp < CONFIG.maxHp, // only if hurt
+        eligible: (game) => game.run.hp < game.run.maxHp, // only if hurt
         onCorrect: (game) => game.heal(2), // fires per correct while active
         choices: [
             {

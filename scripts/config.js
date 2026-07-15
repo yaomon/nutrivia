@@ -35,6 +35,7 @@ const CONFIG = {
     levelUpChoices: 3, // cards offered on level up
     healAmount: 10,
     goldRewardAmount: 25,
+    maxHpUp: 5, // "Bigger Appetite" reward: permanent max-HP boost
 
     // Spaced repetition (intervals are counted in questions answered,
     // not days — a run-based game has no fixed daily cadence)

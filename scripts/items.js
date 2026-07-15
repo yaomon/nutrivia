@@ -63,7 +63,7 @@ const ITEMS = {
         desc: "Sip it to smooth 5 HP back on.",
         kind: "instant",
         cost: 15,
-        canUse: (game) => game.run.hp < CONFIG.maxHp,
+        canUse: (game) => game.run.hp < game.run.maxHp,
         use: (game) => game.heal(5),
     },
     star_bite: {
@@ -86,12 +86,12 @@ const ITEMS = {
     },
     feast: {
         icon: "🍗",
-        name: "Hearty Feast",
-        desc: "A proper meal — restore 10 HP.",
+        name: "Grand Feast",
+        desc: "A full spread — restore ALL your HP.",
         kind: "instant",
-        cost: 25,
-        canUse: (game) => game.run.hp < CONFIG.maxHp,
-        use: (game) => game.heal(10),
+        cost: 35,
+        canUse: (game) => game.run.hp < game.run.maxHp,
+        use: (game) => game.heal(game.run.maxHp),
     },
     honey_jar: {
         icon: "🍯",

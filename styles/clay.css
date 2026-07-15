@@ -79,7 +79,9 @@ body {
         ),
         var(--blotch);
     background-blend-mode: normal, soft-light;
-    background-attachment: fixed;
+    /* NOTE: no background-attachment: fixed — it forces a full-screen repaint
+       on every scroll frame, which is a big jank source on mobile. The run
+       screen barely scrolls the body anyway (its middle scrolls internally). */
     color: var(--ink);
     font-family: "Montserrat", sans-serif;
     overflow-x: hidden;

@@ -43,6 +43,7 @@ const Game = (() => {
         return {
             active: true,
             hp: CONFIG.maxHp,
+            maxHp: CONFIG.maxHp, // can grow mid-run via the Bigger Appetite reward
             level: 1,
             xp: 0,
             streak: 0,
@@ -79,6 +80,7 @@ const Game = (() => {
             const data = JSON.parse(raw);
             if (data.meta) meta = Object.assign(freshMeta(), data.meta);
             run = data.run || null;
+            if (run && run.maxHp == null) run.maxHp = CONFIG.maxHp; // older saves
         } catch (e) {
             console.warn("Bad save, starting fresh", e);
         }
@@ -618,16 +620,23 @@ const Game = (() => {
                 run.items[id] = (run.items[id] || 0) + 1;
             },
         });
-        const itemIds = shuffled(Object.keys(ITEMS));
-        const kinds = [
-            itemCard(itemIds[0]),
-            itemCard(itemIds[1]),
+        // one random support reward — each is distinct from the others
+        const support = [
             {
                 icon: "❤️",
                 name: "Patch Up",
                 desc: "Smooth " + CONFIG.healAmount + " HP back on",
                 apply: () => {
-                    run.hp = Math.min(CONFIG.maxHp, run.hp + CONFIG.healAmount);
+                    run.hp = Math.min(run.maxHp, run.hp + CONFIG.healAmount);
+                },
+            },
+            {
+                icon: "🍽️",
+                name: "Bigger Appetite",
+                desc: "+" + CONFIG.maxHpUp + " max HP, healed to full",
+                apply: () => {
+                    run.maxHp += CONFIG.maxHpUp;
+                    run.hp = run.maxHp;
                 },
             },
             {
@@ -639,7 +648,14 @@ const Game = (() => {
                 },
             },
         ];
-        return shuffled(kinds).slice(0, CONFIG.levelUpChoices);
+        // two distinct item choices + one random support card, so every level
+        // up shows item options plus something else useful
+        const itemIds = shuffled(Object.keys(ITEMS));
+        return shuffled([
+            itemCard(itemIds[0]),
+            itemCard(itemIds[1]),
+            shuffled(support)[0],
+        ]);
     }
 
     function grantFood(after) {
@@ -828,10 +844,11 @@ const Game = (() => {
         visibleWrongOptions,
         eliminateOptions,
         heal(n) {
-            run.hp = Math.min(CONFIG.maxHp, run.hp + n);
+            const before = run.hp;
+            run.hp = Math.min(run.maxHp, run.hp + n);
             UI.floatDelta(
                 UI.$("#hp-fill").parentElement,
-                "+" + n + " HP",
+                "+" + (run.hp - before) + " HP",
                 "#7a9660"
             );
             refreshHUD();
