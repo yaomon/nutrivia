@@ -236,20 +236,37 @@ body.modal-open .run-scroll {
     text-shadow: 0 1px 1px var(--hi-soft);
 }
 
+/* streak, gold, help and quit share one compact 2x2 cluster */
 .chips {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 7px;
+    align-content: center;
+    justify-content: end;
 }
 
 .chip {
-    padding: 7px 14px;
+    padding: 6px 11px;
     font-weight: 900;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     text-align: center;
     border-radius: 999px;
     transition: transform 0.15s var(--bounce), background-color 0.3s ease,
         box-shadow 0.3s ease, color 0.3s ease;
+}
+
+/* help / quit sit in the chip cluster as small square-ish clay buttons */
+.chip-btn {
+    display: grid;
+    place-items: center;
+    padding: 6px 9px;
+    min-width: 34px;
+    font-size: 1rem;
+    color: var(--ink-soft);
+}
+/* keep them pill-shaped even on hover (clay-btn hover otherwise reshapes) */
+.chip-btn:hover:not(:disabled):not(.pressed) {
+    border-radius: 999px;
 }
 
 /* streak chip heats up as the streak climbs — each tier is warmer, glowier
@@ -1041,9 +1058,9 @@ body.modal-open .run-scroll {
     }
     .chips {
         grid-column: 1 / -1;
-        flex-direction: row;
+        grid-template-columns: repeat(4, auto);
         justify-content: center;
-        gap: 12px;
+        gap: 10px;
     }
     .avatar {
         width: 58px;
