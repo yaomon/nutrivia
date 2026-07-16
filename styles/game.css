@@ -299,11 +299,16 @@ body.modal-open .run-scroll {
     50% { transform: scale(1.14); }
 }
 
-/* streak & gold read flat — no raised clay border, bulge highlight or dents */
+/* streak & gold read flat — no raised clay border, bulge, dents, or tint.
+   (non-heated streak is bare; the heat tiers still colour it in) */
 #hud-streak,
 #hud-gold {
     box-shadow: none;
     background-image: none;
+}
+#hud-gold,
+#hud-streak:not(.heat) {
+    background-color: transparent;
 }
 #hud-streak::after,
 #hud-gold::after {
@@ -355,7 +360,7 @@ body.modal-open .run-scroll {
 .question-card {
     padding: 20px 22px 22px;
     box-shadow: none;
-    background-image: none;
+    background: transparent;
     flex: 0 0 auto;
 }
 .question-card::after {
@@ -390,13 +395,13 @@ body.modal-open .run-scroll {
 }
 
 /* ---------------- CHOICES ---------------- */
-/* The choices grow to fill whatever space is left below the question, all
-   the way down to the footer, instead of bunching up near the top. */
+/* The choices keep their natural size and spread evenly through the space
+   left below the question, down to the footer. */
 .choices {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 14px;
+    justify-content: space-evenly;
+    gap: 8px;
     flex: 1 1 auto;
     min-height: 0;
 }
@@ -410,9 +415,8 @@ body.modal-open .run-scroll {
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.35;
-    flex: 1 1 0;
+    flex: 0 0 auto;
     min-height: 60px;
-    max-height: 108px;
 }
 
 .choice-let {
