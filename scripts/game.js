@@ -794,6 +794,11 @@ const Game = (() => {
         UI.showScreen("screen-home");
     }
 
+    function openCollection() {
+        UI.renderCollection(meta, UI.showFoodDetail);
+        UI.showScreen("screen-collection");
+    }
+
     /* ---------------- shop ---------------- */
 
     function openShop() {
@@ -933,6 +938,8 @@ const Game = (() => {
         UI.$("#btn-sets-back").addEventListener("click", goHome);
         UI.$("#btn-shop").addEventListener("click", openShop);
         UI.$("#btn-shop-back").addEventListener("click", goHome);
+        UI.$("#btn-collection").addEventListener("click", openCollection);
+        UI.$("#btn-collection-back").addEventListener("click", goHome);
         UI.$("#btn-again").addEventListener("click", beginRun);
         UI.$("#btn-home").addEventListener("click", goHome);
         UI.$("#btn-reset").addEventListener("click", resetProgress);

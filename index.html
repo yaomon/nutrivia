@@ -56,10 +56,14 @@
                     <span class="home-stat-icon">💰</span>
                     <span id="home-gold">0</span>
                 </div>
-                <div class="home-stat clay-inset">
+                <button
+                    id="btn-collection"
+                    class="home-stat clay-inset clay-btn"
+                    title="View your food collection"
+                >
                     <span class="home-stat-icon">🍱</span>
                     <span id="home-foods">0/0</span>
-                </div>
+                </button>
                 <div class="home-stat clay-inset">
                     <span class="home-stat-icon">🏆</span>
                     <span id="home-best">—</span>
@@ -94,6 +98,16 @@
             <button id="btn-shop-back" class="clay clay-btn btn-hero red">
                 Done
             </button>
+        </section>
+
+        <!-- ============ FOOD COLLECTION ============ -->
+        <section id="screen-collection" class="screen hidden">
+            <h1 class="game-title small">Collection</h1>
+            <div id="collection-count" class="tagline"></div>
+            <button id="btn-collection-back" class="clay clay-btn btn-quiet">
+                back
+            </button>
+            <div id="collection-grid" class="collection-grid"></div>
         </section>
 
         <!-- ============ PICK YOUR MENU ============ -->

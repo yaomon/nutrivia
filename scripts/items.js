@@ -15,7 +15,7 @@ const ITEMS = {
         name: "50/50",
         desc: "Squish the question down to two choices.",
         kind: "instant",
-        cost: 20,
+        cost: 22,
         canUse: (game) => game.visibleWrongOptions().length >= 2,
         use: (game) => {
             // Eliminate wrong answers until only one remains
@@ -28,7 +28,7 @@ const ITEMS = {
         name: "Pinch Off",
         desc: "Flick one wrong answer off the board.",
         kind: "instant",
-        cost: 12,
+        cost: 10,
         canUse: (game) => game.visibleWrongOptions().length >= 2,
         use: (game) => {
             const wrong = game.shuffled(game.visibleWrongOptions());
@@ -43,7 +43,7 @@ const ITEMS = {
             "🛡️ Streak Shield is on — your next miss won't cost you anything.",
         kind: "buff",
         buff: "streak_protector",
-        cost: 25,
+        cost: 26,
         canUse: (game) => !game.run.buffs.streak_protector,
     },
     second_chance: {
@@ -54,7 +54,7 @@ const ITEMS = {
             "🔁 Second Chance is ready — if you miss, that answer disappears and you pick again.",
         kind: "buff",
         buff: "second_chance",
-        cost: 30,
+        cost: 32,
         canUse: (game) => !game.run.buffs.second_chance,
     },
     warm_broth: {
@@ -73,7 +73,7 @@ const ITEMS = {
         activeText: "⭐ Star Bite eaten — your next correct answer is worth double XP!",
         kind: "buff",
         buff: "double_xp",
-        cost: 30,
+        cost: 20,
         canUse: (game) => !game.run.buffs.double_xp,
     },
     golden_spoon: {
@@ -89,7 +89,7 @@ const ITEMS = {
         name: "Grand Feast",
         desc: "A full spread — restore ALL your HP.",
         kind: "instant",
-        cost: 35,
+        cost: 40,
         canUse: (game) => game.run.hp < game.run.maxHp,
         use: (game) => game.heal(game.run.maxHp),
     },
@@ -98,7 +98,7 @@ const ITEMS = {
         name: "Honey Jar",
         desc: "Sweet! Gain 15 XP, right now.",
         kind: "instant",
-        cost: 18,
+        cost: 16,
         use: (game) => game.gainXp(15),
     },
     chili_pepper: {
@@ -109,7 +109,7 @@ const ITEMS = {
             "🌶️ Chili eaten — your next correct answer builds double streak!",
         kind: "buff",
         buff: "double_streak",
-        cost: 22,
+        cost: 18,
         canUse: (game) => !game.run.buffs.double_streak,
     },
     snowflake: {
@@ -120,7 +120,7 @@ const ITEMS = {
             "❄️ Clock frozen — your next correct answer gets the full speed bonus!",
         kind: "buff",
         buff: "auto_fast",
-        cost: 22,
+        cost: 12,
         canUse: (game) => !game.run.buffs.auto_fast,
     },
 };

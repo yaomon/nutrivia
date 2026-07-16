@@ -696,6 +696,54 @@ const UI = (() => {
         openModal($("#modal-food"));
     }
 
+    // browsing the collection: show a food's details straight away, no unwrap
+    function showFoodDetail(food) {
+        const rarity = food.rarity || 0;
+        $("#food-new").classList.add("hidden");
+        $("#food-sub").textContent = "from your collection";
+        $("#food-img").src = "images/food/" + food.name;
+        $("#food-name").textContent = food.displayName;
+        const rarityEl = $("#food-rarity");
+        rarityEl.textContent = RARITIES[rarity] || "?";
+        rarityEl.className = "food-rarity rarity-" + rarity;
+        $("#food-desc").textContent = food.description;
+        const ok = $("#btn-food-ok");
+        ok.textContent = "Close";
+        ok.onclick = () => closeModal($("#modal-food"));
+        $("#food-wrap").classList.add("hidden");
+        $("#food-result").classList.remove("hidden");
+        openModal($("#modal-food"));
+    }
+
+    // the food collection gallery — discovered foods shown, rest locked
+    function renderCollection(meta, onFoodTap) {
+        $("#collection-count").textContent =
+            meta.foods.length + " of " + foods.length + " discovered";
+        const grid = $("#collection-grid");
+        grid.innerHTML = "";
+        const owned = new Set(meta.foods);
+        foods.forEach((food) => {
+            const has = owned.has(food.name);
+            const cell = document.createElement(has ? "button" : "div");
+            cell.className =
+                "collect-cell clay-inset" + (has ? " clay-btn found" : " locked");
+            if (has) {
+                cell.innerHTML =
+                    '<img class="collect-img" src="images/food/' +
+                    food.name +
+                    '" alt="" loading="lazy" /><span class="collect-name rarity-' +
+                    food.rarity +
+                    '">' +
+                    food.displayName +
+                    "</span>";
+                cell.addEventListener("click", () => onFoodTap(food));
+            } else {
+                cell.innerHTML = '<span class="collect-lock">?</span>';
+            }
+            grid.appendChild(cell);
+        });
+    }
+
     // saved from death — dramatic once-per-run rescue
     function showSaved(text, onOk) {
         $("#saved-desc").textContent = text;
@@ -852,6 +900,8 @@ const UI = (() => {
         closeModal,
         showLevelUp,
         showFood,
+        showFoodDetail,
+        renderCollection,
         showSaved,
         renderSummary,
         renderSets,

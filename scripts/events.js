@@ -86,18 +86,15 @@ const EVENTS = {
                 },
             },
             {
-                text: "Flip for gold — heads +25, tails nothing",
+                text: "Flip for gold instead — heads +30, tails −10",
                 outcome: (game) => {
                     if (Math.random() < 0.5) {
-                        game.gainGold(25);
+                        game.gainGold(30);
                         return "🪄 HEADS! The merchant grumbles and pays up.";
                     }
-                    return "😬 Tails. The merchant pockets the coin and winks.";
+                    game.loseGold(10);
+                    return "😬 Tails. The merchant pockets your coin and winks.";
                 },
-            },
-            {
-                text: "Walk away",
-                outcome: () => "🚶 You keep walking. The coin clinks behind you.",
             },
         ],
     },
@@ -246,11 +243,9 @@ const EVENTS = {
                 },
             },
             {
-                text: "Refuse politely — pay 5 gold as tribute",
-                outcome: (game) => {
-                    game.loseGold(5);
-                    return "🙏 Death sighs, takes the coins, and dissolves into mist.";
-                },
+                text: "Walk away — no wager, no risk",
+                outcome: () =>
+                    "🙏 You bow out. Death shrugs and dissolves back into mist.",
             },
             {
                 text: "Flip his hourglass — gamble: 50% +30 gold, 50% −4 HP",
@@ -376,6 +371,71 @@ const EVENTS = {
                 text: "Walk away clean",
                 outcome: () =>
                     "🚶 Wise. The alley isn't kind to the greedy.",
+            },
+        ],
+    },
+    corner_bakery: {
+        icon: "🥐",
+        name: "Corner Bakery",
+        intro: "Warm air rolls out of a little bakery, thick with the smell of fresh bread. Your stomach growls.",
+        eligible: (game) => game.run.gold >= 12,
+        choices: [
+            {
+                text: "Grab a warm roll (12 gold) — restore 6 HP",
+                outcome: (game) => {
+                    if (!game.spendGold(12))
+                        return "🥖 You come up a few coins short.";
+                    game.heal(6);
+                    return "🥖 Soft, warm, restorative. +6 HP.";
+                },
+            },
+            {
+                text: "Splurge on the pastry box (22 gold) — 6 HP and 12 XP",
+                outcome: (game) => {
+                    if (!game.spendGold(22))
+                        return "🥐 Not quite enough for the whole box.";
+                    game.heal(6);
+                    game.gainXp(12);
+                    return "🥐 Flaky, sweet, and inspiring. +6 HP, +12 XP!";
+                },
+            },
+            {
+                text: "Just window-shop",
+                outcome: () =>
+                    "🚶 You breathe in the smell and move along, coins intact.",
+            },
+        ],
+    },
+    spice_rack: {
+        icon: "🌶️",
+        name: "Spice Rack",
+        intro: "A spice peddler fans out jars of fiery powders and frost-blue crystals. \"A little kick for the road?\"",
+        eligible: (game) => game.run.gold >= 16,
+        choices: [
+            {
+                text: "Buy a chili (16 gold) — gain a 🌶️ Chili Pepper",
+                outcome: (game) => {
+                    if (!game.spendGold(16))
+                        return "🌶️ Your purse can't cover it.";
+                    game.gainItem("chili_pepper");
+                    return "🌶️ One fiery Chili Pepper, tucked away for later.";
+                },
+            },
+            {
+                text: "Buy the whole rack (30 gold) — Chili, ❄️ Snowflake AND ⭐ Star Bite",
+                outcome: (game) => {
+                    if (!game.spendGold(30))
+                        return "🌿 Not enough for the full rack.";
+                    game.gainItem("chili_pepper");
+                    game.gainItem("snowflake");
+                    game.gainItem("star_bite");
+                    return "🌿 The peddler bundles up three treasures for you!";
+                },
+            },
+            {
+                text: "Pass on the spices",
+                outcome: () =>
+                    "🚶 \"Another time, then,\" the peddler nods, corking the jars.",
             },
         ],
     },

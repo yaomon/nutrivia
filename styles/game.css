@@ -299,6 +299,24 @@ body.modal-open .run-scroll {
     50% { transform: scale(1.14); }
 }
 
+/* streak & gold read flat — no raised clay border, bulge highlight or dents */
+#hud-streak,
+#hud-gold {
+    box-shadow: none;
+    background-image: none;
+}
+#hud-streak::after,
+#hud-gold::after {
+    display: none;
+}
+/* but keep the streak's heat glow (out-specifies the flatten above) */
+#hud-streak.heat-3 {
+    box-shadow: 0 0 12px rgba(217, 92, 76, 0.55);
+}
+#hud-streak.heat-4 {
+    box-shadow: 0 0 20px rgba(217, 92, 76, 0.8);
+}
+
 /* item reward cards on level up wear a badge so they read as items */
 .reward-card {
     position: relative;
@@ -332,8 +350,16 @@ body.modal-open .run-scroll {
 }
 
 /* ---------------- QUESTION ---------------- */
+/* Flat, not raised: no claymorphism bump/border, bulge highlight or dents —
+   the question reads directly on the slab. */
 .question-card {
-    padding: 24px 24px 28px;
+    padding: 20px 22px 22px;
+    box-shadow: none;
+    background-image: none;
+    flex: 0 0 auto;
+}
+.question-card::after {
+    display: none;
 }
 
 /* event cards are a different clay — a warm mustard-washed slab */
@@ -364,10 +390,15 @@ body.modal-open .run-scroll {
 }
 
 /* ---------------- CHOICES ---------------- */
+/* The choices grow to fill whatever space is left below the question, all
+   the way down to the footer, instead of bunching up near the top. */
 .choices {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    justify-content: space-between;
+    gap: 14px;
+    flex: 1 1 auto;
+    min-height: 0;
 }
 
 .choice {
@@ -379,7 +410,9 @@ body.modal-open .run-scroll {
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.35;
+    flex: 1 1 0;
     min-height: 60px;
+    max-height: 108px;
 }
 
 .choice-let {
@@ -659,6 +692,60 @@ body.modal-open .run-scroll {
     font-weight: 900;
     font-size: 0.9rem;
     border-radius: 999px;
+}
+
+/* ---------------- FOOD COLLECTION ---------------- */
+#screen-collection {
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+}
+
+.collection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+    gap: 10px;
+    width: 100%;
+    max-width: 640px;
+    padding-bottom: 8px;
+}
+
+.collect-cell {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 6px 4px;
+}
+.collect-cell.locked {
+    opacity: 0.55;
+}
+
+.collect-img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    filter: drop-shadow(2px 3px 3px rgba(93, 68, 51, 0.25));
+}
+
+.collect-name {
+    font-size: 0.58rem;
+    font-weight: 800;
+    line-height: 1.1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.collect-lock {
+    font-size: 1.7rem;
+    font-weight: 900;
+    color: var(--ink-soft);
+    opacity: 0.5;
 }
 
 .item-btn {
