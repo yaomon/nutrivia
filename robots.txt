@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yaomon.github.io/nutrivia/sitemap.xml
+Sitemap: https://nu-trivia.netlify.app/sitemap.xml
