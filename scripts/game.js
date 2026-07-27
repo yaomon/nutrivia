@@ -5,8 +5,12 @@ const Game = (() => {
 
     const STORAGE_KEY = "nutrivia_rogue_v1";
 
-    const qByNumber = {};
-    QUESTION_BANK.forEach((q) => (qByNumber[q.number] = q));
+    let qByNumber = {};
+    function indexBank() {
+        qByNumber = {};
+        QUESTION_BANK.forEach((q) => (qByNumber[q.number] = q));
+    }
+    indexBank();
 
     /* ---------------- state ---------------- */
 
@@ -799,6 +803,53 @@ const Game = (() => {
         UI.showScreen("screen-collection");
     }
 
+    /* ---------------- importing question sets ---------------- */
+
+    function openImport() {
+        UI.showImport(QuestionImport.listSets(), deleteCustomSet);
+    }
+
+    // pull text from the paste box (or the chosen file), parse, and store it
+    function runImport(text, suggestedName) {
+        const result = QuestionImport.parse(text);
+        if (!result.ok) {
+            UI.setImportStatus(result.error, false);
+            return;
+        }
+        const set = QuestionImport.addSet(suggestedName, result.questions);
+        indexBank(); // the new questions need to be findable right away
+        // a freshly imported set is switched on so it's usable immediately
+        if (!meta.selectedSets.includes(set.id)) meta.selectedSets.push(set.id);
+        save();
+
+        const skipped = result.skipped
+            ? " (" + result.skipped + " row(s) skipped)"
+            : "";
+        UI.setImportStatus(
+            "✅ Imported " +
+                set.questions.length +
+                " questions as “" +
+                set.name +
+                "” from " +
+                result.formatName +
+                skipped,
+            true
+        );
+        UI.renderImportList(QuestionImport.listSets(), deleteCustomSet);
+        UI.clearImportInputs();
+        UI.renderSets(meta.selectedSets, toggleSet); // refresh the menu behind
+    }
+
+    function deleteCustomSet(id) {
+        if (!confirm("Remove this imported set? Its questions will be gone.")) return;
+        QuestionImport.removeSet(id);
+        indexBank();
+        meta.selectedSets = meta.selectedSets.filter((s) => s !== id);
+        save();
+        UI.renderImportList(QuestionImport.listSets(), deleteCustomSet);
+        UI.renderSets(meta.selectedSets, toggleSet);
+    }
+
     /* ---------------- shop ---------------- */
 
     function openShop() {
@@ -940,6 +991,46 @@ const Game = (() => {
         UI.$("#btn-shop-back").addEventListener("click", goHome);
         UI.$("#btn-collection").addEventListener("click", openCollection);
         UI.$("#btn-collection-back").addEventListener("click", goHome);
+
+        // --- import questions ---
+        UI.$("#btn-import").addEventListener("click", openImport);
+        UI.$("#btn-import-close").addEventListener("click", () =>
+            UI.closeModal(UI.$("#modal-import"))
+        );
+        UI.$("#btn-import-go").addEventListener("click", () => {
+            const text = UI.$("#import-text").value;
+            if (!text.trim()) {
+                UI.setImportStatus(
+                    "Pick a file or paste some questions first.",
+                    false
+                );
+                return;
+            }
+            runImport(text, UI.$("#import-name").value);
+        });
+        UI.$("#import-file").addEventListener("change", (e) => {
+            const file = e.target.files && e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = () => {
+                UI.$("#import-text").value = String(reader.result || "");
+                // default the set name to the file name, sans extension
+                if (!UI.$("#import-name").value.trim()) {
+                    UI.$("#import-name").value = file.name
+                        .replace(/\.[^.]+$/, "")
+                        .replace(/[_-]+/g, " ")
+                        .slice(0, 40);
+                }
+                UI.setImportStatus(
+                    "Loaded “" + file.name + "” — press Import.",
+                    true
+                );
+            };
+            reader.onerror = () =>
+                UI.setImportStatus("Couldn't read that file.", false);
+            reader.readAsText(file);
+            e.target.value = ""; // let the same file be picked again
+        });
         UI.$("#btn-again").addEventListener("click", beginRun);
         UI.$("#btn-home").addEventListener("click", goHome);
         UI.$("#btn-reset").addEventListener("click", resetProgress);

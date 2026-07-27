@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yaomon.github.io/nutrivia/sitemap.xml

@@ -805,6 +805,70 @@ const UI = (() => {
                 : "the pot is empty — pick at least one!";
     }
 
+    /* ---------- importing question sets ---------- */
+
+    function showImport(sets, onRemove) {
+        setImportStatus("", true);
+        clearImportInputs();
+        renderImportList(sets, onRemove);
+        openModal($("#modal-import"));
+    }
+
+    function setImportStatus(msg, ok) {
+        const el = $("#import-status");
+        el.textContent = msg || "";
+        el.className = "import-status" + (msg ? (ok ? " ok" : " bad") : "");
+    }
+
+    function clearImportInputs() {
+        $("#import-text").value = "";
+        $("#import-name").value = "";
+    }
+
+    function renderImportList(sets, onRemove) {
+        const wrap = $("#import-existing");
+        wrap.innerHTML = "";
+        if (!sets.length) return;
+        const title = document.createElement("div");
+        title.className = "import-or";
+        title.textContent = "— your imported sets —";
+        wrap.appendChild(title);
+        sets.forEach((set) => {
+            const row = document.createElement("div");
+            row.className = "import-row clay-inset";
+            row.innerHTML =
+                '<span class="import-row-name">' +
+                (set.icon || "📥") +
+                " " +
+                escapeHtml(set.name) +
+                '</span><span class="import-row-count">' +
+                set.questions.length +
+                " q</span>";
+            const del = document.createElement("button");
+            del.className = "import-remove clay clay-btn";
+            del.textContent = "✕";
+            del.title = "Remove this set";
+            del.addEventListener("click", () => onRemove(set.id));
+            row.appendChild(del);
+            wrap.appendChild(row);
+        });
+    }
+
+    // imported names are user data — never inject them as markup
+    function escapeHtml(s) {
+        return String(s).replace(
+            /[&<>"']/g,
+            (c) =>
+                ({
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    '"': "&quot;",
+                    "'": "&#39;",
+                }[c])
+        );
+    }
+
     /* ---------- pantry shop ---------- */
 
     function renderShop(meta, onBuy) {
@@ -907,5 +971,9 @@ const UI = (() => {
         renderSets,
         renderShop,
         onItemBought,
+        showImport,
+        setImportStatus,
+        clearImportInputs,
+        renderImportList,
     };
 })();

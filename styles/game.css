@@ -698,6 +698,126 @@ body.modal-open .run-scroll {
     border-radius: 999px;
 }
 
+/* ---------------- IMPORT QUESTIONS ---------------- */
+.import-file {
+    font-weight: 800;
+    font-size: 0.95rem;
+    padding: 12px 24px;
+    cursor: pointer;
+}
+
+.import-or {
+    font-family: "Caveat", cursive;
+    font-size: 1.2rem;
+    color: var(--ink-soft);
+}
+
+.import-text,
+.import-name {
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.85rem;
+    color: var(--ink);
+    border: none;
+    padding: 12px 14px;
+    resize: vertical;
+}
+.import-text {
+    min-height: 92px;
+    line-height: 1.4;
+}
+.import-name {
+    font-weight: 700;
+}
+.import-text:focus,
+.import-name:focus {
+    outline: 2px solid var(--sage);
+    outline-offset: 1px;
+}
+.import-text::placeholder,
+.import-name::placeholder {
+    color: var(--ink-soft);
+    opacity: 0.7;
+}
+
+.import-status {
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.35;
+    min-height: 1.2em;
+}
+.import-status.ok {
+    color: var(--sage-deep);
+}
+.import-status.bad {
+    color: var(--red-deep);
+}
+
+.import-existing {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.import-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-align: left;
+}
+.import-row-name {
+    flex: 1;
+    min-width: 0;
+}
+.import-row-count {
+    color: var(--ink-soft);
+    font-weight: 600;
+}
+.import-remove {
+    flex-shrink: 0;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-weight: 900;
+    color: var(--red-deep);
+    border-radius: 999px;
+}
+
+.import-help {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    text-align: left;
+    line-height: 1.45;
+}
+.import-help summary {
+    cursor: pointer;
+    font-family: "Caveat", cursive;
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+}
+.import-help-body {
+    margin-top: 8px;
+    color: var(--ink-soft);
+}
+.import-help code {
+    display: inline-block;
+    background: rgba(93, 68, 51, 0.09);
+    border-radius: 6px;
+    padding: 2px 6px;
+    margin-top: 3px;
+    font-size: 0.74rem;
+    color: var(--ink);
+}
+.import-help hr {
+    border: none;
+    border-top: 1px solid rgba(93, 68, 51, 0.15);
+    margin: 8px 0;
+}
+
 /* ---------------- FOOD COLLECTION ---------------- */
 #screen-collection {
     justify-content: flex-start;

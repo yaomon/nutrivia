@@ -1,11 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0, viewport-fit=cover"
         />
+
+        <!-- ===== SEO =====
+             NOTE: update SITE_URL below if this is deployed somewhere other
+             than GitHub Pages (canonical + og:url + sitemap.xml must match). -->
+        <title>Nutrivia — A Bite-Size Trivia Roguelite</title>
+        <meta
+            name="description"
+            content="Nutrivia is a free browser trivia roguelite: answer questions to earn XP and gold, survive on limited HP, collect 199 foods, and import your own question sets. Study dietetics, Japanese N5/N4, or anything you upload."
+        />
+        <meta
+            name="keywords"
+            content="trivia game, roguelite, quiz game, study game, flashcards, spaced repetition, dietetics exam, JLPT N5, JLPT N4, question import, free browser game, PWA"
+        />
+        <meta name="author" content="yaomon" />
+        <link rel="canonical" href="https://yaomon.github.io/nutrivia/" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Nutrivia" />
+        <meta
+            property="og:title"
+            content="Nutrivia — A Bite-Size Trivia Roguelite"
+        />
+        <meta
+            property="og:description"
+            content="Answer questions, survive on limited HP, collect foods, and import your own quiz sets. A free study game you can install on your phone."
+        />
+        <meta property="og:url" content="https://yaomon.github.io/nutrivia/" />
+        <meta
+            property="og:image"
+            content="https://yaomon.github.io/nutrivia/images/logo512.png"
+        />
+        <meta property="og:image:alt" content="The Nutrivia clay apple icon" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+            name="twitter:title"
+            content="Nutrivia — A Bite-Size Trivia Roguelite"
+        />
+        <meta
+            name="twitter:description"
+            content="Answer questions, survive on limited HP, collect foods, and import your own quiz sets."
+        />
+        <meta
+            name="twitter:image"
+            content="https://yaomon.github.io/nutrivia/images/logo512.png"
+        />
+
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "VideoGame",
+                "name": "Nutrivia",
+                "description": "A bite-size trivia roguelite. Answer questions to earn XP and gold, survive on limited HP, collect foods, and import your own question sets.",
+                "url": "https://yaomon.github.io/nutrivia/",
+                "image": "https://yaomon.github.io/nutrivia/images/logo512.png",
+                "genre": ["Trivia", "Roguelite", "Educational"],
+                "gamePlatform": ["Web browser", "Android", "iOS"],
+                "applicationCategory": "GameApplication",
+                "operatingSystem": "Any",
+                "inLanguage": "en",
+                "isAccessibleForFree": true,
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                }
+            }
+        </script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -24,7 +92,6 @@
         <link rel="apple-touch-icon" href="images/logo192.png" />
         <link rel="stylesheet" href="styles/clay.css" />
         <link rel="stylesheet" href="styles/game.css" />
-        <title>Nutrivia</title>
         <script src="scripts/index.js"></script>
         <script src="scripts/config.js"></script>
         <script src="scripts/domain1.js"></script>
@@ -33,6 +100,9 @@
         <script src="scripts/dietetics.js"></script>
         <script src="scripts/bank.js"></script>
         <script src="scripts/sets.js"></script>
+        <!-- must run before game.js indexes the bank, so saved custom sets
+             are already merged in -->
+        <script src="scripts/import.js"></script>
         <script src="scripts/foods.js"></script>
         <script src="scripts/items.js"></script>
         <script src="scripts/events.js"></script>
@@ -42,6 +112,23 @@
     </head>
 
     <body>
+        <noscript>
+            <h1>Nutrivia — a bite-size trivia roguelite</h1>
+            <p>
+                Nutrivia is a free browser game that turns studying into a
+                run-based roguelite: answer questions to earn XP and gold,
+                survive on limited HP, level up for items and relics, and
+                collect 199 clay-sculpted foods. It ships with dietetics (RD
+                exam), JLPT N5 and N4 question banks, uses spaced repetition to
+                resurface what you get wrong, and can import your own question
+                sets from CSV, Aiken, GIFT or JSON files.
+            </p>
+            <p>
+                This game needs JavaScript enabled to play. Please turn on
+                JavaScript and reload the page.
+            </p>
+        </noscript>
+
         <!-- full-screen edge-flash for damage / level-up feedback -->
         <div id="fx-flash" class="fx-flash"></div>
 
@@ -88,7 +175,7 @@
 
         <!-- ============ PANTRY SHOP ============ -->
         <section id="screen-shop" class="screen hidden">
-            <h1 class="game-title small">The Pantry</h1>
+            <h2 class="game-title small">The Pantry</h2>
             <div class="tagline">spend gold to stock your next run</div>
             <div class="shop-purse clay-inset">
                 💰 <span id="shop-gold">0</span> gold
@@ -102,7 +189,7 @@
 
         <!-- ============ FOOD COLLECTION ============ -->
         <section id="screen-collection" class="screen hidden">
-            <h1 class="game-title small">Collection</h1>
+            <h2 class="game-title small">Collection</h2>
             <div id="collection-count" class="tagline"></div>
             <button id="btn-collection-back" class="clay clay-btn btn-quiet">
                 back
@@ -112,9 +199,12 @@
 
         <!-- ============ PICK YOUR MENU ============ -->
         <section id="screen-sets" class="screen hidden">
-            <h1 class="game-title small">Pick Your Menu</h1>
+            <h2 class="game-title small">Pick Your Menu</h2>
             <div class="tagline">choose which questions go in the pot</div>
             <div id="set-list" class="set-list"></div>
+            <button id="btn-import" class="clay clay-btn btn-quiet">
+                📥 import your own questions
+            </button>
             <div id="set-total" class="set-total"></div>
             <button id="btn-run-go" class="clay clay-btn btn-hero red">
                 Cook!
@@ -214,7 +304,7 @@
 
         <!-- ============ RUN SUMMARY ============ -->
         <section id="screen-summary" class="screen hidden">
-            <h1 id="summary-title" class="game-title small">Run Over</h1>
+            <h2 id="summary-title" class="game-title small">Run Over</h2>
             <div id="summary-sub" class="tagline"></div>
             <div class="summary-grid">
                 <div class="summary-stat clay-inset">
@@ -269,6 +359,70 @@
                 <div id="saved-desc" class="saved-desc"></div>
                 <button id="btn-saved-ok" class="clay clay-btn sage">
                     Rise Again
+                </button>
+            </div>
+        </div>
+
+        <!-- ============ IMPORT QUESTIONS MODAL ============ -->
+        <div id="modal-import" class="modal hidden">
+            <div class="modal-card clay">
+                <h2 class="modal-title">Import Questions</h2>
+                <div class="modal-sub">CSV · Aiken · GIFT · JSON</div>
+
+                <label class="import-file clay clay-btn mustard">
+                    📄 Choose a file
+                    <input
+                        type="file"
+                        id="import-file"
+                        accept=".csv,.tsv,.txt,.json,.gift"
+                        hidden
+                    />
+                </label>
+                <div class="import-or">— or paste them here —</div>
+                <textarea
+                    id="import-text"
+                    class="import-text clay-inset"
+                    rows="5"
+                    placeholder="Paste your questions…"
+                ></textarea>
+                <input
+                    id="import-name"
+                    class="import-name clay-inset"
+                    type="text"
+                    maxlength="40"
+                    placeholder="Set name (e.g. Biology Ch. 4)"
+                />
+                <div id="import-status" class="import-status"></div>
+                <button id="btn-import-go" class="clay clay-btn sage">
+                    Import
+                </button>
+
+                <div id="import-existing" class="import-existing"></div>
+
+                <details class="import-help clay-inset">
+                    <summary>which formats work?</summary>
+                    <div class="import-help-body">
+                        <b>CSV / TSV</b> — one question per row, correct answer
+                        last:<br />
+                        <code>What is 2+2?,3,4,5,6,B</code><br />
+                        (a header row like
+                        <code>question,a,b,c,d,answer</code> also works)
+                        <hr />
+                        <b>Aiken</b> — the Moodle plain-text format:<br />
+                        <code
+                            >What is 2+2?<br />A. 3<br />B. 4<br />ANSWER: B</code
+                        >
+                        <hr />
+                        <b>GIFT</b> — Moodle's other format:<br />
+                        <code>What is 2+2? {=4 ~3 ~5}</code>
+                        <hr />
+                        <b>JSON</b> — an array of objects with a question,
+                        options and an answer.
+                    </div>
+                </details>
+
+                <button id="btn-import-close" class="clay clay-btn btn-quiet">
+                    close
                 </button>
             </div>
         </div>
